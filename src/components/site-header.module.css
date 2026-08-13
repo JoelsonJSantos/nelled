@@ -1,0 +1,138 @@
+@media (max-width: 720px) {
+  .overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+
+    display: block;
+  }
+
+  .backdrop {
+    position: absolute;
+    inset: 0;
+
+    border: 0;
+
+    background: rgba(5, 11, 20, 0.72);
+
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+
+    cursor: default;
+  }
+
+  .panel {
+    position: relative;
+
+    width: min(88vw, 420px);
+    height: 100%;
+    min-height: 100dvh;
+
+    margin-left: auto;
+    padding: 20px 24px 28px;
+
+    display: flex;
+    flex-direction: column;
+
+    background: rgba(5, 11, 20, 0.97);
+
+    border-left: 1px solid
+      rgba(148, 163, 184, 0.2);
+
+    box-shadow:
+      -30px 0 80px rgba(0, 0, 0, 0.38);
+
+    overflow-y: auto;
+  }
+
+  :global(.light) .panel {
+    background: rgba(245, 248, 250, 0.97);
+  }
+
+  .top {
+    min-height: 56px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding-bottom: 18px;
+
+    border-bottom: 1px solid var(--line);
+  }
+
+  .top :global(.brand-logo img) {
+    width: 52px;
+    height: 52px;
+  }
+
+  .actions {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .links {
+    display: grid;
+
+    padding: 18px 0;
+  }
+
+  .links a {
+    display: block;
+
+    padding: 16px 2px;
+
+    border-bottom: 1px solid var(--line);
+
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+
+    transition:
+      color 0.18s ease,
+      padding-left 0.18s ease;
+  }
+
+  .links a:hover {
+    padding-left: 6px;
+
+    color: var(--cyan);
+  }
+
+  .links a:focus-visible,
+  .cta:focus-visible,
+  .top button:focus-visible {
+    outline: 2px solid var(--cyan);
+    outline-offset: 3px;
+  }
+
+  .cta {
+    min-height: 50px;
+
+    margin-top: auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid
+      rgba(0, 217, 245, 0.55);
+
+    border-radius: 8px;
+
+    color: var(--cyan);
+
+    font-size: 15px;
+    font-weight: 700;
+
+    transition:
+      background 0.2s ease,
+      border-color 0.2s ease;
+  }
+
+  .cta:hover {
+    background: rgba(0, 217, 245, 0.08);
+    border-color: var(--cyan);
+  }
+}

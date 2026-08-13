@@ -1,0 +1,60 @@
+.screen {
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.card {
+  width: min(100%, 460px);
+  padding: 40px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--surface);
+  box-shadow: 0 30px 90px color-mix(in srgb, var(--text) 12%, transparent);
+}
+
+.card :global(.brand-logo img) {
+  width: 58px;
+  height: 58px;
+}
+
+.icon {
+  margin-top: 42px;
+  color: var(--cyan);
+}
+
+.eyebrow {
+  margin: 16px 0 10px;
+  color: var(--cyan);
+  font-size: 10px;
+  font-weight: 750;
+  letter-spacing: 0.16em;
+}
+
+.card h1 {
+  margin: 0;
+  font-size: 38px;
+  letter-spacing: -0.04em;
+}
+
+.copy {
+  margin: 13px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.back {
+  min-height: 42px;
+  display: inline-flex;
+  align-items: center;
+  margin-top: 25px;
+  padding: 0 15px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--text);
+  font-size: 13px;
+}

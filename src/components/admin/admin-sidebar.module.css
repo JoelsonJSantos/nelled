@@ -1,0 +1,144 @@
+.sidebar {
+  position: sticky;
+  top: 0;
+  z-index: 90;
+  height: 100svh;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  padding: 25px 18px 20px;
+  background: var(--surface);
+  border-right: 1px solid var(--line);
+}
+
+.brandRow {
+  min-height: 57px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.brand {
+  display: inline-flex;
+  border-radius: 8px;
+}
+
+.brand :global(.brand-logo img) {
+  width: 62px;
+  height: 62px;
+}
+
+.closeButton {
+  display: none;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text);
+}
+
+.management {
+  margin: 14px 8px 25px;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.navigation {
+  display: grid;
+  gap: 22px;
+}
+
+.group > p {
+  margin: 0 10px 7px;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.group a,
+.footer a,
+.footer button {
+  width: 100%;
+  min-height: 42px;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  position: relative;
+  padding: 0 11px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background-color 180ms ease, color 180ms ease;
+}
+
+.group a:hover,
+.footer a:hover,
+.footer button:hover {
+  background: color-mix(in srgb, var(--elevated) 70%, transparent);
+  color: var(--text);
+}
+
+.group a.active {
+  background: color-mix(in srgb, var(--cyan) 10%, transparent);
+  color: var(--cyan);
+}
+
+.group a.active::before {
+  content: "";
+  position: absolute;
+  left: -18px;
+  width: 3px;
+  height: 23px;
+  border-radius: 0 3px 3px 0;
+  background: linear-gradient(var(--cyan), var(--blue));
+}
+
+.footer {
+  margin-top: auto;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+}
+
+.footer form {
+  margin: 2px 0 0;
+}
+
+@media (max-width: 900px) {
+  .sidebar {
+    position: fixed;
+    inset: 0 auto 0 0;
+    width: min(86vw, 290px);
+    transform: translateX(-102%);
+    box-shadow: 24px 0 70px color-mix(in srgb, var(--text) 18%, transparent);
+    transition: transform 240ms ease;
+  }
+
+  .open {
+    transform: translateX(0);
+  }
+
+  .closeButton {
+    display: grid;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sidebar,
+  .group a,
+  .footer a,
+  .footer button {
+    transition: none;
+  }
+}

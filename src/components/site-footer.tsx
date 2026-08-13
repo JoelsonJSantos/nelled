@@ -1,0 +1,4 @@
+import Link from "next/link";
+import { BrandLogo } from "@/components/brand-logo";
+import styles from "./site-footer.module.css";
+export function SiteFooter() { return <footer><div className={`footer-grid ${styles.footerGrid}`}><div><BrandLogo compact/><p>Produtos digitais pensados para criar movimento.</p></div><div><h4>Navegação</h4><Link href="/">Início</Link><Link href="/sobre">Sobre</Link><Link href="/portfolio">Portfólio</Link><Link href="/blog">Blog</Link></div><div><h4>Ecossistema</h4><Link href="/parceiros">Parceiros</Link><Link href="/contato">Contato</Link></div><div><h4>Legal</h4><Link href="/termos-de-uso">Termos de uso</Link><Link href="/politica-de-privacidade">Privacidade</Link><Link href="/politica-de-cookies">Cookies</Link></div></div><div className={`footer-bottom ${styles.footerBottom}`}>© {new Date().getFullYear()} Nelled Studio. Todos os direitos reservados.</div></footer>; }

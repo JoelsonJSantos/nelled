@@ -1,0 +1,232 @@
+.screen {
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  position: relative;
+  overflow: hidden;
+  padding: 32px;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.screen::before,
+.screen::after {
+  content: "";
+  position: absolute;
+  border-radius: 999px;
+  pointer-events: none;
+}
+
+.screen::before {
+  width: 580px;
+  height: 580px;
+  right: -230px;
+  top: -270px;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--cyan) 16%, transparent),
+    color-mix(in srgb, var(--blue) 5%, transparent) 43%,
+    transparent 70%
+  );
+}
+
+.screen::after {
+  width: 1px;
+  height: 100%;
+  left: calc(50% - 270px);
+  background: linear-gradient(
+    transparent,
+    color-mix(in srgb, var(--cyan) 22%, transparent),
+    transparent
+  );
+}
+
+.shell {
+  width: min(100%, 920px);
+  min-height: 570px;
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  box-shadow:
+    0 32px 100px color-mix(in srgb, var(--text) 14%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--cyan) 3%, transparent) inset;
+}
+
+.brandPanel {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  padding: 52px 46px;
+  border-right: 1px solid var(--line);
+  background: linear-gradient(145deg, var(--elevated), var(--bg));
+}
+
+.brandPanel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--line) 45%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--line) 45%, transparent) 1px, transparent 1px);
+  background-size: 40px 40px;
+  mask-image: linear-gradient(to bottom, black, transparent 75%);
+  pointer-events: none;
+}
+
+.brandPanel > * {
+  position: relative;
+  z-index: 1;
+}
+
+.seal {
+  width: 96px;
+  height: 96px;
+  display: grid;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--cyan) 45%, var(--line));
+  border-radius: 18px;
+  background: color-mix(in srgb, var(--cyan) 4%, var(--surface));
+  box-shadow: 0 0 50px color-mix(in srgb, var(--cyan) 11%, transparent);
+}
+
+.seal img {
+  width: 76px;
+  height: 76px;
+  object-fit: contain;
+}
+
+.brandCopy {
+  margin: 38px 0 auto;
+}
+
+.kicker {
+  margin: 0 0 16px;
+  color: var(--cyan);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+}
+
+.brandCopy h1 {
+  margin: 0;
+  font-size: 39px;
+  line-height: 1.05;
+  letter-spacing: -0.05em;
+}
+
+.brandCopy p {
+  max-width: 270px;
+  margin: 18px 0 0;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+.caption {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.formPanel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 52px;
+}
+
+.formPanel h2 {
+  margin: 0 0 10px;
+  font-size: 29px;
+  letter-spacing: -0.045em;
+}
+
+.formPanel > p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.formPanel > .kicker {
+  margin-bottom: 16px;
+  color: var(--cyan);
+  font-size: 11px;
+  line-height: 1;
+}
+
+.formPanel :global(.admin-login-form) {
+  margin-top: 30px;
+}
+
+.formPanel :global(.admin-login-form label) {
+  display: grid;
+  gap: 8px;
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.formPanel :global(.admin-login-form input) {
+  height: 46px;
+  margin: 0;
+  padding: 0 13px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text);
+  outline: none;
+  transition: border-color 200ms ease, box-shadow 200ms ease;
+}
+
+.formPanel :global(.admin-login-form input:focus) {
+  border-color: var(--cyan);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--cyan) 12%, transparent);
+}
+
+.formPanel :global(.admin-login-form .button) {
+  height: 46px;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.back {
+  margin-top: 24px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.back:hover {
+  color: var(--cyan);
+}
+
+@media (max-width: 720px) {
+  .screen {
+    padding: 16px;
+  }
+
+  .shell {
+    min-height: 0;
+    grid-template-columns: 1fr;
+    border-radius: 14px;
+  }
+
+  .brandPanel {
+    display: none;
+  }
+
+  .formPanel {
+    padding: 32px 25px;
+  }
+
+  .screen::after {
+    display: none;
+  }
+}

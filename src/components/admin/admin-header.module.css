@@ -1,0 +1,132 @@
+.header {
+  min-height: 76px;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 13px 40px;
+  background: color-mix(in srgb, var(--surface) 96%, transparent);
+  border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(16px);
+}
+
+.titleGroup,
+.actions,
+.actions a,
+.actions button {
+  display: flex;
+  align-items: center;
+}
+
+.titleGroup {
+  gap: 13px;
+}
+
+.titleGroup div {
+  display: grid;
+  gap: 3px;
+}
+
+.titleGroup span {
+  color: var(--muted);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.titleGroup strong {
+  font-size: 15px;
+  font-weight: 650;
+}
+
+.menuButton {
+  width: 40px;
+  height: 40px;
+  display: none;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text);
+}
+
+.actions {
+  gap: 8px;
+}
+
+.actions a,
+.actions button {
+  min-height: 38px;
+  gap: 8px;
+  padding: 0 13px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+  transition: border-color 180ms ease, color 180ms ease, background-color 180ms ease;
+}
+
+.actions a:hover,
+.actions button:hover {
+  border-color: color-mix(in srgb, var(--cyan) 38%, var(--line));
+  background: color-mix(in srgb, var(--cyan) 8%, var(--surface));
+  color: var(--cyan);
+}
+
+.themeButton {
+  width: 38px;
+  justify-content: center;
+  padding: 0 !important;
+}
+
+.moonIcon {
+  display: none;
+}
+
+:global(html.light) .sunIcon {
+  display: none;
+}
+
+:global(html.light) .moonIcon {
+  display: block;
+}
+
+.actions form {
+  margin: 0;
+}
+
+@media (max-width: 900px) {
+  .header {
+    padding: 12px 22px;
+  }
+
+  .menuButton {
+    display: grid;
+  }
+}
+
+@media (max-width: 560px) {
+  .header {
+    padding-inline: 16px;
+  }
+
+  .actions a {
+    display: none;
+  }
+
+  .actions button span {
+    display: none;
+  }
+
+  .actions button {
+    width: 40px;
+    justify-content: center;
+    padding: 0;
+  }
+}
