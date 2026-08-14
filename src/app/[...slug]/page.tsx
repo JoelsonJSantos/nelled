@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { ContactForm } from "@/components/contact-form";
+import { PageHero } from "@/components/page-hero";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 
@@ -83,9 +84,7 @@ export default async function Page({ params }: Props) {
     <>
       <SiteHeader />
       <main className="inner-page">
-        <p className="eyebrow">{pageContent.eyebrow}</p>
-        <h1>{pageContent.title}</h1>
-        <p className="lede">{pageContent.copy}</p>
+        <PageHero eyebrow={pageContent.eyebrow} title={pageContent.title} description={pageContent.copy} narrow={isContact} />
         {isContact ? (
           <ContactForm />
         ) : (

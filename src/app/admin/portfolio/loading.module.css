@@ -1,0 +1,15 @@
+.shell { display: grid; gap: 18px; }
+.title { width: min(420px, 75%); height: 70px; border-radius: 10px; }
+.filters { height: 68px; border-radius: 10px; }
+.list { display: grid; gap: 1px; overflow: hidden; border: 1px solid var(--line); border-radius: 12px; background: var(--line); }
+.row { min-height: 100px; display: grid; grid-template-columns: 72px 1fr 120px 180px; align-items: center; gap: 16px; padding: 14px; background: var(--surface); }
+.row span { width: 72px; height: 54px; border-radius: 7px; }
+.row i { height: 18px; border-radius: 5px; }
+.title,
+.filters,
+.row span,
+.row i { background: linear-gradient(100deg, var(--surface) 20%, var(--elevated) 45%, var(--surface) 70%); background-size: 220% 100%; animation: pulse 1.4s ease infinite; }
+@keyframes pulse { to { background-position: -220% 0; } }
+@media (max-width: 700px) { .filters { height: 210px; } .row { grid-template-columns: 56px 1fr; } .row i:nth-of-type(n + 2) { display: none; } }
+@media (prefers-reduced-motion: reduce) { .title, .filters, .row span, .row i { animation: none; } }
+

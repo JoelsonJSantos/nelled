@@ -1,0 +1,11 @@
+.image,
+.fallback {
+  min-height: 220px;
+  position: relative;
+  overflow: hidden;
+  background: var(--elevated);
+}
+.image img { object-fit: cover; }
+.fallback { display: grid; place-items: center; align-content: center; gap: 9px; color: var(--muted); font-size: 11px; }
+.fallback svg { color: var(--cyan); }
+

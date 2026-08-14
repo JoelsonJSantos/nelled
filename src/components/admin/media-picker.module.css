@@ -1,0 +1,41 @@
+.field { display: grid; gap: 11px; grid-column: 1 / -1; }
+.label { display: flex; align-items: center; justify-content: space-between; gap: 10px; color: var(--muted); font-size: 12px; }
+.label strong { font-weight: 650; }
+.label span { font-size: 9px; font-weight: 500; }
+.previewGrid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 9px; }
+.previewGrid.single { grid-template-columns: minmax(0, 360px); }
+.preview { position: relative; min-width: 0; aspect-ratio: 16 / 10; overflow: hidden; border: 1px solid var(--line); border-radius: 9px; background: var(--elevated); }
+.preview img { object-fit: cover; }
+.previewActions { position: absolute; right: 7px; bottom: 7px; display: flex; gap: 4px; }
+.previewActions button { width: 30px; height: 30px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 7px; background: color-mix(in srgb, var(--bg) 86%, transparent); color: var(--text); cursor: pointer; backdrop-filter: blur(8px); }
+.previewActions button:hover { color: var(--cyan); }
+.previewActions button:disabled { opacity: .35; cursor: default; }
+.emptyPreview { min-height: 105px; display: grid; place-items: center; align-content: center; gap: 7px; border: 1px dashed var(--line); border-radius: 9px; background: color-mix(in srgb, var(--elevated) 38%, transparent); color: var(--muted); font-size: 11px; }
+.emptyPreview svg { color: var(--cyan); }
+.controls { display: flex; align-items: flex-start; flex-wrap: wrap; gap: 9px; }
+.libraryButton { min-height: 43px; display: inline-flex; align-items: center; gap: 8px; padding: 0 14px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--text); font-size: 12px; font-weight: 700; cursor: pointer; }
+.libraryButton:hover { border-color: color-mix(in srgb, var(--cyan) 40%, var(--line)); color: var(--cyan); }
+.error { color: color-mix(in srgb, var(--blue) 65%, var(--text)); font-size: 11px; }
+.backdrop { position: fixed; inset: 0; z-index: 160; display: grid; place-items: center; padding: 20px; background: color-mix(in srgb, var(--bg) 76%, transparent); backdrop-filter: blur(12px); }
+.dialog { width: min(920px, 100%); max-height: min(780px, calc(100vh - 40px)); display: grid; grid-template-rows: auto auto minmax(160px, 1fr) auto; overflow: hidden; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); box-shadow: 0 28px 90px color-mix(in srgb, var(--bg) 72%, transparent); }
+.dialogHeader { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px; border-bottom: 1px solid var(--line); }
+.dialogHeader p { margin: 0 0 5px; color: var(--cyan); font-size: 9px; font-weight: 800; letter-spacing: .15em; }
+.dialogHeader h2 { margin: 0; font-size: 20px; }
+.dialogHeader button { width: 36px; height: 36px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--text); cursor: pointer; }
+.search { position: relative; display: block; padding: 14px 20px; border-bottom: 1px solid var(--line); }
+.search svg { position: absolute; top: 50%; left: 32px; color: var(--muted); transform: translateY(-50%); }
+.search input { min-height: 42px; margin: 0; padding-left: 38px; }
+.libraryGrid { overflow-y: auto; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); align-content: start; gap: 10px; padding: 20px; }
+.libraryGrid > button { position: relative; min-width: 0; overflow: hidden; padding: 0 0 9px; border: 1px solid var(--line); border-radius: 9px; background: var(--bg); color: var(--text); text-align: left; cursor: pointer; }
+.libraryGrid > button > span { position: relative; display: block; aspect-ratio: 1; margin-bottom: 8px; overflow: hidden; background: var(--elevated); }
+.libraryGrid img { object-fit: cover; }
+.libraryGrid strong { display: block; overflow: hidden; padding: 0 9px; font-size: 10px; text-overflow: ellipsis; white-space: nowrap; }
+.libraryGrid i { position: absolute; top: 7px; right: 7px; padding: 5px 7px; border-radius: 999px; background: var(--cyan); color: var(--bg); font-size: 8px; font-style: normal; font-weight: 800; }
+.libraryGrid .selected { border-color: var(--cyan); box-shadow: 0 0 0 2px color-mix(in srgb, var(--cyan) 15%, transparent); }
+.dialogEmpty { display: grid; place-items: center; align-content: center; gap: 8px; color: var(--muted); }
+.dialogEmpty svg { color: var(--cyan); }
+.dialogEmpty p { margin: 0; }
+.dialogFooter { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 14px 20px; border-top: 1px solid var(--line); color: var(--muted); font-size: 11px; }
+.dialogFooter button { min-height: 40px; padding: 0 15px; border: 0; border-radius: 8px; background: linear-gradient(110deg, var(--blue), var(--cyan)); color: white; font-weight: 750; cursor: pointer; }
+@media (max-width: 800px) { .previewGrid, .libraryGrid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 620px) { .previewGrid, .libraryGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .controls, .controls > * { width: 100%; } .dialog { max-height: calc(100vh - 20px); } .backdrop { padding: 10px; } .libraryGrid { padding: 12px; } }

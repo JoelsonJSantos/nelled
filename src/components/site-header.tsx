@@ -79,7 +79,7 @@ export function SiteHeader() {
   };
 
   return (
-    <header>
+    <header className={styles.siteHeader}>
       <nav className="nav" aria-label="Navegação principal">
         <BrandLogo compact />
 

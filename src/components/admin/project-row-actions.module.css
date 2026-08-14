@@ -1,0 +1,135 @@
+.wrap {
+  min-width: 0;
+  display: grid;
+  gap: 7px;
+}
+
+.actions,
+.actions form {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 5px;
+}
+
+.actions a,
+.actions button,
+.actions > span {
+  min-height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 0 9px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--muted);
+  font: inherit;
+  font-size: 10px;
+  cursor: pointer;
+}
+
+.actions a:hover,
+.actions button:hover {
+  border-color: color-mix(in srgb, var(--cyan) 35%, var(--line));
+  color: var(--cyan);
+}
+
+.actions .deleteButton:hover {
+  border-color: color-mix(in srgb, #f87171 40%, var(--line));
+  color: #f87171;
+}
+
+.disabled {
+  opacity: 0.45;
+  cursor: not-allowed !important;
+}
+
+.pending {
+  justify-self: end;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10px;
+}
+
+.pending { color: var(--cyan); }
+.pending svg { animation: spin 800ms linear infinite; }
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: color-mix(in srgb, var(--bg) 78%, transparent);
+  backdrop-filter: blur(10px);
+}
+
+.dialog {
+  width: min(100%, 430px);
+  position: relative;
+  padding: 28px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--elevated);
+  box-shadow: 0 28px 90px color-mix(in srgb, var(--text) 18%, transparent);
+}
+
+.dialog > svg { color: #f87171; }
+.dialog h2 { margin: 16px 0 8px; font-size: 20px; }
+.dialog p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.55; }
+.dialog > div { display: flex; justify-content: flex-end; gap: 8px; margin-top: 24px; }
+.dialog > div > button,
+.dialog > div button {
+  min-height: 40px;
+  padding: 0 14px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.dialog > div .confirmDelete {
+  border-color: color-mix(in srgb, #f87171 35%, var(--line));
+  background: color-mix(in srgb, #f87171 12%, var(--surface));
+  color: #fca5a5;
+}
+
+.close {
+  width: 34px;
+  height: 34px;
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+@media (max-width: 1200px) {
+  .actions span { display: none; }
+  .actions a,
+  .actions button,
+  .actions > span { width: 32px; padding: 0; }
+}
+
+@media (max-width: 680px) {
+  .actions { justify-content: flex-start; flex-wrap: wrap; }
+  .pending { justify-self: start; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pending svg { animation: none; }
+}

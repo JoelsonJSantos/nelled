@@ -1,0 +1,44 @@
+.toast {
+  position: fixed;
+  top: 92px;
+  right: 28px;
+  z-index: 1500;
+  width: max-content;
+  max-width: min(390px, calc(100vw - 32px));
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 12px 13px 15px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: var(--elevated);
+  color: var(--text);
+  box-shadow: 0 18px 50px color-mix(in srgb, var(--text) 14%, transparent);
+  font-size: 13px;
+}
+
+.toast > svg { color: var(--cyan); }
+.error > svg { color: var(--blue); }
+
+.toast button {
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.toast button:hover { background: var(--surface); color: var(--text); }
+.toast button:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
+.success { border-color: color-mix(in srgb, var(--cyan) 34%, var(--line)); }
+.error { border-color: color-mix(in srgb, var(--blue) 42%, var(--line)); }
+
+@media (max-width: 680px) {
+  .toast { top: 82px; right: 16px; }
+}

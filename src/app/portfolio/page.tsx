@@ -1,8 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
+import { ProjectImage } from "@/components/project-image";
+import { PageHero } from "@/components/page-hero";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
-import { createClient } from "@/lib/supabase/server";
+import { getPublishedProjects } from "@/lib/public-content";
+import styles from "./page.module.css";
 
 export const metadata: Metadata = {
   title: "Portfólio",
@@ -10,10 +14,32 @@ export const metadata: Metadata = {
 };
 
 export default async function Portfolio() {
-  const supabase = await createClient();
-  if (!supabase) throw new Error("A conexão com o conteúdo não está disponível.");
-  const { data, error } = await supabase.from("projects").select("slug,name,category,excerpt,technologies,year").eq("status", "published").order("sort_order");
-  if (error) throw new Error("Não foi possível carregar o portfólio.");
-  const projects = (data ?? []).map((project) => ({ ...project, technologies: project.technologies ?? [] }));
-  return <><SiteHeader/><main className="inner-page"><p className="eyebrow">PORTFÓLIO</p><h1>Projetos que criam movimento.</h1>{projects.length ? <div className="public-grid">{projects.map((project) => <Link href={`/portfolio/${project.slug}`} className="public-card" key={project.slug}><p className="eyebrow">{project.category || "PROJETO"}</p><h2>{project.name}</h2><p>{project.excerpt}</p><small>{project.technologies.join(" · ")}</small></Link>)}</div> : <div className="empty-panel"><div className="empty-symbol">NS</div><div><h3>Cases em preparação</h3><p>Os projetos publicados pela Nelled Studio aparecerão aqui.</p></div></div>}</main><SiteFooter/></>;
+  const projects = await getPublishedProjects();
+  return (
+    <>
+      <SiteHeader />
+      <main className={`inner-page ${styles.page}`}>
+        <PageHero eyebrow="PORTFÓLIO" title="Projetos que criam movimento." description="Cases reais construídos com estratégia, tecnologia e atenção aos detalhes." />
+        {projects.length ? (
+          <div className={styles.grid}>
+            {projects.map((project) => (
+              <article className={styles.card} key={project.id}>
+                <Link href={`/portfolio/${project.slug}`} className={styles.media} aria-label={`Ver projeto ${project.name}`}><ProjectImage src={project.coverImage} alt={`Capa do projeto ${project.name}`} sizes="(max-width: 760px) 100vw, 50vw" /></Link>
+                <div className={styles.cardBody}>
+                  <div className={styles.meta}><span>{project.category || "Projeto"}</span><span>{project.year}</span></div>
+                  <h2><Link href={`/portfolio/${project.slug}`}>{project.name}</Link></h2>
+                  <p>{project.excerpt}</p>
+                  {project.technologies.length > 0 && <ul>{project.technologies.slice(0, 5).map((technology) => <li key={technology}>{technology}</li>)}</ul>}
+                  <Link className={styles.link} href={`/portfolio/${project.slug}`}>Ver projeto <ArrowRight size={16} /></Link>
+                </div>
+              </article>
+            ))}
+          </div>
+        ) : (
+          <div className="empty-panel"><div className="empty-symbol">NS</div><div><h3>Cases em preparação</h3><p>Os projetos publicados pela Nelled Studio aparecerão aqui.</p></div></div>
+        )}
+      </main>
+      <SiteFooter />
+    </>
+  );
 }

@@ -1,0 +1,11 @@
+.page { min-height: 72vh; }
+.heading { width: min(620px, 80%); height: 120px; margin-bottom: 48px; border-radius: 12px; }
+.grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+.card { min-height: 420px; display: grid; align-content: start; gap: 18px; padding: 20px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+.card span { height: 240px; margin: -20px -20px 6px; }
+.card i { width: 75%; height: 20px; border-radius: 5px; }
+.heading, .card span, .card i { background: linear-gradient(100deg, var(--surface) 20%, var(--elevated) 45%, var(--surface) 70%); background-size: 220% 100%; animation: pulse 1.4s ease infinite; }
+@keyframes pulse { to { background-position: -220% 0; } }
+@media (max-width: 760px) { .grid { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { .heading, .card span, .card i { animation: none; } }
+
