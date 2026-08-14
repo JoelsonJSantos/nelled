@@ -9,7 +9,7 @@ import { getFeaturedProjects } from "@/lib/public-content";
 import portfolioStyles from "./home-portfolio.module.css";
 
 export const metadata: Metadata = {
-  title: { absolute: "Nelled Studio — Criando soluções digitais" },
+  title: { absolute: "Nelled Studio - Criando soluções digitais" },
   description: "A Nelled Studio cria sites, sistemas, plataformas e produtos digitais que transformam ideias em resultados.",
 };
 
