@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
+import { cookies } from "next/headers";
+
 import "./globals.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "Nelled Studio - Criando soluções digitais",
+    default: "Nelled Studio — Criando soluções digitais",
     template: "%s | Nelled Studio",
   },
   description:
@@ -15,49 +17,37 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       { url: "/favicon.ico" },
-      { url: "/favicon.svg", type: "image/svg+xml" },
+      {
+        url: "/favicon.svg",
+        type: "image/svg+xml",
+      },
     ],
     apple: "/apple-touch-icon.png",
   },
   manifest: "/site.webmanifest",
 };
 
-const themeScript = `
-(function () {
-  try {
-    const savedTheme = localStorage.getItem("theme");
-
-    let theme = savedTheme;
-
-    if (!theme) {
-      theme = window.matchMedia("(prefers-color-scheme: light)").matches
-        ? "light"
-        : "dark";
-    }
-
-    const root = document.documentElement;
-
-    root.classList.toggle("light", theme === "light");
-    root.style.colorScheme = theme;
-  } catch {}
-})();
-`;
-
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <html lang="pt-BR" suppressHydrationWarning>
-      <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: themeScript,
-          }}
-        />
-      </head>
+  const cookieStore = await cookies();
 
+  const savedTheme = cookieStore.get("theme")?.value;
+
+  const theme =
+    savedTheme === "light" ? "light" : "dark";
+
+  return (
+    <html
+      lang="pt-BR"
+      className={theme === "light" ? "light" : undefined}
+      style={{
+        colorScheme: theme,
+      }}
+      suppressHydrationWarning
+    >
       <body>{children}</body>
     </html>
   );

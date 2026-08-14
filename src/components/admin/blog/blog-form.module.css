@@ -1,0 +1,268 @@
+.form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 28px;
+  align-items: start;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  min-width: 0;
+}
+
+.sidebar {
+  position: sticky;
+  top: 92px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.field > span,
+.editorField > span {
+  color: var(--text);
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.field input,
+.field textarea,
+.field select {
+  width: 100%;
+
+  border: 1px solid var(--line);
+  border-radius: 9px;
+
+  background: var(--surface);
+  color: var(--text);
+
+  font: inherit;
+
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    background 0.18s ease;
+}
+
+.field input,
+.field select {
+  min-height: 44px;
+
+  padding: 0 13px;
+}
+
+.field textarea {
+  min-height: 96px;
+
+  padding: 12px 13px;
+
+  resize: vertical;
+
+  line-height: 1.6;
+}
+
+.field input::placeholder,
+.field textarea::placeholder {
+  color: color-mix(
+    in srgb,
+    var(--muted) 75%,
+    transparent
+  );
+}
+
+.field input:hover,
+.field textarea:hover,
+.field select:hover {
+  border-color: color-mix(
+    in srgb,
+    var(--cyan) 25%,
+    var(--line)
+  );
+}
+
+.field input:focus,
+.field textarea:focus,
+.field select:focus {
+  outline: none;
+
+  border-color: var(--cyan);
+
+  box-shadow:
+    0 0 0 3px
+    color-mix(
+      in srgb,
+      var(--cyan) 12%,
+      transparent
+    );
+}
+
+.editorField {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.seo {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+
+  margin: 6px 0 0;
+  padding: 22px;
+
+  border: 1px solid var(--line);
+  border-radius: 12px;
+
+  background: var(--surface);
+}
+
+.seo legend {
+  padding: 0 8px;
+
+  color: var(--text);
+
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.sidePanel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  padding: 18px;
+
+  border: 1px solid var(--line);
+  border-radius: 12px;
+
+  background: var(--surface);
+}
+
+.sidePanel h2 {
+  margin: 0;
+
+  color: var(--text);
+
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  color: var(--text);
+
+  font-size: 13px;
+
+  cursor: pointer;
+}
+
+.checkbox input {
+  width: 17px;
+  height: 17px;
+
+  accent-color: var(--cyan);
+
+  cursor: pointer;
+}
+
+.submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  min-height: 44px;
+
+  padding: 0 16px;
+
+  border: 1px solid var(--cyan);
+  border-radius: 9px;
+
+  background: var(--cyan);
+  color: #021018;
+
+  font: inherit;
+  font-size: 13px;
+  font-weight: 800;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    filter 0.18s ease;
+}
+
+.submit:hover {
+  transform: translateY(-1px);
+
+  filter: brightness(1.05);
+
+  box-shadow:
+    0 10px 30px
+    color-mix(
+      in srgb,
+      var(--cyan) 18%,
+      transparent
+    );
+}
+
+.submit:active {
+  transform: translateY(0);
+}
+
+.submit:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 3px;
+}
+
+@media (max-width: 1080px) {
+  .form {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    position: static;
+
+    display: grid;
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .submit {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 760px) {
+  .form {
+    gap: 22px;
+  }
+
+  .main {
+    gap: 18px;
+  }
+
+  .sidebar {
+    display: flex;
+  }
+
+  .seo,
+  .sidePanel {
+    padding: 16px;
+  }
+}

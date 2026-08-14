@@ -1,0 +1,131 @@
+.editor {
+  overflow: hidden;
+
+  border: 1px solid var(--line);
+  border-radius: 12px;
+
+  background: var(--surface);
+
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.editor:focus-within {
+  border-color: color-mix(
+    in srgb,
+    var(--cyan) 45%,
+    var(--line)
+  );
+
+  box-shadow: 0 0 0 3px color-mix(
+    in srgb,
+    var(--cyan) 15%,
+    var(--line)
+  );
+}
+
+.editorContent {
+  min-height: 520px;
+
+  padding: 32px;
+
+  color: var(--text);
+
+  font-size: 17px;
+  line-height: 1.75;
+
+  outline: none;
+}
+
+.editorContent p {
+  margin: 0 0 1.2em;
+}
+
+.editorContent h2 {
+  margin: 1.8em 0 0.7em;
+
+  font-size: 34px;
+  line-height: 1.1;
+}
+
+.editorContent h3 {
+  margin: 1.6em 0 0.65em;
+
+  font-size: 27px;
+  line-height: 1.15;
+}
+
+.editorContent blockquote {
+  margin: 28px 0;
+
+  padding: 4px 0 4px 20px;
+
+  border-left: 3px solid var(--cyan);
+
+  color: var(--muted);
+}
+
+.editorContent img {
+  display: block;
+
+  max-width: 100%;
+  height: auto;
+
+  margin: 28px auto;
+
+  border-radius: 10px;
+}
+
+.editorContent pre {
+  overflow-x: auto;
+
+  padding: 20px;
+
+  border: 1px solid var(--line);
+  border-radius: 8px;
+
+  background: var(--bg);
+}
+
+.editorContent table {
+  width: 100%;
+
+  margin: 28px 0;
+
+  border-collapse: collapse;
+}
+
+.editorContent th,
+.editorContent td {
+  padding: 10px 12px;
+
+  border: 1px solid var(--line);
+}
+
+.editorContent th {
+  background: var(--elevated);
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+
+  padding: 10px 16px;
+
+  border-top: 1px solid var(--line);
+
+  color: var(--muted);
+  font-size: 12px;
+}
+
+@media (max-width: 720px) {
+  .editorContent {
+    min-height: 420px;
+    padding: 22px 18px;
+
+    font-size: 16px;
+  }
+}

@@ -57,14 +57,27 @@ export function SiteHeader() {
 
   const toggleTheme = () => {
   const root = document.documentElement;
-  const isLight = !root.classList.contains("light");
 
-  root.classList.toggle("light", isLight);
+  const isLight =
+    !root.classList.contains("light");
 
-  const theme = isLight ? "light" : "dark";
+  const theme =
+    isLight ? "light" : "dark";
 
-  localStorage.setItem("theme", theme);
+  root.classList.toggle(
+    "light",
+    isLight,
+  );
+
   root.style.colorScheme = theme;
+
+  localStorage.setItem(
+    "theme",
+    theme,
+  );
+
+  document.cookie =
+    `theme=${theme}; Path=/; Max-Age=31536000; SameSite=Lax`;
 };
 
   const transition = reduceMotion
