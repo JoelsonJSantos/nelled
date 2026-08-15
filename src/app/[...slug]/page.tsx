@@ -8,6 +8,7 @@ import { PrivacyPreferencesButton } from "@/components/privacy/privacy-preferenc
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { InstagramIcon, LinkedInIcon } from "@/components/social-icons";
+import aboutStyles from "./about-page.module.css";
 import legalStyles from "./legal-page.module.css";
 
 import {
@@ -245,16 +246,96 @@ export default async function Page({ params }: Props) {
             </aside>
           </div>
         ) : isAbout ? (
-          <div className="empty-panel page-panel">
-            <div className="empty-symbol">NS</div>
-            <div>
-              <h3>{settings.pages.sobre.bodyTitle}</h3>
-
-              {aboutParagraphs.map((paragraph, index) => (
-                <p key={`${index}-${paragraph.slice(0, 24)}`}>{paragraph}</p>
-              ))}
+          <section className={aboutStyles.story} aria-label="História da Nelled Studio">
+            <div className={aboutStyles.storyLead}>
+              <p className={aboutStyles.storyEyebrow}>DESDE JANEIRO DE 2026</p>
+              <h2>Uma história que começou com vontade de construir melhor.</h2>
+              <p>
+                A {settings.companyName} nasceu para transformar experiência prática em
+                tecnologia que resolve problemas reais — com clareza, cuidado e espaço
+                para evoluir.
+              </p>
             </div>
-          </div>
+
+            <div className={aboutStyles.timeline}>
+              <article className={aboutStyles.milestone}>
+                <div className={aboutStyles.marker}>
+                  <span>JAN</span>
+                  <strong>2026</strong>
+                </div>
+
+                <div className={aboutStyles.milestoneContent}>
+                  <p className={aboutStyles.label}>ORIGEM</p>
+                  <h3>Nasce a {settings.companyName}.</h3>
+                  <p>
+                    Fundada em janeiro de 2026, a {settings.companyName} surgiu com uma
+                    proposta simples: criar soluções digitais que não fossem apenas
+                    bonitas, mas realmente úteis.
+                  </p>
+                  <p>
+                    O estúdio nasceu da experiência prática com tecnologia, suporte,
+                    infraestrutura e desenvolvimento, reunindo conhecimento técnico com
+                    uma visão cada vez mais voltada à criação de produtos digitais.
+                  </p>
+                </div>
+              </article>
+
+              <article className={aboutStyles.milestone}>
+                <div className={aboutStyles.marker}>
+                  <span>NOSSO</span>
+                  <strong>PORQUÊ</strong>
+                </div>
+
+                <div className={aboutStyles.milestoneContent}>
+                  <p className={aboutStyles.label}>PROPÓSITO</p>
+                  <h3>{settings.pages.sobre.bodyTitle}</h3>
+
+                  {aboutParagraphs.map((paragraph, index) => (
+                    <p key={`${index}-${paragraph.slice(0, 24)}`}>{paragraph}</p>
+                  ))}
+                </div>
+              </article>
+
+              <article className={aboutStyles.milestone}>
+                <div className={aboutStyles.marker}>
+                  <span>AGORA</span>
+                  <strong>HOJE</strong>
+                </div>
+
+                <div className={aboutStyles.milestoneContent}>
+                  <p className={aboutStyles.label}>EVOLUÇÃO</p>
+                  <h3>Construindo o próximo passo.</h3>
+                  <p>
+                    Hoje, a {settings.companyName} evolui como um estúdio digital
+                    independente, desenvolvendo produtos próprios e criando soluções
+                    personalizadas para empresas, profissionais e novos negócios.
+                  </p>
+                  <p>
+                    Cada novo projeto amplia essa história: entender melhor o problema,
+                    escolher a tecnologia certa e entregar algo que possa continuar
+                    crescendo depois do lançamento.
+                  </p>
+                </div>
+              </article>
+            </div>
+
+            <div className={aboutStyles.facts} aria-label="Nelled Studio em números">
+              <div>
+                <strong>JAN 2026</strong>
+                <span>Fundação</span>
+              </div>
+
+              <div>
+                <strong>100%</strong>
+                <span>Foco em soluções digitais</span>
+              </div>
+
+              <div className={aboutStyles.factWide}>
+                <strong>Estratégia · Design · Tecnologia</strong>
+                <span>Do conceito à evolução</span>
+              </div>
+            </div>
+          </section>
         ) : isLegal ? (
           <div className={legalStyles.shell}>
             <article
