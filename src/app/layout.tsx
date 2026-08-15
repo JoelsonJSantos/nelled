@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { cookies } from "next/headers";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 import "./globals.css";
 
@@ -10,21 +12,6 @@ export const metadata: Metadata = {
   },
   description:
     "Software house para produtos digitais, sistemas, plataformas e experiências web.",
-  robots: {
-    index: true,
-    follow: true,
-  },
-  icons: {
-    icon: [
-      { url: "/favicon.ico" },
-      {
-        url: "/favicon.svg",
-        type: "image/svg+xml",
-      },
-    ],
-    apple: "/apple-touch-icon.png",
-  },
-  manifest: "/site.webmanifest",
 };
 
 export default async function RootLayout({
@@ -34,21 +21,33 @@ export default async function RootLayout({
 }) {
   const cookieStore = await cookies();
 
-  const savedTheme = cookieStore.get("theme")?.value;
+  const savedTheme =
+    cookieStore.get("theme")?.value;
 
   const theme =
-    savedTheme === "light" ? "light" : "dark";
+    savedTheme === "light"
+      ? "light"
+      : "dark";
 
   return (
     <html
       lang="pt-BR"
-      className={theme === "light" ? "light" : undefined}
+      className={
+        theme === "light"
+          ? "light"
+          : undefined
+      }
       style={{
         colorScheme: theme,
       }}
       suppressHydrationWarning
     >
-      <body>{children}</body>
+      <body>
+        {children}
+
+        <Analytics />
+        <SpeedInsights />
+      </body>
     </html>
   );
 }
