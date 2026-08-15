@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { ArrowRight, Mail, Phone } from "lucide-react";
 
 import { ContactForm } from "@/components/contact-form";
+import { PublicLink } from "@/components/navigation/public-link";
 import { PageHero } from "@/components/page-hero";
 import { PrivacyPreferencesButton } from "@/components/privacy/privacy-preferences-button";
 import { SiteFooter } from "@/components/site-footer";
@@ -363,9 +363,9 @@ export default async function Page({ params }: Props) {
               <p>Esta página está preparada para receber conteúdo institucional.</p>
 
               {key === "portfolio" && (
-                <Link href="/contato" className="text-link">
+                <PublicLink href="/contato" className="text-link">
                   Tem um projeto em mente? <ArrowRight size={16} />
-                </Link>
+                </PublicLink>
               )}
             </div>
           </div>

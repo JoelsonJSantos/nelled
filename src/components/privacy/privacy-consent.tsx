@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   BarChart3,
@@ -27,6 +26,7 @@ import {
   subscribePrivacyConsent,
   type PrivacyPreferences,
 } from "@/lib/privacy-consent";
+import { PublicLink } from "@/components/navigation/public-link";
 import type { PrivacyBannerContent } from "@/lib/site-settings";
 
 import styles from "./privacy-consent.module.css";
@@ -215,9 +215,9 @@ export function PrivacyConsent({
             <p>{content.description}</p>
 
             <nav className={styles.legalLinks} aria-label="Documentos legais">
-              <Link href="/politica-de-privacidade">Privacidade</Link>
-              <Link href="/termos-de-uso">Termos de Uso</Link>
-              <Link href="/politica-de-cookies">Cookies</Link>
+              <PublicLink href="/politica-de-privacidade">Privacidade</PublicLink>
+              <PublicLink href="/termos-de-uso">Termos de Uso</PublicLink>
+              <PublicLink href="/politica-de-cookies">Cookies</PublicLink>
             </nav>
           </div>
 
@@ -338,11 +338,11 @@ export function PrivacyConsent({
             </div>
 
             <div className={styles.modalLegalLinks}>
-              <Link href="/politica-de-privacidade">
+              <PublicLink href="/politica-de-privacidade">
                 Política de Privacidade
-              </Link>
-              <Link href="/politica-de-cookies">Política de Cookies</Link>
-              <Link href="/termos-de-uso">Termos de Uso</Link>
+              </PublicLink>
+              <PublicLink href="/politica-de-cookies">Política de Cookies</PublicLink>
+              <PublicLink href="/termos-de-uso">Termos de Uso</PublicLink>
             </div>
 
             <footer className={styles.modalActions}>

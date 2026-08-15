@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 
 import { PageHero } from "@/components/page-hero";
+import { PublicLink } from "@/components/navigation/public-link";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { createClient } from "@/lib/supabase/server";
@@ -99,7 +99,7 @@ export default async function Blog() {
             aria-label="Artigos publicados"
           >
             {posts.map((post) => (
-              <Link
+              <PublicLink
                 href={`/blog/${post.slug}`}
                 className={styles.card}
                 key={post.slug}
@@ -146,7 +146,7 @@ export default async function Blog() {
                     </span>
                   </div>
                 </div>
-              </Link>
+              </PublicLink>
             ))}
           </section>
         ) : (

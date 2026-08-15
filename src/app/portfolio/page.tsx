@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { ProjectImage } from "@/components/project-image";
+import { PublicLink } from "@/components/navigation/public-link";
 import { PageHero } from "@/components/page-hero";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
@@ -24,13 +24,13 @@ export default async function Portfolio() {
           <div className={styles.grid}>
             {projects.map((project) => (
               <article className={styles.card} key={project.id}>
-                <Link href={`/portfolio/${project.slug}`} className={styles.media} aria-label={`Ver projeto ${project.name}`}><ProjectImage src={project.coverImage} alt={`Capa do projeto ${project.name}`} sizes="(max-width: 760px) 100vw, 50vw" /></Link>
+                <PublicLink href={`/portfolio/${project.slug}`} className={styles.media} aria-label={`Ver projeto ${project.name}`}><ProjectImage src={project.coverImage} alt={`Capa do projeto ${project.name}`} sizes="(max-width: 760px) 100vw, 50vw" /></PublicLink>
                 <div className={styles.cardBody}>
                   <div className={styles.meta}><span>{project.category || "Projeto"}</span><span>{project.year}</span></div>
-                  <h2><Link href={`/portfolio/${project.slug}`}>{project.name}</Link></h2>
+                  <h2><PublicLink href={`/portfolio/${project.slug}`}>{project.name}</PublicLink></h2>
                   <p>{project.excerpt}</p>
                   {project.technologies.length > 0 && <ul>{project.technologies.slice(0, 5).map((technology) => <li key={technology}>{technology}</li>)}</ul>}
-                  <Link className={styles.link} href={`/portfolio/${project.slug}`}>Ver projeto <ArrowRight size={16} /></Link>
+                  <PublicLink className={styles.link} href={`/portfolio/${project.slug}`}>Ver projeto <ArrowRight size={16} /></PublicLink>
                 </div>
               </article>
             ))}

@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowUpRight } from "lucide-react";
 
 import { SiteFooter } from "@/components/site-footer";
+import { PublicLink } from "@/components/navigation/public-link";
 import { SiteHeader } from "@/components/site-header";
 import { contentMetadata } from "@/lib/metadata";
 import { getPublishedPartner } from "@/lib/public-content";
@@ -84,7 +84,7 @@ export default async function Partner({ params }: Props) {
           )}
 
           {targetUrl && (
-            <Link
+            <PublicLink
               className="button primary"
               href={targetUrl}
               target="_blank"
@@ -92,7 +92,7 @@ export default async function Partner({ params }: Props) {
             >
               Conhecer parceiro
               <ArrowUpRight size={17} />
-            </Link>
+            </PublicLink>
           )}
         </article>
       </main>

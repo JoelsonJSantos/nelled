@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
 import { Fragment } from "react";
 import {
   ArrowRight,
@@ -13,6 +12,7 @@ import {
 } from "lucide-react";
 
 import { ProjectImage } from "@/components/project-image";
+import { PublicLink } from "@/components/navigation/public-link";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { getFeaturedProjects } from "@/lib/public-content";
@@ -117,14 +117,14 @@ export default async function Home() {
             <p className="subtle">{home.heroSecondary}</p>
 
             <div className="actions">
-              <Link className="button primary" href="/portfolio">
+              <PublicLink className="button primary" href="/portfolio">
                 {home.primaryCtaLabel}
                 <ArrowRight size={17} />
-              </Link>
+              </PublicLink>
 
-              <Link className="button ghost" href="/contato">
+              <PublicLink className="button ghost" href="/contato">
                 {home.secondaryCtaLabel}
-              </Link>
+              </PublicLink>
             </div>
           </div>
 
@@ -179,17 +179,17 @@ export default async function Home() {
               <h2>{home.portfolioTitle}</h2>
             </div>
 
-            <Link className="text-link" href="/portfolio">
+            <PublicLink className="text-link" href="/portfolio">
               {home.portfolioLinkLabel}
               <ArrowRight size={16} />
-            </Link>
+            </PublicLink>
           </div>
 
           {featuredProjects.length ? (
             <div className={portfolioStyles.grid}>
               {featuredProjects.map((project) => (
                 <article className={portfolioStyles.card} key={project.id}>
-                  <Link
+                  <PublicLink
                     href={`/portfolio/${project.slug}`}
                     className={portfolioStyles.media}
                   >
@@ -198,7 +198,7 @@ export default async function Home() {
                       alt={`Capa do projeto ${project.name}`}
                       sizes="(max-width: 760px) 100vw, 33vw"
                     />
-                  </Link>
+                  </PublicLink>
 
                   <div>
                     <p className="eyebrow">
@@ -206,20 +206,20 @@ export default async function Home() {
                     </p>
 
                     <h3>
-                      <Link href={`/portfolio/${project.slug}`}>
+                      <PublicLink href={`/portfolio/${project.slug}`}>
                         {project.name}
-                      </Link>
+                      </PublicLink>
                     </h3>
 
                     <p>{project.excerpt}</p>
 
-                    <Link
+                    <PublicLink
                       href={`/portfolio/${project.slug}`}
                       className={portfolioStyles.link}
                     >
                       Ver case
                       <ArrowRight size={15} />
-                    </Link>
+                    </PublicLink>
                   </div>
                 </article>
               ))}
@@ -240,10 +240,10 @@ export default async function Home() {
           <h2>{home.ctaTitle}</h2>
           <p>{home.ctaDescription}</p>
 
-          <Link className="button primary" href="/contato">
+          <PublicLink className="button primary" href="/contato">
             {home.ctaButtonLabel}
             <ArrowRight size={17} />
-          </Link>
+          </PublicLink>
         </section>
       </main>
 

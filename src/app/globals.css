@@ -650,7 +650,7 @@ h2 span {
   background:
     radial-gradient(
       circle at 80% 20%,
-      rgba(0, 217, 245, 0.22),
+      rgba(214, 217, 218, 0.22),
       transparent 28%
     ),
     var(--surface);

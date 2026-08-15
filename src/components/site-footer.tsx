@@ -1,7 +1,7 @@
-import Link from "next/link";
 import { Mail, Phone } from "lucide-react";
 
 import { BrandLogo } from "@/components/brand-logo";
+import { PublicLink } from "@/components/navigation/public-link";
 import { PrivacyPreferencesButton } from "@/components/privacy/privacy-preferences-button";
 import { InstagramIcon, LinkedInIcon } from "@/components/social-icons";
 import { getSiteSettings, phoneHref } from "@/lib/site-settings";
@@ -47,16 +47,16 @@ export async function SiteFooter() {
 
         <div>
           <h4>{footer.navigationTitle}</h4>
-          <Link href="/">Início</Link>
-          <Link href="/sobre">Sobre</Link>
-          <Link href="/portfolio">Portfólio</Link>
-          <Link href="/blog">Blog</Link>
+          <PublicLink href="/">Início</PublicLink>
+          <PublicLink href="/sobre">Sobre</PublicLink>
+          <PublicLink href="/portfolio">Portfólio</PublicLink>
+          <PublicLink href="/blog">Blog</PublicLink>
         </div>
 
         <div>
           <h4>{footer.ecosystemTitle}</h4>
-          <Link href="/parceiros">Parceiros</Link>
-          <Link href="/contato">Contato</Link>
+          <PublicLink href="/parceiros">Parceiros</PublicLink>
+          <PublicLink href="/contato">Contato</PublicLink>
 
           {settings.instagram && (
             <a href={settings.instagram} target="_blank" rel="noopener noreferrer">
@@ -75,9 +75,9 @@ export async function SiteFooter() {
 
         <div>
           <h4>{footer.legalTitle}</h4>
-          <Link href="/termos-de-uso">Termos de uso</Link>
-          <Link href="/politica-de-privacidade">Privacidade</Link>
-          <Link href="/politica-de-cookies">Cookies</Link>
+          <PublicLink href="/termos-de-uso">Termos de uso</PublicLink>
+          <PublicLink href="/politica-de-privacidade">Privacidade</PublicLink>
+          <PublicLink href="/politica-de-cookies">Cookies</PublicLink>
           <PrivacyPreferencesButton />
         </div>
       </div>

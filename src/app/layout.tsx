@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { cookies } from "next/headers";
 
 import { ConsentAwareTracking } from "@/components/privacy/consent-aware-tracking";
+import { RouteTransitionProvider } from "@/components/navigation/route-transition-loader";
 import { PrivacyConsent } from "@/components/privacy/privacy-consent";
 import { getSiteSettings } from "@/lib/site-settings";
 
@@ -53,10 +54,11 @@ export default async function RootLayout({
       suppressHydrationWarning
     >
       <body>
-        {children}
-
-        <PrivacyConsent content={privacy} />
-        <ConsentAwareTracking version={privacy.version} />
+        <RouteTransitionProvider>
+          {children}
+          <PrivacyConsent content={privacy} />
+          <ConsentAwareTracking version={privacy.version} />
+        </RouteTransitionProvider>
       </body>
     </html>
   );

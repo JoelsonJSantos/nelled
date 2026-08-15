@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { Menu, Sun, X } from "lucide-react";
 import {
   AnimatePresence,
@@ -14,6 +13,7 @@ import {
 } from "react";
 
 import { BrandLogo } from "@/components/brand-logo";
+import { PublicLink } from "@/components/navigation/public-link";
 import styles from "./site-header.module.css";
 
 const nav = [
@@ -98,9 +98,9 @@ export function SiteHeader() {
 
         <div className="nav-links">
           {nav.map(([label, href]) => (
-            <Link href={href} key={href}>
+            <PublicLink href={href} key={href}>
               {label}
-            </Link>
+            </PublicLink>
           ))}
         </div>
 
@@ -114,12 +114,12 @@ export function SiteHeader() {
             <Sun size={18} />
           </button>
 
-          <Link
+          <PublicLink
             className="quote-link"
             href="/contato"
           >
             Solicitar orçamento
-          </Link>
+          </PublicLink>
 
           <button
             type="button"
@@ -232,24 +232,24 @@ export function SiteHeader() {
                             }
                       }
                     >
-                      <Link
+                      <PublicLink
                         href={href}
                         onClick={closeMenu}
                       >
                         {label}
-                      </Link>
+                      </PublicLink>
                     </motion.div>
                   )
                 )}
               </nav>
 
-              <Link
+              <PublicLink
                 className={styles.cta}
                 href="/contato"
                 onClick={closeMenu}
               >
                 Solicitar orçamento
-              </Link>
+              </PublicLink>
             </motion.section>
           </motion.div>
         )}

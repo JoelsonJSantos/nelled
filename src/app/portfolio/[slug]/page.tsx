@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight, Code2, ExternalLink } from "lucide-react";
 import { ProjectImage } from "@/components/project-image";
+import { PublicLink } from "@/components/navigation/public-link";
 import { ProjectGallery } from "@/components/project-gallery";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
@@ -70,14 +70,14 @@ export default async function Project({ params }: Props) {
             {(project.externalUrl || project.githubUrl) && (
               <div className={styles.actions}>
                 {project.externalUrl && (
-                  <Link href={project.externalUrl} target="_blank" rel="noreferrer" className="button primary">
+                  <PublicLink href={project.externalUrl} target="_blank" rel="noreferrer" className="button primary">
                     Visitar projeto <ExternalLink size={16} />
-                  </Link>
+                  </PublicLink>
                 )}
                 {project.githubUrl && (
-                  <Link href={project.githubUrl} target="_blank" rel="noreferrer" className="button ghost">
+                  <PublicLink href={project.githubUrl} target="_blank" rel="noreferrer" className="button ghost">
                     <Code2 size={16} /> GitHub
-                  </Link>
+                  </PublicLink>
                 )}
               </div>
             )}
@@ -117,16 +117,16 @@ export default async function Project({ params }: Props) {
 
         <nav className={styles.projectNav} aria-label="Navegação entre projetos">
           {navigation.previous ? (
-            <Link href={`/portfolio/${navigation.previous.slug}`}>
+            <PublicLink href={`/portfolio/${navigation.previous.slug}`}>
               <ArrowLeft size={17} />
               <span><small>Projeto anterior</small>{navigation.previous.name}</span>
-            </Link>
+            </PublicLink>
           ) : <span />}
           {navigation.next ? (
-            <Link href={`/portfolio/${navigation.next.slug}`}>
+            <PublicLink href={`/portfolio/${navigation.next.slug}`}>
               <span><small>Próximo projeto</small>{navigation.next.name}</span>
               <ArrowRight size={17} />
-            </Link>
+            </PublicLink>
           ) : <span />}
         </nav>
 
@@ -134,9 +134,9 @@ export default async function Project({ params }: Props) {
           <p className="eyebrow">PRÓXIMO PROJETO</p>
           <h2>Vamos construir algo relevante?</h2>
           <p>Conte seu desafio e descubra como a Nelled Studio pode transformar sua ideia em um produto digital.</p>
-          <Link href="/contato" className="button primary">
+          <PublicLink href="/contato" className="button primary">
             Fale com a Nelled Studio <ArrowRight size={17} />
-          </Link>
+          </PublicLink>
         </section>
       </main>
       <SiteFooter />

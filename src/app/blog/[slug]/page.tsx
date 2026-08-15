@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { SiteFooter } from "@/components/site-footer";
+import { PublicLink } from "@/components/navigation/public-link";
 import { SiteHeader } from "@/components/site-header";
 import { contentMetadata } from "@/lib/metadata";
 import { getPublishedPost } from "@/lib/public-content";
@@ -183,12 +183,12 @@ const coverAlt = content.coverAlt ?? "";
             desafio em produto digital.
           </p>
 
-          <Link
+          <PublicLink
             href="/contato"
             className="button primary"
           >
             Fale com a Nelled Studio
-          </Link>
+          </PublicLink>
         </section>
       </main>
 
