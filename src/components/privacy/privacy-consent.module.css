@@ -1,26 +1,28 @@
 .banner {
   position: fixed;
-  right: 24px;
-  bottom: 24px;
+  left: 50%;
+  bottom: 18px;
   z-index: 9000;
 
-  width: min(760px, calc(100vw - 48px));
+  width: min(590px, calc(100vw - 32px));
 
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-columns: auto minmax(0, 1fr);
   align-items: start;
-  gap: 16px;
+  gap: 12px 13px;
 
-  padding: 18px;
+  padding: 13px 14px;
 
-  border: 1px solid color-mix(in srgb, var(--cyan) 24%, var(--line));
-  border-radius: 14px;
+  border: 1px solid color-mix(in srgb, var(--cyan) 22%, var(--line));
+  border-radius: 12px;
 
   background: color-mix(in srgb, var(--surface) 96%, transparent);
   color: var(--text);
 
-  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.38);
-  backdrop-filter: blur(18px);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.34);
+  backdrop-filter: blur(16px);
+
+  transform: translateX(-50%);
 }
 
 .bannerIcon,
@@ -33,9 +35,14 @@
 }
 
 .bannerIcon {
-  width: 42px;
-  height: 42px;
-  border-radius: 10px;
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+}
+
+.bannerIcon svg {
+  width: 18px;
+  height: 18px;
 }
 
 .bannerCopy {
@@ -44,33 +51,34 @@
 
 .bannerCopy strong {
   display: block;
-  margin-bottom: 6px;
-  font-size: 15px;
+  margin-bottom: 4px;
+  font-size: 13px;
+  line-height: 1.25;
 }
 
 .bannerCopy p {
-  max-width: 560px;
+  max-width: 500px;
   margin: 0;
   color: var(--muted);
-  font-size: 12px;
-  line-height: 1.6;
+  font-size: 10.5px;
+  line-height: 1.48;
 }
 
 .legalLinks,
 .modalLegalLinks {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 10px;
 }
 
 .legalLinks {
-  margin-top: 10px;
+  margin-top: 7px;
 }
 
 .legalLinks a,
 .modalLegalLinks a {
   color: var(--cyan);
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 700;
 }
 
@@ -78,14 +86,13 @@
 .modalActions {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 7px;
 }
 
 .bannerActions {
-  align-self: center;
-  flex-wrap: wrap;
+  grid-column: 2;
   justify-content: flex-end;
-  max-width: 310px;
+  flex-wrap: wrap;
 }
 
 .primaryButton,
@@ -99,14 +106,15 @@
 
 .primaryButton,
 .secondaryButton {
-  min-height: 38px;
+  min-height: 32px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0 13px;
-  border-radius: 8px;
-  font-size: 11px;
+  padding: 0 11px;
+  border-radius: 7px;
+  font-size: 10px;
   font-weight: 800;
+  white-space: nowrap;
 }
 
 .primaryButton {
@@ -362,24 +370,34 @@
   border: 0;
 }
 
-@media (max-width: 760px) {
+@media (max-width: 640px) {
   .banner {
-    right: 14px;
-    bottom: 14px;
-    width: calc(100vw - 28px);
-    grid-template-columns: auto minmax(0, 1fr);
-    padding: 15px;
+    bottom: 12px;
+    width: calc(100vw - 24px);
+    grid-template-columns: 1fr;
+    gap: 9px;
+    padding: 12px;
+  }
+
+  .bannerIcon {
+    display: none;
+  }
+
+  .bannerCopy strong {
+    font-size: 12.5px;
+  }
+
+  .bannerCopy p {
+    font-size: 10px;
   }
 
   .bannerActions {
-    grid-column: 1 / -1;
-    width: 100%;
-    max-width: none;
+    grid-column: auto;
     justify-content: stretch;
   }
 
   .bannerActions button {
-    flex: 1 1 140px;
+    flex: 1 1 120px;
   }
 
   .modalBackdrop {
@@ -411,17 +429,18 @@
   }
 }
 
-@media (max-width: 480px) {
-  .bannerIcon {
-    display: none;
-  }
-
-  .banner {
-    grid-template-columns: 1fr;
+@media (max-width: 420px) {
+  .legalLinks {
+    gap: 8px;
   }
 
   .bannerActions {
-    grid-column: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .bannerActions .primaryButton {
+    grid-column: 1 / -1;
   }
 
   .categoryCard {
