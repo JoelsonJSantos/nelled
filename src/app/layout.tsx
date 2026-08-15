@@ -24,6 +24,10 @@ export async function generateMetadata(): Promise<Metadata> {
       description: settings.seoDescription,
       url: settings.domain,
     },
+    // Adicione a verificação do Google aqui:
+    verification: {
+      google: "BqOLZqFnMIWWYkmZd2wr5SZAeMhWecWw9c1EGf7BM7s", 
+    },
   };
 }
 
