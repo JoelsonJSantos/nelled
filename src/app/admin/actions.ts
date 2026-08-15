@@ -143,6 +143,66 @@ const partnerSchema = z.object({
     .min(0),
 });
 
+const siteSettingsSchema = z.object({
+  companyName: z
+    .string()
+    .trim()
+    .min(2, "Informe o nome da empresa.")
+    .max(120),
+
+  email: z
+    .string()
+    .trim()
+    .email("Informe um e-mail válido.")
+    .optional()
+    .or(z.literal("")),
+
+  phone: z
+    .string()
+    .trim()
+    .max(30)
+    .optional(),
+
+  instagram: z
+    .string()
+    .trim()
+    .url("Informe uma URL válida para o Instagram.")
+    .optional()
+    .or(z.literal("")),
+
+  linkedin: z
+    .string()
+    .trim()
+    .url("Informe uma URL válida para o LinkedIn.")
+    .optional()
+    .or(z.literal("")),
+
+  domain: z
+    .string()
+    .trim()
+    .url("Informe uma URL válida para o domínio.")
+    .optional()
+    .or(z.literal("")),
+
+  seoTitle: z
+    .string()
+    .trim()
+    .max(
+      180,
+      "O título SEO deve ter no máximo 180 caracteres.",
+    )
+    .optional(),
+
+  seoDescription: z
+    .string()
+    .trim()
+    .max(
+      320,
+      "A descrição SEO deve ter no máximo 320 caracteres.",
+    )
+    .optional(),
+});
+
 function read(
   formData: FormData,
   key: string,
@@ -156,9 +216,7 @@ function checked(
   formData: FormData,
   key: string,
 ) {
-  return (
-    formData.get(key) === "on"
-  );
+  return formData.get(key) === "on";
 }
 
 function errorMessage(
@@ -254,17 +312,13 @@ export async function savePost(
   }
 
   let editorJson:
-    | Record<
-        string,
-        unknown
-      >
+    | Record<string, unknown>
     | null = null;
 
   try {
-    const json =
-      JSON.parse(
-        parsed.data.contentJson,
-      );
+    const json = JSON.parse(
+      parsed.data.contentJson,
+    );
 
     if (
       !json ||
@@ -291,10 +345,9 @@ export async function savePost(
   if (
     parsed.data.publishedAt
   ) {
-    const date =
-      new Date(
-        parsed.data.publishedAt,
-      );
+    const date = new Date(
+      parsed.data.publishedAt,
+    );
 
     if (
       Number.isNaN(
@@ -516,18 +569,15 @@ export async function savePartner(
 
     content: {
       body:
-        parsed.data
-          .content,
+        parsed.data.content,
     },
 
     website_url:
-      parsed.data
-        .websiteUrl ||
+      parsed.data.websiteUrl ||
       null,
 
     affiliate_url:
-      parsed.data
-        .affiliateUrl ||
+      parsed.data.affiliateUrl ||
       null,
 
     coupon:
@@ -574,6 +624,159 @@ export async function savePartner(
 
   redirect(
     "/admin/parceiros",
+  );
+}
+
+export async function saveSiteSettings(
+  formData: FormData,
+) {
+  const parsed =
+    siteSettingsSchema.safeParse({
+      companyName: read(
+        formData,
+        "companyName",
+      ),
+
+      email: read(
+        formData,
+        "email",
+      ),
+
+      phone: read(
+        formData,
+        "phone",
+      ),
+
+      instagram: read(
+        formData,
+        "instagram",
+      ),
+
+      linkedin: read(
+        formData,
+        "linkedin",
+      ),
+
+      domain: read(
+        formData,
+        "domain",
+      ),
+
+      seoTitle: read(
+        formData,
+        "seoTitle",
+      ),
+
+      seoDescription: read(
+        formData,
+        "seoDescription",
+      ),
+    });
+
+  if (!parsed.success) {
+    throw new Error(
+      parsed.error.issues[0]
+        ?.message ??
+        "Configurações inválidas.",
+    );
+  }
+
+  const supabase =
+    await requireAdmin();
+
+  const {
+    data: current,
+    error: currentError,
+  } = await supabase
+    .from("site_settings")
+    .select("settings")
+    .eq("id", 1)
+    .maybeSingle();
+
+  if (currentError) {
+    throw new Error(
+      "Não foi possível carregar as configurações atuais.",
+    );
+  }
+
+  const currentSettings =
+    current?.settings &&
+    typeof current.settings ===
+      "object" &&
+    !Array.isArray(
+      current.settings,
+    )
+      ? (current.settings as Record<
+          string,
+          unknown
+        >)
+      : {};
+
+  const settings = {
+    ...currentSettings,
+
+    email:
+      parsed.data.email || "",
+
+    phone:
+      parsed.data.phone || "",
+
+    instagram:
+      parsed.data.instagram || "",
+
+    linkedin:
+      parsed.data.linkedin || "",
+
+    domain:
+      parsed.data.domain || "",
+
+    seo_title:
+      parsed.data.seoTitle || "",
+
+    seo_description:
+      parsed.data.seoDescription ||
+      "",
+  };
+
+  const { error } =
+    await supabase
+      .from("site_settings")
+      .upsert(
+        {
+          id: 1,
+
+          company_name:
+            parsed.data.companyName,
+
+          settings,
+
+          updated_at:
+            new Date().toISOString(),
+        },
+        {
+          onConflict: "id",
+        },
+      );
+
+  if (error) {
+    throw new Error(
+      errorMessage(error),
+    );
+  }
+
+  revalidatePath("/");
+  revalidatePath("/sobre");
+  revalidatePath("/contato");
+  revalidatePath("/portfolio");
+  revalidatePath("/blog");
+  revalidatePath("/parceiros");
+
+  revalidatePath(
+    "/admin/configuracoes",
+  );
+
+  redirect(
+    "/admin/configuracoes?saved=1",
   );
 }
 

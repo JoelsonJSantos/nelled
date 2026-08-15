@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { Resend } from "resend";
 import { z } from "zod";
 
+import { getSiteSettings } from "@/lib/site-settings";
 import { createClient } from "@/lib/supabase/server";
 
 export type ContactFormState = {
@@ -241,8 +242,13 @@ export async function submitContact(
   const resendKey =
     process.env.RESEND_API_KEY;
 
+  const siteSettings =
+    await getSiteSettings();
+
   const recipient =
-    process.env.CONTACT_TO_EMAIL;
+    process.env.CONTACT_TO_EMAIL?.trim() ||
+    siteSettings.email ||
+    undefined;
 
   let emailed = false;
 
@@ -275,10 +281,10 @@ export async function submitContact(
         to: recipient,
         replyTo: contact.email,
 
-        subject: `Nova solicitação de ${safeName}`,
+        subject: `Nova solicitação para ${siteSettings.companyName} — ${safeName}`,
 
         html: `
-          <h1>Nova solicitação pelo site</h1>
+          <h1>Nova solicitação pelo site da ${escapeHtml(siteSettings.companyName)}</h1>
 
           <p>
             <strong>Nome:</strong>
@@ -318,7 +324,7 @@ export async function submitContact(
         `,
 
         text: [
-          "Nova solicitação pelo site",
+          `Nova solicitação pelo site da ${siteSettings.companyName}`,
           `Nome: ${contact.name}`,
           `Empresa: ${
             contact.company ??

@@ -515,3 +515,424 @@
     flex-direction: column;
   }
 }
+
+.settingsForm {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.settingsSuccess {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  width: fit-content;
+
+  margin-bottom: 20px;
+  padding: 10px 13px;
+
+  border: 1px solid
+    color-mix(
+      in srgb,
+      #22c55e 30%,
+      var(--line)
+    );
+
+  border-radius: 9px;
+
+  background:
+    color-mix(
+      in srgb,
+      #22c55e 7%,
+      transparent
+    );
+
+  color: #22c55e;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.settingsField input:not([readonly]),
+.settingsField textarea:not([readonly]) {
+  cursor: text;
+}
+
+.settingsSaveBar {
+  position: sticky;
+  bottom: 18px;
+  z-index: 5;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+
+  padding: 14px 16px;
+
+  border: 1px solid var(--line);
+  border-radius: 12px;
+
+  background:
+    color-mix(
+      in srgb,
+      var(--surface) 94%,
+      transparent
+    );
+
+  backdrop-filter: blur(14px);
+
+  box-shadow:
+    0 16px 44px rgba(0, 0, 0, 0.18);
+}
+
+.settingsSaveBar > div {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.settingsSaveBar strong {
+  color: var(--text);
+  font-size: 13px;
+}
+
+.settingsSaveBar span {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.settingsSaveButton {
+  min-height: 40px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  padding: 0 16px;
+
+  border: 1px solid var(--cyan);
+  border-radius: 8px;
+
+  background: var(--cyan);
+  color: #021018;
+
+  font: inherit;
+  font-size: 12px;
+  font-weight: 800;
+
+  cursor: pointer;
+
+  transition:
+    transform 180ms ease,
+    filter 180ms ease;
+}
+
+.settingsSaveButton:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.05);
+}
+
+.settingsSaveButton:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 3px;
+}
+
+.analyticsStatus {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 14px;
+
+  border: 1px solid var(--line);
+  border-radius: 10px;
+
+  background: var(--bg);
+}
+
+.analyticsIcon {
+  width: 38px;
+  height: 38px;
+
+  display: grid;
+  place-items: center;
+
+  flex: none;
+
+  border-radius: 9px;
+
+  background:
+    color-mix(
+      in srgb,
+      var(--cyan) 12%,
+      transparent
+    );
+
+  color: var(--cyan);
+}
+
+.analyticsStatus > div {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.analyticsStatus strong {
+  color: var(--text);
+  font-size: 13px;
+}
+
+.analyticsStatus > div > span {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.analyticsState {
+  width: fit-content;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+
+  color: #22c55e;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.analyticsDetails {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.analyticsDetails > div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  padding: 10px;
+
+  border: 1px solid var(--line);
+  border-radius: 8px;
+
+  background: var(--bg);
+}
+
+.analyticsDetails span {
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.analyticsDetails strong {
+  color: var(--text);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.settingsExternalLink {
+  width: fit-content;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  padding: 9px 12px;
+
+  border: 1px solid var(--line);
+  border-radius: 8px;
+
+  color: var(--text);
+
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+
+  transition:
+    border-color 180ms ease,
+    color 180ms ease,
+    background-color 180ms ease;
+}
+
+.settingsExternalLink:hover {
+  border-color:
+    color-mix(
+      in srgb,
+      var(--cyan) 45%,
+      var(--line)
+    );
+
+  background:
+    color-mix(
+      in srgb,
+      var(--cyan) 5%,
+      transparent
+    );
+
+  color: var(--cyan);
+}
+
+@media (max-width: 720px) {
+  .settingsSaveBar {
+    position: static;
+
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .settingsSaveButton,
+  .settingsExternalLink {
+    width: 100%;
+  }
+
+  .analyticsDetails {
+    grid-template-columns: 1fr;
+  }
+}
+
+.settingsToastOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+
+  display: grid;
+  place-items: center;
+
+  padding: 24px;
+
+  pointer-events: none;
+}
+
+.settingsToast {
+  min-width: 300px;
+  max-width: 420px;
+
+  display: flex;
+  align-items: center;
+  gap: 13px;
+
+  padding: 16px 18px;
+
+  border: 1px solid
+    rgba(34, 197, 94, 0.38);
+
+  border-radius: 12px;
+
+  background:
+    color-mix(
+      in srgb,
+      var(--surface) 94%,
+      #22c55e 6%
+    );
+
+  color: var(--text);
+
+  box-shadow:
+    0 24px 70px
+    rgba(0, 0, 0, 0.34);
+
+  backdrop-filter: blur(16px);
+
+  animation:
+    settingsToastEnter
+    260ms ease both;
+}
+
+.settingsToastLeaving {
+  animation:
+    settingsToastLeave
+    300ms ease both;
+}
+
+.settingsToastIcon {
+  width: 40px;
+  height: 40px;
+
+  display: grid;
+  place-items: center;
+
+  flex: none;
+
+  border-radius: 10px;
+
+  background:
+    rgba(34, 197, 94, 0.14);
+
+  color: #22c55e;
+}
+
+.settingsToast > div {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.settingsToast strong {
+  color: #86efac;
+
+  font-size: 14px;
+  font-weight: 750;
+}
+
+.settingsToast span {
+  color: var(--muted);
+
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+@keyframes settingsToastEnter {
+  from {
+    opacity: 0;
+    transform:
+      translateY(10px)
+      scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform:
+      translateY(0)
+      scale(1);
+  }
+}
+
+@keyframes settingsToastLeave {
+  from {
+    opacity: 1;
+    transform:
+      translateY(0)
+      scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform:
+      translateY(-8px)
+      scale(0.98);
+  }
+}
+
+@media (
+  prefers-reduced-motion: reduce
+) {
+  .settingsToast,
+  .settingsToastLeaving {
+    animation-duration: 0ms;
+  }
+}
+
+@media (max-width: 520px) {
+  .settingsToastOverlay {
+    padding: 18px;
+  }
+
+  .settingsToast {
+    width: 100%;
+    min-width: 0;
+  }
+}

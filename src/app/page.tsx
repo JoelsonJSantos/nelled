@@ -6,12 +6,25 @@ import { ProjectImage } from "@/components/project-image";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { getFeaturedProjects } from "@/lib/public-content";
+import { getSiteSettings } from "@/lib/site-settings";
 import portfolioStyles from "./home-portfolio.module.css";
 
-export const metadata: Metadata = {
-  title: { absolute: "Nelled Studio - Criando soluções digitais" },
-  description: "A Nelled Studio cria sites, sistemas, plataformas e produtos digitais que transformam ideias em resultados.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await getSiteSettings();
+
+  return {
+    title: { absolute: settings.seoTitle },
+    description: settings.seoDescription,
+    alternates: { canonical: settings.domain },
+    openGraph: {
+      title: settings.seoTitle,
+      description: settings.seoDescription,
+      url: settings.domain,
+      siteName: settings.companyName,
+      type: "website",
+    },
+  };
+}
 
 const services = [
   [Code2, "Desenvolvimento Web", "Sites institucionais, portais, aplicações e experiências web modernas."],

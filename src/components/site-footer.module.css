@@ -1,1 +1,39 @@
 @media (max-width:720px){.footerGrid{grid-template-columns:repeat(3,minmax(0,1fr));gap:22px 13px}.footerGrid>div:first-child{grid-column:1/-1}.footerGrid>div:first-child p{margin:12px 0 0;max-width:260px}.footerGrid h4{font-size:9px;letter-spacing:.8px;margin:0 0 10px}.footerGrid a{margin:8px 0;font-size:11px;line-height:1.35}.footerBottom{gap:11px;margin-top:30px;padding-top:17px;font-size:11px}.footerBottom a{font-size:11px}}
+
+.contactLinks {
+  display: grid;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.contactLinks a,
+.footerGrid > div:nth-child(3) > a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.contactLinks a {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.contactLinks a:hover {
+  color: var(--cyan);
+}
+
+.contactLinks span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width:720px) {
+  .contactLinks {
+    margin-top: 14px;
+  }
+
+  .contactLinks a {
+    font-size: 11px;
+  }
+}
