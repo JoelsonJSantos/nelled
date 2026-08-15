@@ -2,21 +2,29 @@ import Link from "next/link";
 import { Mail, Phone } from "lucide-react";
 
 import { BrandLogo } from "@/components/brand-logo";
+import { PrivacyPreferencesButton } from "@/components/privacy/privacy-preferences-button";
 import { InstagramIcon, LinkedInIcon } from "@/components/social-icons";
 import { getSiteSettings, phoneHref } from "@/lib/site-settings";
 
 import styles from "./site-footer.module.css";
 
+function footerCopyright(template: string, companyName: string) {
+  return template
+    .replaceAll("{year}", String(new Date().getFullYear()))
+    .replaceAll("{company}", companyName);
+}
+
 export async function SiteFooter() {
   const settings = await getSiteSettings();
   const telephone = phoneHref(settings.phone);
+  const footer = settings.pages.footer;
 
   return (
     <footer>
       <div className={`footer-grid ${styles.footerGrid}`}>
         <div>
           <BrandLogo compact />
-          <p>Produtos digitais pensados para criar movimento.</p>
+          <p>{footer.tagline}</p>
 
           {(settings.email || settings.phone) && (
             <div className={styles.contactLinks}>
@@ -38,7 +46,7 @@ export async function SiteFooter() {
         </div>
 
         <div>
-          <h4>Navegação</h4>
+          <h4>{footer.navigationTitle}</h4>
           <Link href="/">Início</Link>
           <Link href="/sobre">Sobre</Link>
           <Link href="/portfolio">Portfólio</Link>
@@ -46,7 +54,7 @@ export async function SiteFooter() {
         </div>
 
         <div>
-          <h4>Ecossistema</h4>
+          <h4>{footer.ecosystemTitle}</h4>
           <Link href="/parceiros">Parceiros</Link>
           <Link href="/contato">Contato</Link>
 
@@ -66,15 +74,16 @@ export async function SiteFooter() {
         </div>
 
         <div>
-          <h4>Legal</h4>
+          <h4>{footer.legalTitle}</h4>
           <Link href="/termos-de-uso">Termos de uso</Link>
           <Link href="/politica-de-privacidade">Privacidade</Link>
           <Link href="/politica-de-cookies">Cookies</Link>
+          <PrivacyPreferencesButton />
         </div>
       </div>
 
       <div className={`footer-bottom ${styles.footerBottom}`}>
-        © {new Date().getFullYear()} {settings.companyName}. Todos os direitos reservados.
+        {footerCopyright(footer.copyright, settings.companyName)}
       </div>
     </footer>
   );

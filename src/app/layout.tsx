@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { cookies } from "next/headers";
-import { Analytics } from "@vercel/analytics/next";
-import { SpeedInsights } from "@vercel/speed-insights/next"
 
+import { ConsentAwareTracking } from "@/components/privacy/consent-aware-tracking";
+import { PrivacyConsent } from "@/components/privacy/privacy-consent";
 import { getSiteSettings } from "@/lib/site-settings";
 
 import "./globals.css";
@@ -24,9 +24,8 @@ export async function generateMetadata(): Promise<Metadata> {
       description: settings.seoDescription,
       url: settings.domain,
     },
-    // Adicione a verificação do Google aqui:
     verification: {
-      google: "BqOLZqFnMIWWYkmZd2wr5SZAeMhWecWw9c1EGf7BM7s", 
+      google: "BqOLZqFnMIWWYkmZd2wr5SZAeMhWecWw9c1EGf7BM7s",
     },
   };
 }
@@ -36,9 +35,14 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const cookieStore = await cookies();
+  const [cookieStore, settings] = await Promise.all([
+    cookies(),
+    getSiteSettings(),
+  ]);
+
   const savedTheme = cookieStore.get("theme")?.value;
   const theme = savedTheme === "light" ? "light" : "dark";
+  const privacy = settings.pages.privacyBanner;
 
   return (
     <html
@@ -49,8 +53,9 @@ export default async function RootLayout({
     >
       <body>
         {children}
-        <Analytics />
-        <SpeedInsights />
+
+        <PrivacyConsent content={privacy} />
+        <ConsentAwareTracking version={privacy.version} />
       </body>
     </html>
   );

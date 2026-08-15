@@ -3,115 +3,176 @@ import Link from "next/link";
 import { ArrowRight, Mail, Phone } from "lucide-react";
 
 import { ContactForm } from "@/components/contact-form";
-import { InstagramIcon, LinkedInIcon } from "@/components/social-icons";
 import { PageHero } from "@/components/page-hero";
+import { PrivacyPreferencesButton } from "@/components/privacy/privacy-preferences-button";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
-import { getSiteSettings, phoneHref } from "@/lib/site-settings";
+import { InstagramIcon, LinkedInIcon } from "@/components/social-icons";
+import legalStyles from "./legal-page.module.css";
 
-type Props = { params: Promise<{ slug: string[] }> };
+import {
+  getSiteSettings,
+  phoneHref,
+  replaceSiteTokens,
+  type LegalPageContent,
+} from "@/lib/site-settings";
 
-const routeMetadata: Record<string, { title: string; description: string }> = {
-  sobre: {
-    title: "Sobre",
-    description:
-      "Conheça a Nelled Studio, sua forma de trabalhar e o propósito que orienta cada solução digital.",
-  },
-  contato: {
-    title: "Contato",
-    description:
-      "Converse com a Nelled Studio sobre seu próximo site, sistema, plataforma ou produto digital.",
-  },
-  "termos-de-uso": {
-    title: "Termos de Uso",
-    description:
-      "Consulte os termos e condições de uso do site e dos serviços digitais da Nelled Studio.",
-  },
-  "politica-de-privacidade": {
-    title: "Política de Privacidade",
-    description:
-      "Entenda como a Nelled Studio coleta, utiliza e protege os dados pessoais dos visitantes do site.",
-  },
-  "politica-de-cookies": {
-    title: "Política de Cookies",
-    description:
-      "Saiba como a Nelled Studio utiliza cookies e tecnologias semelhantes em seu site.",
-  },
+type Props = {
+  params: Promise<{
+    slug: string[];
+  }>;
 };
+
+type LegalKey =
+  | "termos-de-uso"
+  | "politica-de-privacidade"
+  | "politica-de-cookies";
+
+function sanitizeHtml(value: string) {
+  return value
+    .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, "")
+    .replace(/<iframe\b[^>]*>[\s\S]*?<\/iframe>/gi, "")
+    .replace(/\son\w+\s*=\s*(["']).*?\1/gi, "")
+    .replace(
+      /\s(href|src)\s*=\s*(["'])\s*javascript:[\s\S]*?\2/gi,
+      ' $1="#"',
+    );
+}
+
+function isLegalKey(value: string): value is LegalKey {
+  return [
+    "termos-de-uso",
+    "politica-de-privacidade",
+    "politica-de-cookies",
+  ].includes(value);
+}
+
+function getLegalPage(
+  key: LegalKey,
+  pages: Awaited<ReturnType<typeof getSiteSettings>>["pages"],
+): LegalPageContent {
+  if (key === "termos-de-uso") return pages.termosDeUso;
+  if (key === "politica-de-privacidade") return pages.politicaDePrivacidade;
+  return pages.politicaDeCookies;
+}
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const [{ slug }, settings] = await Promise.all([params, getSiteSettings()]);
-  const pageMetadata = routeMetadata[slug.join("/")];
+  const key = slug.join("/");
 
-  if (pageMetadata) {
+  if (isLegalKey(key)) {
+    const page = getLegalPage(key, settings.pages);
+
     return {
-      title: pageMetadata.title,
-      description: pageMetadata.description.replaceAll(
-        "Nelled Studio",
-        settings.companyName,
-      ),
+      title: replaceSiteTokens(page.seoTitle, settings),
+      description: replaceSiteTokens(page.seoDescription, settings),
+      alternates: {
+        canonical: `${settings.domain}/${key}`,
+      },
+      openGraph: {
+        title: replaceSiteTokens(page.seoTitle, settings),
+        description: replaceSiteTokens(page.seoDescription, settings),
+        url: `${settings.domain}/${key}`,
+        siteName: settings.companyName,
+        type: "website",
+      },
+    };
+  }
+
+  if (key === "sobre") {
+    return {
+      title: "Sobre",
+      description:
+        "Conheça a Nelled Studio, sua forma de trabalhar e o propósito que orienta cada solução digital.".replaceAll(
+          "Nelled Studio",
+          settings.companyName,
+        ),
+    };
+  }
+
+  if (key === "contato") {
+    return {
+      title: "Contato",
+      description:
+        "Converse com a Nelled Studio sobre seu próximo site, sistema, plataforma ou produto digital.".replaceAll(
+          "Nelled Studio",
+          settings.companyName,
+        ),
     };
   }
 
   return {
     title: "Página em construção",
     description: `Conteúdo institucional da ${settings.companyName} em preparação.`,
-    robots: { index: false, follow: false },
+    robots: {
+      index: false,
+      follow: false,
+    },
   };
 }
 
-const content: Record<string, { eyebrow: string; title: string; copy: string }> = {
-  sobre: {
-    eyebrow: "NOSSA ESSÊNCIA",
-    title: "Tecnologia que avança com clareza.",
-    copy: "Somos um estúdio digital dedicado a transformar desafios de negócio em produtos digitais úteis, sofisticados e sustentáveis.",
-  },
-  portfolio: {
-    eyebrow: "TRABALHOS",
-    title: "Projetos que merecem ser bem contados.",
-    copy: "Nosso portfólio será formado exclusivamente por cases reais. Em breve, a Nelled Field fará parte desta jornada.",
-  },
-  blog: {
-    eyebrow: "CONHECIMENTO",
-    title: "Ideias para produtos digitais melhores.",
-    copy: "Artigos, aprendizados e perspectivas sobre tecnologia, design e negócios digitais serão publicados aqui.",
-  },
-  parceiros: {
-    eyebrow: "ECOSSISTEMA",
-    title: "Parcerias com intenção.",
-    copy: "Recomendamos apenas ferramentas e empresas que possam gerar valor concreto para projetos digitais.",
-  },
-  contato: {
-    eyebrow: "NOVOS PROJETOS",
-    title: "Vamos criar algo juntos?",
-    copy: "Conte um pouco sobre a sua ideia. Nossa equipe retornará pelo canal informado.",
-  },
-};
-
 export default async function Page({ params }: Props) {
   const [{ slug }, settings] = await Promise.all([params, getSiteSettings()]);
-  const key = slug[0];
-  const pageContent = content[key] ?? {
-    eyebrow: "NELLED STUDIO",
-    title: "Página em construção.",
-    copy: "Este conteúdo será administrado pelo CMS da Nelled Studio.",
-  };
+  const key = slug[0] ?? "";
+  const isAbout = key === "sobre";
   const isContact = key === "contato";
+  const isLegal = isLegalKey(key);
+
   const telephone = phoneHref(settings.phone);
   const hasDirectContact = Boolean(
     settings.email || settings.phone || settings.instagram || settings.linkedin,
   );
 
+  const pageContent = isAbout
+    ? {
+        eyebrow: settings.pages.sobre.eyebrow,
+        title: settings.pages.sobre.title,
+        copy: settings.pages.sobre.description,
+      }
+    : isContact
+      ? {
+          eyebrow: settings.pages.contato.eyebrow,
+          title: settings.pages.contato.title,
+          copy: settings.pages.contato.description,
+        }
+      : isLegal
+        ? (() => {
+            const page = getLegalPage(key, settings.pages);
+            return {
+              eyebrow: replaceSiteTokens(page.eyebrow, settings),
+              title: replaceSiteTokens(page.title, settings),
+              copy: replaceSiteTokens(page.description, settings),
+            };
+          })()
+        : {
+            eyebrow: "NELLED STUDIO",
+            title: "Página em construção.",
+            copy: "Este conteúdo será administrado pelo CMS da Nelled Studio.",
+          };
+
+  const aboutParagraphs = settings.pages.sobre.body
+    .split(/\n\s*\n/)
+    .map((paragraph) => paragraph.trim())
+    .filter(Boolean);
+
+  const directTitle =
+    settings.pages.contato.directTitle || `Fale com a ${settings.companyName}`;
+
+  const legalPage = isLegal ? getLegalPage(key, settings.pages) : null;
+  const legalHtml = legalPage
+    ? sanitizeHtml(replaceSiteTokens(legalPage.html, settings))
+    : "";
+
   return (
     <>
       <SiteHeader />
 
-      <main className="inner-page">
+      <main className={`inner-page ${isLegal ? legalStyles.page : ""}`}>
         <PageHero
           eyebrow={pageContent.eyebrow}
           title={pageContent.title}
           description={pageContent.copy}
-          narrow={isContact}
+          narrow={isContact || isLegal}
         />
 
         {isContact ? (
@@ -120,11 +181,9 @@ export default async function Page({ params }: Props) {
 
             <aside className="contact-info-card" aria-label="Canais de contato">
               <div>
-                <p className="eyebrow">CONTATO DIRETO</p>
-                <h2>Fale com a {settings.companyName}</h2>
-                <p>
-                  Prefere conversar por outro canal? Use um dos contatos oficiais abaixo.
-                </p>
+                <p className="eyebrow">{settings.pages.contato.directEyebrow}</p>
+                <h2>{directTitle}</h2>
+                <p>{settings.pages.contato.directDescription}</p>
               </div>
 
               {hasDirectContact ? (
@@ -179,19 +238,48 @@ export default async function Page({ params }: Props) {
                 </div>
               ) : (
                 <p className="contact-info-empty">
-                  Os canais diretos serão exibidos aqui assim que forem configurados no CMS.
+                  Os canais diretos serão exibidos aqui assim que forem configurados no
+                  CMS.
                 </p>
               )}
             </aside>
+          </div>
+        ) : isAbout ? (
+          <div className="empty-panel page-panel">
+            <div className="empty-symbol">NS</div>
+            <div>
+              <h3>{settings.pages.sobre.bodyTitle}</h3>
+
+              {aboutParagraphs.map((paragraph, index) => (
+                <p key={`${index}-${paragraph.slice(0, 24)}`}>{paragraph}</p>
+              ))}
+            </div>
+          </div>
+        ) : isLegal ? (
+          <div className={legalStyles.shell}>
+            <article
+              className={legalStyles.content}
+              dangerouslySetInnerHTML={{
+                __html: legalHtml,
+              }}
+            />
+
+            {(key === "politica-de-privacidade" ||
+              key === "politica-de-cookies") && (
+              <div className={legalStyles.preferences}>
+                <PrivacyPreferencesButton
+                  variant="inline"
+                  label="Gerenciar preferências de privacidade"
+                />
+              </div>
+            )}
           </div>
         ) : (
           <div className="empty-panel page-panel">
             <div className="empty-symbol">NS</div>
             <div>
               <h3>Conteúdo gerenciado pelo CMS</h3>
-              <p>
-                Esta área está preparada para receber {key === "portfolio" ? "projetos" : "conteúdos"} publicados no painel administrativo.
-              </p>
+              <p>Esta página está preparada para receber conteúdo institucional.</p>
 
               {key === "portfolio" && (
                 <Link href="/contato" className="text-link">

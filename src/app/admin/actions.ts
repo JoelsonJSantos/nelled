@@ -203,6 +203,117 @@ const siteSettingsSchema = z.object({
     .optional(),
 });
 
+
+const pageKeySchema = z.enum([
+  "home",
+  "sobre",
+  "contato",
+  "footer",
+  "termos-de-uso",
+  "politica-de-privacidade",
+  "politica-de-cookies",
+  "privacy-banner",
+]);
+
+const pageText = z
+  .string()
+  .trim()
+  .min(1, "Preencha todos os campos obrigatórios.")
+  .max(500);
+
+const pageLongText = z
+  .string()
+  .trim()
+  .min(1, "Preencha todos os campos obrigatórios.")
+  .max(5000);
+
+const homePageSchema = z.object({
+  heroEyebrow: pageText,
+  heroTitle: pageText,
+  heroAccent: pageText,
+  heroDescription: pageText,
+  heroSecondary: pageText,
+  primaryCtaLabel: pageText,
+  secondaryCtaLabel: pageText,
+  servicesEyebrow: pageText,
+  servicesTitle: pageText,
+  portfolioEyebrow: pageText,
+  portfolioTitle: pageText,
+  portfolioLinkLabel: pageText,
+  ctaEyebrow: pageText,
+  ctaTitle: pageText,
+  ctaDescription: pageText,
+  ctaButtonLabel: pageText,
+});
+
+const aboutPageSchema = z.object({
+  eyebrow: pageText,
+  title: pageText,
+  description: pageText,
+  bodyTitle: pageText,
+  body: pageLongText,
+});
+
+const contactPageSchema = z.object({
+  eyebrow: pageText,
+  title: pageText,
+  description: pageText,
+  directEyebrow: pageText,
+  directTitle: z.string().trim().max(180).optional(),
+  directDescription: pageText,
+});
+
+const footerPageSchema = z.object({
+  tagline: pageText,
+  navigationTitle: pageText,
+  ecosystemTitle: pageText,
+  legalTitle: pageText,
+  copyright: pageText,
+});
+
+const legalPageSchema = z.object({
+  eyebrow: pageText,
+  title: pageText,
+  description: pageText,
+  html: z
+    .string()
+    .trim()
+    .min(10, "Escreva o conteúdo da página.")
+    .max(120000, "O conteúdo da página está muito grande."),
+  seoTitle: z
+    .string()
+    .trim()
+    .min(2, "Informe o título SEO.")
+    .max(180),
+  seoDescription: z
+    .string()
+    .trim()
+    .min(10, "Informe a descrição SEO.")
+    .max(320),
+});
+
+const privacyBannerSchema = z.object({
+  version: z
+    .string()
+    .trim()
+    .min(1, "Informe a versão do consentimento.")
+    .max(30),
+  title: pageText,
+  description: pageText,
+  acceptLabel: pageText,
+  rejectLabel: pageText,
+  preferencesLabel: pageText,
+  saveLabel: pageText,
+  modalTitle: pageText,
+  modalDescription: pageText,
+});
+
+function objectRecord(value: unknown) {
+  return value && typeof value === "object" && !Array.isArray(value)
+    ? (value as Record<string, unknown>)
+    : {};
+}
+
 function read(
   formData: FormData,
   key: string,
@@ -778,6 +889,221 @@ export async function saveSiteSettings(
   redirect(
     "/admin/configuracoes?saved=1",
   );
+}
+
+
+export async function savePageContent(
+  formData: FormData,
+) {
+  const pageKeyResult = pageKeySchema.safeParse(
+    read(formData, "pageKey"),
+  );
+
+  if (!pageKeyResult.success) {
+    throw new Error("Página inválida.");
+  }
+
+  const pageKey = pageKeyResult.data;
+  let pageContent: Record<string, string>;
+
+  if (pageKey === "home") {
+    const parsed = homePageSchema.safeParse({
+      heroEyebrow: read(formData, "heroEyebrow"),
+      heroTitle: read(formData, "heroTitle"),
+      heroAccent: read(formData, "heroAccent"),
+      heroDescription: read(formData, "heroDescription"),
+      heroSecondary: read(formData, "heroSecondary"),
+      primaryCtaLabel: read(formData, "primaryCtaLabel"),
+      secondaryCtaLabel: read(formData, "secondaryCtaLabel"),
+      servicesEyebrow: read(formData, "servicesEyebrow"),
+      servicesTitle: read(formData, "servicesTitle"),
+      portfolioEyebrow: read(formData, "portfolioEyebrow"),
+      portfolioTitle: read(formData, "portfolioTitle"),
+      portfolioLinkLabel: read(formData, "portfolioLinkLabel"),
+      ctaEyebrow: read(formData, "ctaEyebrow"),
+      ctaTitle: read(formData, "ctaTitle"),
+      ctaDescription: read(formData, "ctaDescription"),
+      ctaButtonLabel: read(formData, "ctaButtonLabel"),
+    });
+
+    if (!parsed.success) {
+      throw new Error(
+        parsed.error.issues[0]?.message ?? "Conteúdo inválido.",
+      );
+    }
+
+    pageContent = parsed.data;
+  } else if (pageKey === "sobre") {
+    const parsed = aboutPageSchema.safeParse({
+      eyebrow: read(formData, "eyebrow"),
+      title: read(formData, "title"),
+      description: read(formData, "description"),
+      bodyTitle: read(formData, "bodyTitle"),
+      body: read(formData, "body"),
+    });
+
+    if (!parsed.success) {
+      throw new Error(
+        parsed.error.issues[0]?.message ?? "Conteúdo inválido.",
+      );
+    }
+
+    pageContent = parsed.data;
+  } else if (pageKey === "contato") {
+    const parsed = contactPageSchema.safeParse({
+      eyebrow: read(formData, "eyebrow"),
+      title: read(formData, "title"),
+      description: read(formData, "description"),
+      directEyebrow: read(formData, "directEyebrow"),
+      directTitle: read(formData, "directTitle"),
+      directDescription: read(formData, "directDescription"),
+    });
+
+    if (!parsed.success) {
+      throw new Error(
+        parsed.error.issues[0]?.message ?? "Conteúdo inválido.",
+      );
+    }
+
+    pageContent = {
+      ...parsed.data,
+      directTitle: parsed.data.directTitle || "",
+    };
+  } else if (pageKey === "footer") {
+    const parsed = footerPageSchema.safeParse({
+      tagline: read(formData, "tagline"),
+      navigationTitle: read(formData, "navigationTitle"),
+      ecosystemTitle: read(formData, "ecosystemTitle"),
+      legalTitle: read(formData, "legalTitle"),
+      copyright: read(formData, "copyright"),
+    });
+
+    if (!parsed.success) {
+      throw new Error(
+        parsed.error.issues[0]?.message ?? "Conteúdo inválido.",
+      );
+    }
+
+    pageContent = parsed.data;
+  } else if (pageKey === "privacy-banner") {
+    const parsed = privacyBannerSchema.safeParse({
+      version: read(formData, "version"),
+      title: read(formData, "title"),
+      description: read(formData, "description"),
+      acceptLabel: read(formData, "acceptLabel"),
+      rejectLabel: read(formData, "rejectLabel"),
+      preferencesLabel: read(formData, "preferencesLabel"),
+      saveLabel: read(formData, "saveLabel"),
+      modalTitle: read(formData, "modalTitle"),
+      modalDescription: read(formData, "modalDescription"),
+    });
+
+    if (!parsed.success) {
+      throw new Error(
+        parsed.error.issues[0]?.message ?? "Conteúdo inválido.",
+      );
+    }
+
+    pageContent = parsed.data;
+  } else {
+    const parsed = legalPageSchema.safeParse({
+      eyebrow: read(formData, "eyebrow"),
+      title: read(formData, "title"),
+      description: read(formData, "description"),
+      html: read(formData, "html"),
+      seoTitle: read(formData, "seoTitle"),
+      seoDescription: read(formData, "seoDescription"),
+    });
+
+    if (!parsed.success) {
+      throw new Error(
+        parsed.error.issues[0]?.message ?? "Conteúdo inválido.",
+      );
+    }
+
+    pageContent = parsed.data;
+  }
+
+  const supabase = await requireAdmin();
+
+  const { data: current, error: currentError } = await supabase
+    .from("site_settings")
+    .select("company_name,settings")
+    .eq("id", 1)
+    .maybeSingle();
+
+  if (currentError) {
+    throw new Error(
+      "Não foi possível carregar o conteúdo atual das páginas.",
+    );
+  }
+
+  const currentSettings = objectRecord(current?.settings);
+  const currentPages = objectRecord(currentSettings.pages);
+
+  const settings = {
+    ...currentSettings,
+    pages: {
+      ...currentPages,
+      [pageKey]: pageContent,
+    },
+  };
+
+  const { error } = await supabase
+    .from("site_settings")
+    .upsert(
+      {
+        id: 1,
+        company_name: current?.company_name || "Nelled Studio",
+        settings,
+        updated_at: new Date().toISOString(),
+      },
+      { onConflict: "id" },
+    );
+
+  if (error) {
+    throw new Error(errorMessage(error));
+  }
+
+  const publicPaths: Record<typeof pageKey, string[]> = {
+    home: ["/"],
+    sobre: ["/sobre"],
+    contato: ["/contato"],
+    footer: [
+      "/",
+      "/sobre",
+      "/contato",
+      "/portfolio",
+      "/blog",
+      "/parceiros",
+      "/termos-de-uso",
+      "/politica-de-privacidade",
+      "/politica-de-cookies",
+    ],
+    "termos-de-uso": ["/termos-de-uso"],
+    "politica-de-privacidade": ["/politica-de-privacidade"],
+    "politica-de-cookies": ["/politica-de-cookies"],
+    "privacy-banner": [
+      "/",
+      "/sobre",
+      "/contato",
+      "/portfolio",
+      "/blog",
+      "/parceiros",
+      "/termos-de-uso",
+      "/politica-de-privacidade",
+      "/politica-de-cookies",
+    ],
+  };
+
+  for (const path of publicPaths[pageKey]) {
+    revalidatePath(path);
+  }
+
+  revalidatePath("/admin/paginas");
+  revalidatePath("/sitemap.xml");
+
+  redirect(`/admin/paginas?editar=${pageKey}&saved=1`);
 }
 
 export async function deleteRecord(

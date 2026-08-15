@@ -936,3 +936,68 @@
     min-width: 0;
   }
 }
+.pageCardActive {
+  border-color: color-mix(in srgb, var(--cyan) 42%, var(--line));
+  background: color-mix(in srgb, var(--cyan) 5%, var(--surface));
+}
+
+.pageEditor {
+  margin-top: 28px;
+  padding-top: 28px;
+  border-top: 1px solid var(--line);
+}
+
+.pageEditorHeader {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.pageEditorHeader h2 {
+  margin: 0;
+  color: var(--text);
+  font-size: 24px;
+  letter-spacing: -0.03em;
+}
+
+.pageEditorHeader > div > p:last-child {
+  margin: 7px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.settingsField small {
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+@media (max-width: 720px) {
+  .pageEditorHeader {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .pageEditorHeader .secondaryAction {
+    width: 100%;
+  }
+}
+
+.settingsCardFull {
+  grid-column: 1 / -1;
+}
+
+.pageEditorHint {
+  margin: 0;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+@media (max-width: 720px) {
+  .settingsCardFull {
+    grid-column: auto;
+  }
+}

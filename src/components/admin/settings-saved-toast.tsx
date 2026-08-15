@@ -5,90 +5,77 @@ import { useEffect, useState } from "react";
 
 import styles from "@/components/admin/admin-ui.module.css";
 
+type SettingsSavedToastProps = {
+  show: boolean;
+  title?: string;
+  message?: string;
+};
+
 export function SettingsSavedToast({
   show,
-}: {
-  show: boolean;
-}) {
-  const [visible, setVisible] =
-    useState(show);
-
-  const [leaving, setLeaving] =
-    useState(false);
+  title = "Configurações salvas",
+  message = "As alterações foram salvas com sucesso.",
+}: SettingsSavedToastProps) {
+  const [visible, setVisible] = useState(show);
+  const [leaving, setLeaving] = useState(false);
 
   useEffect(() => {
     if (!show) return;
 
-    /*
-     * Remove ?saved=1 da URL sem recarregar.
-     * Assim o aviso não volta ao apertar F5.
-     */
+    const url = new URL(window.location.href);
+    url.searchParams.delete("saved");
+
     window.history.replaceState(
       window.history.state,
       "",
-      window.location.pathname,
+      `${url.pathname}${url.search}${url.hash}`,
     );
 
-    const leaveTimer =
-      window.setTimeout(() => {
-        setLeaving(true);
-      }, 3000);
+    /*
+     * O reset acontece em callback assíncrono para evitar atualização
+     * síncrona de estado dentro do effect (regra do React 19/ESLint).
+     */
+    const startTimer = window.setTimeout(() => {
+      setVisible(true);
+      setLeaving(false);
+    }, 0);
 
-    const removeTimer =
-      window.setTimeout(() => {
-        setVisible(false);
-      }, 3400);
+    const leaveTimer = window.setTimeout(() => {
+      setLeaving(true);
+    }, 3000);
+
+    const removeTimer = window.setTimeout(() => {
+      setVisible(false);
+    }, 3400);
 
     return () => {
-      window.clearTimeout(
-        leaveTimer,
-      );
-
-      window.clearTimeout(
-        removeTimer,
-      );
+      window.clearTimeout(startTimer);
+      window.clearTimeout(leaveTimer);
+      window.clearTimeout(removeTimer);
     };
   }, [show]);
 
-  if (!visible) {
-    return null;
-  }
+  if (!visible) return null;
 
   return (
     <div
-      className={
-        styles.settingsToastOverlay
-      }
+      className={styles.settingsToastOverlay}
       aria-live="polite"
       aria-atomic="true"
     >
       <div
         className={`${styles.settingsToast} ${
-          leaving
-            ? styles.settingsToastLeaving
-            : ""
+          leaving ? styles.settingsToastLeaving : ""
         }`}
         role="status"
       >
-        <span
-          className={
-            styles.settingsToastIcon
-          }
-        >
-          <CheckCircle2
-            size={21}
-          />
+        <span className={styles.settingsToastIcon}>
+          <CheckCircle2 size={21} />
         </span>
 
         <div>
-          <strong>
-            Configurações salvas
-          </strong>
-
-          <span>
-            As alterações foram
-            salvas com sucesso.
-          </span>
+          <strong>{title}</strong>
+          <span>{message}</span>
         </div>
       </div>
     </div>
