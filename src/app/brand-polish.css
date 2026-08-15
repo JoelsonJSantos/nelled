@@ -1,0 +1,304 @@
+/* =========================================================
+   NELLED — BRAND POLISH
+   Remove azuis de interface e amplia microinterações públicas.
+========================================================= */
+
+/* Cor de destaque: somente cyan, sem gradiente azul. */
+h1 span,
+h2 span {
+  background: none;
+  color: var(--cyan);
+  -webkit-text-fill-color: currentColor;
+}
+
+/* Pequenos marcadores deixam de usar o azul secundário. */
+.eyebrow i,
+.ns-mark span {
+  background: var(--cyan);
+  color: var(--cyan);
+}
+
+/* Hero: mantém só um brilho cyan bem discreto. */
+.hero::before {
+  background:
+    radial-gradient(
+      circle at 76% 46%,
+      rgba(0, 217, 245, 0.095),
+      transparent 32%
+    );
+}
+
+.light .hero::before {
+  background:
+    radial-gradient(
+      circle at 76% 46%,
+      rgba(0, 173, 196, 0.075),
+      transparent 32%
+    );
+}
+
+/* =========================================================
+   BOTÕES
+========================================================= */
+
+.button,
+.quote-link,
+.contact-submit {
+  position: relative;
+  overflow: hidden;
+
+  transition:
+    color 180ms ease,
+    background-color 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
+}
+
+/* Principal: cyan sólido, sem azul. */
+.primary,
+.button.primary,
+.contact-submit.primary {
+  border: 1px solid var(--cyan);
+  background: var(--cyan);
+  color: #041018;
+  box-shadow: none;
+}
+
+/* Hover mais elegante: elevação + glow leve. */
+.primary:hover,
+.button.primary:hover,
+.contact-submit.primary:hover {
+  transform: translateY(-2px);
+  background: color-mix(in srgb, var(--cyan) 88%, white);
+  border-color: color-mix(in srgb, var(--cyan) 88%, white);
+  box-shadow:
+    0 9px 28px rgba(0, 217, 245, 0.16);
+}
+
+/* Botão secundário. */
+.ghost {
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--text);
+
+  transition:
+    color 180ms ease,
+    background-color 180ms ease,
+    border-color 180ms ease,
+    transform 180ms ease;
+}
+
+.ghost:hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--cyan) 48%, var(--line));
+  background: color-mix(in srgb, var(--cyan) 6%, transparent);
+  color: var(--cyan);
+}
+
+/* Solicitar orçamento no header. */
+.quote-link {
+  background: transparent;
+}
+
+.quote-link:hover {
+  transform: translateY(-2px);
+  border-color: var(--cyan);
+  background: color-mix(in srgb, var(--cyan) 8%, transparent);
+  box-shadow:
+    0 8px 24px rgba(0, 217, 245, 0.09);
+}
+
+/* Setas de botões e links ganham movimento. */
+.button svg,
+.quote-link svg,
+.text-link svg,
+.contact-info-links a svg,
+footer a svg {
+  transition: transform 180ms ease;
+}
+
+.button:hover svg,
+.quote-link:hover svg,
+.text-link:hover svg,
+.contact-info-links a:hover svg,
+footer a:hover svg {
+  transform: translateX(3px);
+}
+
+/* Respeita disabled sem animação. */
+.button:disabled,
+.contact-submit:disabled {
+  transform: none;
+  box-shadow: none;
+}
+
+/* =========================================================
+   LINKS
+========================================================= */
+
+.text-link,
+.contact-info-links a,
+footer a,
+article a:not(.button) {
+  transition:
+    color 180ms ease,
+    opacity 180ms ease,
+    transform 180ms ease;
+}
+
+/* Links editoriais e de contato. */
+.text-link:hover,
+.contact-info-links a:hover,
+article a:not(.button):hover {
+  color: var(--cyan);
+}
+
+/* Text-link anda levemente para a direita. */
+.text-link:hover {
+  transform: translateX(3px);
+}
+
+/* Footer ganha o mesmo feedback que a navbar. */
+footer a:hover {
+  color: var(--cyan);
+  transform: translateX(2px);
+}
+
+/* Navbar continua sutil, mas com underline animado. */
+.nav-links a {
+  position: relative;
+}
+
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -7px;
+
+  width: 100%;
+  height: 1px;
+
+  background: var(--cyan);
+
+  transform: scaleX(0);
+  transform-origin: right center;
+
+  transition: transform 180ms ease;
+}
+
+.nav-links a:hover::after,
+.nav-links a:focus-visible::after {
+  transform: scaleX(1);
+  transform-origin: left center;
+}
+
+/* =========================================================
+   CTA FINAL
+========================================================= */
+
+/*
+ * Remove o bloco azul/teal da chamada final.
+ * Mantém a hierarquia com superfície escura + borda discreta.
+ */
+.cta {
+  position: relative;
+  overflow: hidden;
+
+  background: var(--surface);
+  border: 1px solid var(--line);
+
+  box-shadow: none;
+}
+
+.cta::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 7%;
+  right: 7%;
+
+  height: 1px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      color-mix(in srgb, var(--cyan) 58%, transparent),
+      transparent
+    );
+
+  pointer-events: none;
+}
+
+/* =========================================================
+   ACCESSIBILITY / MOTION
+========================================================= */
+
+a:focus-visible,
+.button:focus-visible,
+.quote-link:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button,
+  .quote-link,
+  .ghost,
+  .text-link,
+  .contact-info-links a,
+  footer a,
+  article a:not(.button),
+  .button svg,
+  .quote-link svg,
+  .text-link svg,
+  .contact-info-links a svg,
+  footer a svg,
+  .nav-links a::after {
+    transition: none;
+  }
+
+  .button:hover,
+  .quote-link:hover,
+  .ghost:hover,
+  .text-link:hover,
+  footer a:hover {
+    transform: none;
+  }
+}
+
+/* =========================================================
+   LOGOS / PROPORÇÃO VISUAL
+========================================================= */
+
+/*
+ * Os PNGs já têm transparência real, mas possuem bastante área
+ * transparente ao redor da arte. Por isso aumentamos o canvas
+ * exibido via CSS em vez de aplicar transparência/blend no logo.
+ */
+.nav > .brand-logo img {
+  width: 84px;
+  height: 84px;
+  opacity: 1;
+}
+
+.hero-logo {
+  width: min(128%, 600px);
+  max-width: none;
+  height: auto;
+
+  opacity: 1;
+  mix-blend-mode: normal;
+
+  filter: drop-shadow(
+    0 0 30px rgba(0, 217, 245, 0.11)
+  );
+}
+
+@media (max-width: 720px) {
+  .nav > .brand-logo img {
+    width: 72px;
+    height: 72px;
+  }
+}

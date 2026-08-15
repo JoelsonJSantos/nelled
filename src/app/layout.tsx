@@ -6,6 +6,7 @@ import { PrivacyConsent } from "@/components/privacy/privacy-consent";
 import { getSiteSettings } from "@/lib/site-settings";
 
 import "./globals.css";
+import "./brand-polish.css";
 
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSiteSettings();

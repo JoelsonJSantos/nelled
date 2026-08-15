@@ -1,0 +1,145 @@
+.screen {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+
+  display: grid;
+  place-items: center;
+
+  min-height: 100dvh;
+  padding: 24px;
+
+  background:
+    radial-gradient(
+      circle at 50% 48%,
+      color-mix(in srgb, var(--cyan) 7%, transparent),
+      transparent 34%
+    ),
+    var(--bg);
+}
+
+.content {
+  display: grid;
+  justify-items: center;
+  gap: 14px;
+}
+
+.logoWrap {
+  position: relative;
+
+  width: min(470px, 72vw);
+  aspect-ratio: 1045 / 686;
+
+  display: grid;
+  place-items: center;
+}
+
+.logo {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+
+  opacity: 1;
+  mix-blend-mode: normal;
+
+  animation: logoPulse 1.45s ease-in-out infinite alternate;
+}
+
+.logoLight {
+  display: none;
+}
+
+:global(.light) .logoDark {
+  display: none;
+}
+
+:global(.light) .logoLight {
+  display: block;
+}
+
+.progress {
+  position: relative;
+  overflow: hidden;
+
+  width: 92px;
+  height: 2px;
+
+  border-radius: 999px;
+
+  background:
+    color-mix(in srgb, var(--cyan) 14%, var(--line));
+}
+
+.progress span {
+  position: absolute;
+  inset: 0;
+
+  border-radius: inherit;
+  background: var(--cyan);
+
+  transform: translateX(-100%);
+
+  animation: loadingLine 1.15s ease-in-out infinite;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@keyframes logoPulse {
+  from {
+    transform: scale(0.985);
+    filter: drop-shadow(0 0 12px rgba(0, 217, 245, 0.06));
+  }
+
+  to {
+    transform: scale(1);
+    filter: drop-shadow(0 0 28px rgba(0, 217, 245, 0.13));
+  }
+}
+
+@keyframes loadingLine {
+  0% {
+    transform: translateX(-105%);
+  }
+
+  50% {
+    transform: translateX(0%);
+  }
+
+  100% {
+    transform: translateX(105%);
+  }
+}
+
+@media (max-width: 640px) {
+  .logoWrap {
+    width: min(360px, 88vw);
+  }
+
+  .progress {
+    width: 78px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logo,
+  .progress span {
+    animation: none;
+  }
+
+  .progress span {
+    transform: none;
+  }
+}

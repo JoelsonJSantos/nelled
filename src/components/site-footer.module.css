@@ -1,39 +1,108 @@
-@media (max-width:720px){.footerGrid{grid-template-columns:repeat(3,minmax(0,1fr));gap:22px 13px}.footerGrid>div:first-child{grid-column:1/-1}.footerGrid>div:first-child p{margin:12px 0 0;max-width:260px}.footerGrid h4{font-size:9px;letter-spacing:.8px;margin:0 0 10px}.footerGrid a{margin:8px 0;font-size:11px;line-height:1.35}.footerBottom{gap:11px;margin-top:30px;padding-top:17px;font-size:11px}.footerBottom a{font-size:11px}}
+.footerGrid > div:first-child :global(.brand-logo) {
+  width: max-content;
+}
+
+.footerGrid > div:first-child :global(.brand-logo img) {
+  width: 90px;
+  height: 90px;
+  opacity: 1;
+}
 
 .contactLinks {
   display: grid;
-  gap: 8px;
+  gap: 10px;
   margin-top: 18px;
 }
 
-.contactLinks a,
+/*
+ * Mais específico que .footer-grid a do globals.css.
+ * Mantém ícone e texto na mesma linha.
+ */
+.footerGrid .contactLinks a {
+  display: inline-flex;
+  align-items: center;
+  width: max-content;
+  max-width: 100%;
+  gap: 9px;
+
+  margin: 0;
+
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.footerGrid .contactLinks a:hover {
+  color: var(--cyan);
+}
+
+.footerGrid .contactLinks svg {
+  flex: 0 0 auto;
+  align-self: center;
+  margin: 0;
+  color: currentColor;
+}
+
+.footerGrid .contactLinks span {
+  display: inline-block;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
 .footerGrid > div:nth-child(3) > a {
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-.contactLinks a {
-  margin: 0;
-  color: var(--muted);
-  font-size: 12px;
-}
+@media (max-width: 720px) {
+  .footerGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px 13px;
+  }
 
-.contactLinks a:hover {
-  color: var(--cyan);
-}
+  .footerGrid > div:first-child {
+    grid-column: 1 / -1;
+  }
 
-.contactLinks span {
-  min-width: 0;
-  overflow-wrap: anywhere;
-}
+  .footerGrid > div:first-child :global(.brand-logo img) {
+    width: 82px;
+    height: 82px;
+  }
 
-@media (max-width:720px) {
+  .footerGrid > div:first-child p {
+    margin: 12px 0 0;
+    max-width: 260px;
+  }
+
+  .footerGrid h4 {
+    margin: 0 0 10px;
+    font-size: 9px;
+    letter-spacing: 0.8px;
+  }
+
+  .footerGrid a {
+    margin: 8px 0;
+    font-size: 11px;
+    line-height: 1.35;
+  }
+
   .contactLinks {
     margin-top: 14px;
   }
 
-  .contactLinks a {
+  .footerGrid .contactLinks a {
+    font-size: 11px;
+  }
+
+  .footerBottom {
+    gap: 11px;
+    margin-top: 30px;
+    padding-top: 17px;
+    font-size: 11px;
+  }
+
+  .footerBottom a {
     font-size: 11px;
   }
 }
