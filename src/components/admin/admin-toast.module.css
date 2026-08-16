@@ -1,25 +1,57 @@
-.toast {
+.overlay {
   position: fixed;
-  top: 92px;
-  right: 28px;
+  inset: 0;
   z-index: 1500;
-  width: max-content;
-  max-width: min(390px, calc(100vw - 32px));
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  pointer-events: none;
+}
+
+.toast {
+  width: min(420px, 100%);
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
-  gap: 10px;
-  padding: 13px 12px 13px 15px;
-  border: 1px solid var(--line);
-  border-radius: 9px;
-  background: var(--elevated);
+  gap: 13px;
+  padding: 16px 14px 16px 18px;
+  border: 1px solid color-mix(in srgb, #22c55e 38%, var(--line));
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--surface) 94%, #22c55e 6%);
   color: var(--text);
-  box-shadow: 0 18px 50px color-mix(in srgb, var(--text) 14%, transparent);
-  font-size: 13px;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.34);
+  backdrop-filter: blur(16px);
+  pointer-events: auto;
 }
 
-.toast > svg { color: var(--cyan); }
-.error > svg { color: var(--blue); }
+.icon {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  background: rgba(34, 197, 94, 0.14);
+  color: #22c55e;
+}
+
+.content {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.content strong {
+  color: #86efac;
+  font-size: 14px;
+  font-weight: 750;
+}
+
+.content > span {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.45;
+}
 
 .toast button {
   width: 30px;
@@ -34,11 +66,15 @@
   cursor: pointer;
 }
 
-.toast button:hover { background: var(--surface); color: var(--text); }
+.toast button:hover { background: color-mix(in srgb, var(--text) 7%, transparent); color: var(--text); }
 .toast button:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
-.success { border-color: color-mix(in srgb, var(--cyan) 34%, var(--line)); }
-.error { border-color: color-mix(in srgb, var(--blue) 42%, var(--line)); }
+.error {
+  border-color: color-mix(in srgb, #ef4444 42%, var(--line));
+  background: color-mix(in srgb, var(--surface) 94%, #ef4444 6%);
+}
+.error .icon { background: rgba(239, 68, 68, 0.14); color: #f87171; }
+.error .content strong { color: #fca5a5; }
 
 @media (max-width: 680px) {
-  .toast { top: 82px; right: 16px; }
+  .overlay { padding: 18px; }
 }

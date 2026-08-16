@@ -1,0 +1,43 @@
+.detail { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(280px, .7fr); gap: 18px; margin-top: 26px; }
+.mainColumn, .sideColumn { display: grid; align-content: start; gap: 18px; }
+.card { padding: 21px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+.card h2 { margin: 0; color: var(--text); font-size: 16px; }
+.card > p { margin: 8px 0 0; color: var(--muted); font-size: 12px; line-height: 1.6; }
+.contactData { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 18px; }
+.contactData div { min-width: 0; display: grid; gap: 5px; }
+.contactData dt { color: var(--muted); font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.contactData dd { overflow-wrap: anywhere; margin: 0; color: var(--text); font-size: 13px; line-height: 1.55; }
+.message { white-space: pre-wrap; }
+.emailLink { color: var(--cyan); }
+.emailLink svg { vertical-align: -2px; }
+.queryError { margin: 0 0 16px; padding: 12px 14px; border: 1px solid rgba(248, 113, 113, .3); border-radius: 8px; background: rgba(248, 113, 113, .06); color: #fca5a5; font-size: 12px; }
+.statusForm { display: grid; gap: 8px; margin-top: 16px; }
+.statusForm > label, .noteForm > label { color: var(--muted); font-size: 11px; font-weight: 700; }
+.statusForm > div { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; }
+.statusForm select, .noteForm textarea { width: 100%; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--text); outline: none; }
+.statusForm select { min-height: 40px; padding: 0 10px; }
+.noteForm textarea { resize: vertical; min-height: 94px; padding: 10px; line-height: 1.55; }
+.statusForm select:focus, .noteForm textarea:focus { border-color: var(--cyan); box-shadow: 0 0 0 3px color-mix(in srgb, var(--cyan) 9%, transparent); }
+.statusForm button, .noteForm button { width: fit-content; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; gap: 7px; padding: 0 13px; border: 1px solid transparent; border-radius: 8px; background: linear-gradient(110deg, var(--blue), var(--cyan)); color: white; font-size: 12px; font-weight: 750; cursor: pointer; }
+.statusForm button:disabled, .noteForm button:disabled { cursor: wait; opacity: .7; }
+.noteForm { display: grid; gap: 8px; margin-top: 16px; }
+.fieldError { color: #fca5a5; font-size: 11px; }
+.notes, .history { display: grid; gap: 0; margin-top: 16px; }
+.note, .historyItem { padding: 14px 0; border-bottom: 1px solid var(--line); }
+.note:last-child, .historyItem:last-child { border-bottom: 0; padding-bottom: 0; }
+.note p { margin: 0; white-space: pre-wrap; color: var(--text); font-size: 13px; line-height: 1.65; }
+.note small, .historyItem small { display: block; margin-top: 8px; color: var(--muted); font-size: 10px; }
+.historyItem strong { color: var(--text); font-size: 12px; }
+.historyItem strong span { color: var(--cyan); }
+.empty { display: grid; place-items: center; min-height: 110px; margin-top: 16px; border: 1px dashed color-mix(in srgb, var(--line) 78%, transparent); border-radius: 9px; color: var(--muted); font-size: 12px; text-align: center; }
+.rowActions { display: flex; justify-content: flex-end; gap: 6px; }
+.rowActions a, .rowActions button { min-height: 34px; display: inline-flex; align-items: center; gap: 6px; padding: 0 8px; border: 1px solid var(--line); border-radius: 7px; background: var(--surface); color: var(--text); font-size: 11px; cursor: pointer; }
+.rowActions a:hover, .rowActions button:hover { border-color: color-mix(in srgb, var(--cyan) 40%, var(--line)); color: var(--cyan); }
+.spinner { animation: spin 800ms linear infinite; }
+.pagination { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 16px; color: var(--muted); font-size: 12px; }
+.pagination nav { display: flex; gap: 7px; }
+.pagination a, .pagination span { min-width: 34px; min-height: 34px; display: grid; place-items: center; padding: 0 10px; border: 1px solid var(--line); border-radius: 7px; color: var(--text); }
+.pagination a:hover { border-color: var(--cyan); color: var(--cyan); }
+@keyframes spin { to { transform: rotate(360deg); } }
+@media (max-width: 900px) { .detail { grid-template-columns: 1fr; } }
+@media (max-width: 720px) { .contactData { grid-template-columns: 1fr; } .rowActions span { display: none; } .pagination { align-items: flex-start; flex-direction: column; } }

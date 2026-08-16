@@ -360,6 +360,10 @@
   grid-template-columns: minmax(0, 1.4fr) minmax(140px, 0.8fr) minmax(90px, 0.5fr) 95px 80px;
 }
 
+.dataRowContact {
+  grid-template-columns: minmax(0, 1.25fr) minmax(150px, 0.9fr) minmax(108px, 0.62fr) minmax(100px, 0.5fr) minmax(105px, 0.52fr) auto;
+}
+
 .featured {
   color: var(--cyan);
   font-size: 11px;
@@ -483,7 +487,8 @@
 
   .dataRow,
   .dataRowThree,
-  .dataRowFive {
+  .dataRowFive,
+  .dataRowContact {
     grid-template-columns: minmax(0, 1fr) auto;
   }
 
