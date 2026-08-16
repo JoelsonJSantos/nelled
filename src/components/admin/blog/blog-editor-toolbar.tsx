@@ -47,7 +47,7 @@ type Props = {
 
   media: MediaItem[];
 
-  context: MediaContext;
+  context?: MediaContext;
 
   onMediaUploaded?: (
     media: MediaItem[],
@@ -487,19 +487,21 @@ export function BlogEditorToolbar({
           <Unlink size={17} />
         </button>
 
-        <button
-          type="button"
-          title="Inserir imagem"
-          onClick={() =>
-            setImagePickerOpen(
-              true,
-            )
-          }
-        >
-          <ImageIcon
-            size={17}
-          />
-        </button>
+        {context && (
+          <button
+            type="button"
+            title="Inserir imagem"
+            onClick={() =>
+              setImagePickerOpen(
+                true,
+              )
+            }
+          >
+            <ImageIcon
+              size={17}
+            />
+          </button>
+        )}
 
         <button
           type="button"
@@ -621,7 +623,7 @@ export function BlogEditorToolbar({
         </button>
       </div>
 
-      {imagePickerOpen && (
+      {imagePickerOpen && context && (
         <div
           className={
             styles.mediaInsert

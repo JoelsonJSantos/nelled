@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { z } from "zod";
 
 import { requireAdmin } from "@/lib/admin";
+import { sanitizeRichTextHtml } from "@/lib/sanitize-rich-text";
 
 const slug = z
   .string()
@@ -126,7 +127,12 @@ const partnerSchema = z.object({
   content: z
     .string()
     .trim()
+    .max(40_000, "A descrição completa está muito longa.")
     .optional(),
+
+  seoTitle: z.string().trim().max(180).optional(),
+
+  seoDescription: z.string().trim().max(320).optional(),
 
   websiteUrl: z
     .string()
@@ -782,6 +788,10 @@ export async function savePartner(
         "content",
       ),
 
+      seoTitle: read(formData, "seoTitle"),
+
+      seoDescription: read(formData, "seoDescription"),
+
       websiteUrl: read(
         formData,
         "websiteUrl",
@@ -843,8 +853,12 @@ export async function savePartner(
       null,
 
     content: {
-      body:
-        parsed.data.content,
+      html: sanitizeRichTextHtml(parsed.data.content ?? ""),
+    },
+
+    seo: {
+      title: parsed.data.seoTitle || null,
+      description: parsed.data.seoDescription || null,
     },
 
     website_url:
@@ -896,9 +910,10 @@ export async function savePartner(
   revalidatePath(
     "/parceiros",
   );
+  revalidatePath(`/parceiros/${parsed.data.slug}`);
 
   redirect(
-    "/admin/parceiros",
+    "/admin/parceiros?saved=1",
   );
 }
 

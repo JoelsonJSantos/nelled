@@ -28,8 +28,9 @@ export type BlogEditorValue = {
 type BlogEditorProps = {
   initialHtml?: string;
 
-  media: MediaItem[];
-  context: MediaContext;
+  media?: MediaItem[];
+  context?: MediaContext;
+  compact?: boolean;
 
   onMediaUploaded?: (
     media: MediaItem[],
@@ -42,8 +43,9 @@ type BlogEditorProps = {
 
 export function BlogEditor({
   initialHtml = "",
-  media,
+  media = [],
   context,
+  compact = false,
   onMediaUploaded,
   onChange,
 }: BlogEditorProps) {
@@ -125,7 +127,7 @@ export function BlogEditor({
     );
 
   return (
-    <div className={styles.editor}>
+    <div className={`${styles.editor} ${compact ? styles.compact : ""}`}>
       <BlogEditorToolbar
         editor={editor}
         media={media}

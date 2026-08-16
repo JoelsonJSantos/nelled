@@ -2,11 +2,18 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ArrowUpRight } from "lucide-react";
 
+import { CampaignPlacement } from "@/components/campaign-placement";
 import { SiteFooter } from "@/components/site-footer";
 import { PublicLink } from "@/components/navigation/public-link";
 import { SiteHeader } from "@/components/site-header";
 import { contentMetadata } from "@/lib/metadata";
 import { getPublishedPartner } from "@/lib/public-content";
+import {
+  legacyTextOrHtmlToEditorHtml,
+  sanitizeRichTextHtml,
+} from "@/lib/sanitize-rich-text";
+
+import styles from "./page.module.css";
 
 type Props = {
   params: Promise<{
@@ -48,8 +55,13 @@ export default async function Partner({ params }: Props) {
     typeof data.content === "object" && data.content
       ? (data.content as {
           body?: string;
+          html?: string;
         })
       : {};
+
+  const richHtml = sanitizeRichTextHtml(
+    legacyTextOrHtmlToEditorHtml(content.html ?? content.body ?? ""),
+  );
 
   const targetUrl = data.affiliate_url || data.website_url;
   const hasAffiliateLink = Boolean(data.affiliate_url);
@@ -63,38 +75,56 @@ export default async function Partner({ params }: Props) {
         <h1>{data.name}</h1>
         <p className="lede">{data.short_description}</p>
 
-        <article className="article-content">
-          <p>{content.body ?? ""}</p>
+        <div className={styles.contentLayout}>
+          <article className={`${styles.article} article-content`}>
+            {richHtml && (
+              <div
+                className={styles.richText}
+                dangerouslySetInnerHTML={{ __html: richHtml }}
+              />
+            )}
 
-          {hasAffiliateLink && (
-            <p>
-              <small>
-                Transparência: este conteúdo pode utilizar link de afiliado. A
-                Nelled Studio poderá receber uma comissão caso uma contratação ou
-                compra seja realizada por esse link, sem custo adicional por esse
-                motivo.
-              </small>
-            </p>
-          )}
+            {hasAffiliateLink && (
+              <p>
+                <small>
+                  Transparência: este conteúdo pode utilizar link de afiliado. A
+                  Nelled Studio poderá receber uma comissão caso uma contratação ou
+                  compra seja realizada por esse link, sem custo adicional por esse
+                  motivo.
+                </small>
+              </p>
+            )}
 
-          {data.coupon && (
-            <p>
-              <strong>Cupom:</strong> {data.coupon}
-            </p>
-          )}
+            {(data.coupon || targetUrl) && (
+              <section className={styles.commercial} aria-label="Informações comerciais">
+                {data.coupon && (
+                  <div className={styles.coupon}>
+                    <span>Cupom</span>
+                    <strong>{data.coupon}</strong>
+                  </div>
+                )}
 
-          {targetUrl && (
-            <PublicLink
-              className="button primary"
-              href={targetUrl}
-              target="_blank"
-              rel={hasAffiliateLink ? "sponsored noreferrer" : "noopener noreferrer"}
-            >
-              Conhecer parceiro
-              <ArrowUpRight size={17} />
-            </PublicLink>
-          )}
-        </article>
+                {targetUrl && (
+                  <PublicLink
+                    className="button primary"
+                    href={targetUrl}
+                    target="_blank"
+                    rel={hasAffiliateLink ? "sponsored noreferrer" : "noopener noreferrer"}
+                  >
+                    Conhecer parceiro
+                    <ArrowUpRight size={17} />
+                  </PublicLink>
+                )}
+              </section>
+            )}
+          </article>
+
+          <div className={styles.sidebar}>
+            <div className={styles.sidebarInner}>
+              <CampaignPlacement placement="partner-detail" />
+            </div>
+          </div>
+        </div>
       </main>
 
       <SiteFooter />
