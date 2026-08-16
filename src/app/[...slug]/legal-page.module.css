@@ -1,5 +1,5 @@
 .page {
-  max-width: 980px;
+  max-width: var(--content-narrow);
 }
 
 .shell {
@@ -9,7 +9,7 @@
 .content {
   padding: clamp(24px, 4vw, 42px);
   border: 1px solid var(--line);
-  border-radius: 14px;
+  border-radius: var(--radius-lg);
   background: var(--surface);
   color: var(--text);
 }
@@ -37,7 +37,7 @@
 .content p,
 .content li {
   color: var(--muted);
-  font-size: 14px;
+  font-size: var(--text-sm);
   line-height: 1.78;
 }
 
@@ -93,7 +93,7 @@
 .content img {
   max-width: 100%;
   height: auto;
-  border-radius: 10px;
+  border-radius: var(--radius-md);
 }
 
 .preferences {

@@ -1,8 +1,8 @@
 .pageLayout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(240px, 280px);
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 280px);
   align-items: start;
-  gap: clamp(32px, 5vw, 72px);
+  gap: clamp(32px, 5vw, 64px);
 }
 
 .mainColumn {
@@ -22,7 +22,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin: -18px 0 32px;
+  margin: -12px 0 28px;
 }
 
 .categoryLink,
@@ -32,7 +32,7 @@
   min-height: 34px;
   padding: 0 12px;
   border: 1px solid var(--line);
-  border-radius: 999px;
+  border-radius: var(--radius-sm);
   background: var(--surface);
   color: var(--muted);
   font-size: 12px;

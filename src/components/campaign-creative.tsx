@@ -136,6 +136,7 @@ export function CampaignCreative({
       aria-label="Banner patrocinado"
     >
       <div className={styles.carousel}>
+        <span className={styles.label} aria-hidden="true">Ads</span>
         {campaigns.map((campaign, index) => {
           const active = index === activeIndex;
           const external = campaign.targetUrl && isExternalUrl(campaign.targetUrl, siteOrigin);

@@ -1,12 +1,12 @@
 .story {
   width: 100%;
-  max-width: 940px;
-  margin-top: 54px;
+  max-width: var(--content-narrow);
+  margin-top: 48px;
 }
 
 .storyLead {
-  max-width: 760px;
-  margin-bottom: 64px;
+  max-width: var(--content-editorial);
+  margin-bottom: var(--section-space);
 }
 
 .storyEyebrow,
@@ -19,15 +19,15 @@
 }
 
 .storyLead h2 {
-  max-width: 760px;
+  max-width: var(--content-editorial);
   margin: 0 0 18px;
-  font-size: clamp(30px, 4vw, 48px);
+  font-size: var(--text-xl);
   line-height: 1.04;
   letter-spacing: -0.045em;
 }
 
 .storyLead > p:last-child {
-  max-width: 680px;
+  max-width: var(--content-editorial);
   margin: 0;
   color: var(--muted);
   font-size: 16px;
@@ -86,7 +86,7 @@
   padding: 9px 10px;
 
   border: 1px solid color-mix(in srgb, var(--cyan) 40%, var(--line));
-  border-radius: 9px;
+  border-radius: var(--radius-sm);
 
   background: var(--bg);
 
@@ -128,7 +128,7 @@
 }
 
 .milestoneContent {
-  max-width: 680px;
+  max-width: var(--content-editorial);
   padding-top: 2px;
 }
 
@@ -177,7 +177,7 @@
   padding: 16px;
 
   border: 1px solid var(--line);
-  border-radius: 10px;
+  border-radius: var(--radius-md);
 
   background:
     linear-gradient(

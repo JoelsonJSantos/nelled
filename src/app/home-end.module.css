@@ -1,6 +1,6 @@
 .campaign > aside {
-  max-width: 1020px;
-  margin-top: 44px;
+  max-width: 1000px;
+  margin-top: 40px;
 }
 
 .campaign > aside > div {
@@ -8,21 +8,16 @@
 }
 
 .cta {
-  max-width: 1080px;
-  margin-top: 18px;
-  margin-bottom: 48px;
-  padding-top: clamp(40px, 4.5vw, 48px);
-  padding-bottom: clamp(40px, 4.5vw, 48px);
+  max-width: 1000px;
 }
 
 .cta h2 {
-  max-width: 760px;
-  font-size: clamp(30px, 3.5vw, 44px);
+  max-width: 720px;
 }
 
 @media (max-width: 760px) {
   .campaign > aside {
-    margin-top: 36px;
+    margin-top: 32px;
     padding-inline: 20px;
   }
 
@@ -32,11 +27,5 @@
 
   .cta {
     width: calc(100% - 40px);
-    margin-bottom: 40px;
-    padding: 34px 22px;
-  }
-
-  .cta h2 {
-    font-size: clamp(28px, 9vw, 36px);
   }
 }

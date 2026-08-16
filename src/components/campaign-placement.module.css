@@ -1,10 +1,10 @@
-.wrapper { box-sizing: border-box; width: 100%; margin: 44px auto 0; padding: 0 24px; }
-.wrapper[data-variant="horizontal-large"] { max-width: 1120px; margin-top: 56px; }
-.wrapper[data-variant="horizontal-compact"] { max-width: 840px; margin-top: 56px; }
-.wrapper[data-variant="sidebar-vertical"] { max-width: 300px; margin: 0 auto; }
-.wrapper[data-variant="vertical"] { max-width: 320px; margin: 0 auto; }
-.carousel { position: relative; width: 100%; height: clamp(132px, 16vw, 220px); overflow: hidden; border: 1px solid color-mix(in srgb, var(--line) 84%, transparent); border-radius: 12px; background: color-mix(in srgb, var(--surface) 88%, var(--bg)); }
-.wrapper[data-variant="horizontal-compact"] .carousel { height: clamp(110px, 14vw, 168px); }
+.wrapper { box-sizing: border-box; width: 100%; margin: 40px auto 0; padding: 0 24px; }
+.wrapper[data-variant="horizontal-large"] { max-width: 1000px; margin-top: 48px; }
+.wrapper[data-variant="horizontal-compact"] { max-width: 840px; margin-top: 48px; }
+.wrapper[data-variant="sidebar-vertical"] { max-width: 280px; margin: 0 auto; }
+.wrapper[data-variant="vertical"] { max-width: 300px; margin: 0 auto; }
+.carousel { position: relative; width: 100%; height: clamp(124px, 15vw, 190px); overflow: hidden; border: 1px solid color-mix(in srgb, var(--line) 92%, transparent); border-radius: var(--radius-md); background: color-mix(in srgb, var(--surface) 92%, var(--bg)); }
+.wrapper[data-variant="horizontal-compact"] .carousel { height: clamp(104px, 13vw, 156px); }
 .wrapper[data-variant="sidebar-vertical"] .carousel { height: auto; aspect-ratio: 3 / 5; }
 .wrapper[data-variant="vertical"] .carousel { height: auto; aspect-ratio: 3 / 5; }
 .banner { position: absolute; inset: 0; opacity: 0; pointer-events: none; transition: opacity 280ms ease; }
@@ -12,21 +12,22 @@
 .banner > a, .banner > div, .banner > picture { display: block; width: 100%; height: 100%; }
 .banner > a { border-radius: inherit; }
 .banner > a:focus-visible { outline: 2px solid var(--cyan); outline-offset: 4px; }
-.bannerImage { display: block; width: 100%; height: 100%; min-height: 0 !important; padding: clamp(4px, .7vw, 8px); background: transparent !important; object-fit: contain; object-position: center; }
+.bannerImage { display: block; width: 100%; height: 100%; min-height: 0 !important; padding: 6px; background: transparent !important; object-fit: contain; object-position: center; }
+.label { position: absolute; top: 8px; right: 8px; z-index: 2; padding: 3px 6px; border: 1px solid rgba(255, 255, 255, 0.18); border-radius: var(--radius-sm); background: rgba(4, 16, 24, 0.68); color: #f5f8fa; font-size: 10px; font-weight: 600; line-height: 1; letter-spacing: 0.02em; opacity: 0.82; pointer-events: none; backdrop-filter: blur(6px); }
 @media (prefers-reduced-motion: reduce) { .banner { transition: none; } }
 @media (max-width: 820px) {
   .wrapper[data-variant="sidebar-vertical"], .wrapper[data-variant="vertical"] { margin-top: 32px; }
-  .wrapper[data-variant="sidebar-vertical"][data-mobile-variant="horizontal-compact"] { max-width: 100%; margin: 24px auto 32px; padding: 0; }
+  .wrapper[data-variant="sidebar-vertical"][data-mobile-variant="horizontal-compact"] { max-width: 100%; margin: 24px auto 28px; padding: 0; }
   .wrapper[data-variant="sidebar-vertical"][data-mobile-variant="horizontal-compact"] .carousel { height: clamp(90px, 30vw, 130px); aspect-ratio: 3 / 1; }
 }
 @media (max-width: 760px) {
-  .wrapper { margin-top: 40px; padding: 0 20px; }
-  .wrapper[data-variant="horizontal-large"] { margin-top: 48px; }
-  .wrapper[data-variant="horizontal-compact"] { margin-top: 40px; }
+  .wrapper { margin-top: 32px; padding: 0 20px; }
+  .wrapper[data-variant="horizontal-large"] { margin-top: 40px; }
+  .wrapper[data-variant="horizontal-compact"] { margin-top: 32px; }
   .wrapper[data-variant="sidebar-vertical"] { max-width: 280px; margin-top: 32px; }
   .wrapper[data-variant="vertical"] { max-width: 300px; margin-top: 32px; }
-  .carousel { height: clamp(128px, 38vw, 190px); }
-  .wrapper[data-variant="horizontal-compact"] .carousel { height: clamp(108px, 35vw, 150px); }
+  .carousel { height: clamp(112px, 34vw, 160px); }
+  .wrapper[data-variant="horizontal-compact"] .carousel { height: clamp(96px, 30vw, 130px); }
   .wrapper[data-variant="sidebar-vertical"] .carousel { height: auto; aspect-ratio: 3 / 5; }
   .wrapper[data-variant="vertical"] .carousel { height: auto; aspect-ratio: 3 / 5; }
 }
