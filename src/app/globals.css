@@ -523,7 +523,7 @@ h2 span {
   isolation: isolate;
   overflow: hidden;
 
-  min-height: 600px;
+  min-height: 560px;
 
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
@@ -561,7 +561,7 @@ h2 span {
   position: relative;
   isolation: isolate;
 
-  height: 400px;
+  height: 370px;
 
   display: grid;
   place-items: center;
@@ -660,8 +660,8 @@ h2 span {
 ========================================================= */
 
 .section {
-  padding-top: 104px;
-  padding-bottom: 20px;
+  padding-top: clamp(72px, 8vw, 88px);
+  padding-bottom: 12px;
 }
 
 .split {
@@ -704,7 +704,7 @@ h2 span {
 }
 
 .service-card {
-  padding: 25px;
+  padding: 21px;
 
   background:
     linear-gradient(
@@ -736,7 +736,7 @@ h2 span {
 }
 
 .service-card svg {
-  margin-bottom: 25px;
+  margin-bottom: 18px;
 
   color: var(--cyan);
 }
@@ -762,7 +762,7 @@ h2 span {
 ========================================================= */
 
 .showcase {
-  padding-bottom: 70px;
+  padding-bottom: 42px;
 }
 
 .empty-panel {
@@ -819,11 +819,11 @@ h2 span {
   position: relative;
   overflow: hidden;
 
-  margin-top: 30px;
-  margin-bottom: 88px;
+  margin-top: 20px;
+  margin-bottom: 64px;
 
-  padding-top: 78px;
-  padding-bottom: 78px;
+  padding-top: clamp(54px, 6vw, 64px);
+  padding-bottom: clamp(54px, 6vw, 64px);
 
   border: 1px solid var(--line);
   border-radius: 12px;
@@ -1359,7 +1359,7 @@ footer {
   /* Sections */
 
   .section {
-    padding-top: 70px;
+    padding-top: 60px;
   }
 
   .split {

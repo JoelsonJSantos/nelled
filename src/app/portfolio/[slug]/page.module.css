@@ -187,13 +187,19 @@
 }
 
 .cta {
-  margin-top: 64px;
-  padding: clamp(38px, 5vw, 58px);
+  max-width: 920px;
+  margin: 56px auto 0;
+  padding: clamp(28px, 4vw, 40px);
   border: 1px solid var(--line);
   border-radius: 12px;
   background:
     radial-gradient(circle at 82% 12%, color-mix(in srgb, var(--cyan) 18%, var(--surface)), var(--surface) 34%),
     var(--surface);
+}
+
+.cta h2 {
+  margin-bottom: 12px;
+  font-size: clamp(28px, 3.5vw, 40px);
 }
 
 .cta p:not(.eyebrow) {
@@ -287,7 +293,7 @@
   }
 
   .cta {
-    margin-top: 52px;
-    padding: 36px 22px;
+    margin-top: 44px;
+    padding: 28px 22px;
   }
 }

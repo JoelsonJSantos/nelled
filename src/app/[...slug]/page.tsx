@@ -4,7 +4,6 @@ import { ArrowRight, Mail, Phone } from "lucide-react";
 import { ContactForm } from "@/components/contact-form";
 import { PublicLink } from "@/components/navigation/public-link";
 import { PageHero } from "@/components/page-hero";
-import { PrivacyPreferencesButton } from "@/components/privacy/privacy-preferences-button";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { InstagramIcon, LinkedInIcon } from "@/components/social-icons";
@@ -17,6 +16,7 @@ import {
   replaceSiteTokens,
   type LegalPageContent,
 } from "@/lib/site-settings";
+import { sanitizeRichTextHtml } from "@/lib/sanitize-rich-text";
 
 type Props = {
   params: Promise<{
@@ -28,17 +28,6 @@ type LegalKey =
   | "termos-de-uso"
   | "politica-de-privacidade"
   | "politica-de-cookies";
-
-function sanitizeHtml(value: string) {
-  return value
-    .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, "")
-    .replace(/<iframe\b[^>]*>[\s\S]*?<\/iframe>/gi, "")
-    .replace(/\son\w+\s*=\s*(["']).*?\1/gi, "")
-    .replace(
-      /\s(href|src)\s*=\s*(["'])\s*javascript:[\s\S]*?\2/gi,
-      ' $1="#"',
-    );
-}
 
 function isLegalKey(value: string): value is LegalKey {
   return [
@@ -161,7 +150,7 @@ export default async function Page({ params }: Props) {
 
   const legalPage = isLegal ? getLegalPage(key, settings.pages) : null;
   const legalHtml = legalPage
-    ? sanitizeHtml(replaceSiteTokens(legalPage.html, settings))
+    ? sanitizeRichTextHtml(replaceSiteTokens(legalPage.html, settings))
     : "";
 
   return (
@@ -345,15 +334,6 @@ export default async function Page({ params }: Props) {
               }}
             />
 
-            {(key === "politica-de-privacidade" ||
-              key === "politica-de-cookies") && (
-              <div className={legalStyles.preferences}>
-                <PrivacyPreferencesButton
-                  variant="inline"
-                  label="Gerenciar preferências de privacidade"
-                />
-              </div>
-            )}
           </div>
         ) : (
           <div className="empty-panel page-panel">
