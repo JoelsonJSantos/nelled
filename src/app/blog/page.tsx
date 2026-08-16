@@ -1,10 +1,16 @@
 import type { Metadata } from "next";
 
-import { PageHero } from "@/components/page-hero";
+import { BlogPostGrid } from "@/components/blog-post-grid";
+import { CampaignPlacement } from "@/components/campaign-placement";
 import { PublicLink } from "@/components/navigation/public-link";
+import { PageHero } from "@/components/page-hero";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
-import { createClient } from "@/lib/supabase/server";
+import { getActiveCampaignsForPlacement } from "@/lib/public-campaigns";
+import {
+  getPublicBlogCategories,
+  getPublishedBlogPosts,
+} from "@/lib/public-content";
 
 import styles from "./page.module.css";
 
@@ -14,158 +20,105 @@ export const metadata: Metadata = {
     "Artigos e perspectivas da Nelled Studio sobre tecnologia, design, negócios e produtos digitais.",
 };
 
-function formatDate(
-  value: string | null,
-) {
-  if (!value) return "";
+type SearchParams = Promise<{
+  categoria?: string | string[];
+}>;
 
-  return new Intl.DateTimeFormat(
-    "pt-BR",
-    {
-      day: "2-digit",
-      month: "long",
-      year: "numeric",
-    },
-  ).format(new Date(value));
+function selectedCategorySlug(value: string | string[] | undefined) {
+  return typeof value === "string" ? value.trim() : "";
 }
 
-export default async function Blog() {
-  const supabase =
-    await createClient();
+export default async function Blog({
+  searchParams,
+}: {
+  searchParams: SearchParams;
+}) {
+  const params = await searchParams;
+  const categorySlug = selectedCategorySlug(params.categoria);
+  const [posts, categories, campaigns] = await Promise.all([
+    getPublishedBlogPosts(categorySlug || undefined),
+    getPublicBlogCategories(),
+    getActiveCampaignsForPlacement("blog-list"),
+  ]);
 
-  if (!supabase) {
-    throw new Error(
-      "A conexão com o conteúdo não está disponível.",
-    );
-  }
+  const categoryNavigation = categories.length > 0 ? (
+    <nav className={styles.categoryNav} aria-label="Filtrar artigos por categoria">
+      <PublicLink
+        href="/blog"
+        className={!categorySlug ? styles.categoryLinkActive : styles.categoryLink}
+        aria-current={!categorySlug ? "page" : undefined}
+      >
+        Todos
+      </PublicLink>
 
-  const { data, error } =
-    await supabase
-      .from("blog_posts")
-      .select(`
-        slug,
-        title,
-        summary,
-        published_at,
-        featured,
-        content,
-        seo,
-        category_id
-      `)
-      .eq("status", "published")
-      .lte(
-        "published_at",
-        new Date().toISOString(),
-      )
-      .order(
-        "published_at",
-        {
-          ascending: false,
-        },
-      );
+      {categories.map((category) => (
+        <PublicLink
+          href={`/blog?categoria=${encodeURIComponent(category.slug)}`}
+          className={
+            categorySlug === category.slug
+              ? styles.categoryLinkActive
+              : styles.categoryLink
+          }
+          aria-current={categorySlug === category.slug ? "page" : undefined}
+          key={category.slug}
+        >
+          {category.name}
+        </PublicLink>
+      ))}
+    </nav>
+  ) : null;
 
-  if (error) {
-    console.error(
-      "Erro ao carregar artigos:",
-      {
-        code: error.code,
-        message: error.message,
-        details: error.details,
-        hint: error.hint,
-      },
-    );
+  const postList = posts.length > 0 ? (
+    <BlogPostGrid posts={posts} />
+  ) : (
+    <div className="empty-panel">
+      <div className="empty-symbol">NS</div>
 
-    throw new Error(
-      "Não foi possível carregar os artigos.",
-    );
-  }
+      <div>
+        <h3>{categorySlug ? "Nenhum artigo nesta categoria" : "Artigos em breve"}</h3>
+        <p>
+          {categorySlug
+            ? "Novos conteúdos desta categoria aparecerão aqui quando forem publicados."
+            : "Os primeiros conteúdos serão publicados aqui."}
+        </p>
+      </div>
+    </div>
+  );
 
-  const posts = data ?? [];
+  const hero = (
+    <>
+      <PageHero
+        eyebrow="BLOG"
+        title="Ideias para produtos digitais melhores."
+        description="Conteúdos sobre desenvolvimento, produto, tecnologia e experiências digitais."
+      />
+      {categoryNavigation}
+    </>
+  );
 
   return (
     <>
       <SiteHeader />
 
       <main className="inner-page">
-        <PageHero
-          eyebrow="BLOG"
-          title="Ideias para produtos digitais melhores."
-          description="Conteúdos sobre desenvolvimento, produto, tecnologia e experiências digitais."
-        />
-
-        {posts.length > 0 ? (
-          <section
-            className={styles.grid}
-            aria-label="Artigos publicados"
-          >
-            {posts.map((post) => (
-              <PublicLink
-                href={`/blog/${post.slug}`}
-                className={styles.card}
-                key={post.slug}
-                aria-label={`Ler artigo: ${post.title}`}
-              >
-                <div
-                  className={styles.imagePlaceholder}
-                  aria-hidden="true"
-                >
-                  NS
-                </div>
-
-                <div className={styles.content}>
-                  <div className={styles.meta}>
-                    <span>Artigo</span>
-
-                    {post.featured && (
-                      <>
-                        <span>·</span>
-                        <span>Destaque</span>
-                      </>
-                    )}
-                  </div>
-
-                  <h2 className={styles.title}>
-                    {post.title}
-                  </h2>
-
-                  {post.summary && (
-                    <p className={styles.summary}>
-                      {post.summary}
-                    </p>
-                  )}
-
-                  <div className={styles.footer}>
-                    <time
-                      dateTime={post.published_at ?? undefined}
-                    >
-                      {formatDate(post.published_at)}
-                    </time>
-
-                    <span className={styles.readMore}>
-                      Ler artigo →
-                    </span>
-                  </div>
-                </div>
-              </PublicLink>
-            ))}
-          </section>
-        ) : (
-          <div className="empty-panel">
-            <div className="empty-symbol">
-              NS
+        {campaigns.length > 0 ? (
+          <div className={styles.pageLayout}>
+            <div className={styles.mainColumn}>
+              {hero}
+              {postList}
             </div>
 
-            <div>
-              <h3>
-                Artigos em breve
-              </h3>
-
-              <p>
-                Os primeiros conteúdos
-                serão publicados aqui.
-              </p>
-            </div>
+            <aside className={styles.sidebar} aria-label="Publicidade">
+              <div className={styles.sidebarInner}>
+                <CampaignPlacement placement="blog-list" campaigns={campaigns} />
+              </div>
+            </aside>
           </div>
+        ) : (
+          <>
+            {hero}
+            {postList}
+          </>
         )}
       </main>
 

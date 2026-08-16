@@ -3,6 +3,7 @@
 import {
   useState,
 } from "react";
+import Link from "next/link";
 
 import { BlogEditor } from "./blog-editor";
 
@@ -542,6 +543,13 @@ export function BlogForm({
               )}
             </select>
           </label>
+
+          <Link
+            className={styles.categoryLink}
+            href="/admin/blog/categorias"
+          >
+            Gerenciar categorias
+          </Link>
         </div>
 
         <div

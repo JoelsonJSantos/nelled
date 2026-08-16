@@ -29,6 +29,20 @@
   text-transform: uppercase;
 }
 
+.categoryLink {
+  color: inherit;
+  text-decoration: none;
+}
+
+.categoryLink:hover {
+  color: var(--text);
+}
+
+.categoryLink:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 3px;
+}
+
 .hero h1 {
   margin-bottom: 22px;
 
@@ -62,26 +76,6 @@
   color: var(--muted);
 
   font-size: 13px;
-}
-
-.cover {
-  max-width: 1000px;
-
-  margin:
-    52px auto
-    0;
-}
-
-.cover img {
-  display: block;
-
-  width: 100%;
-  aspect-ratio: 16 / 9;
-
-  object-fit: cover;
-
-  border: 1px solid var(--line);
-  border-radius: 14px;
 }
 
 .article {
@@ -226,13 +220,11 @@
 }
 
 .cta {
-  max-width: 900px;
+  max-width: 860px;
 
-  margin:
-    88px auto
-    0;
+  margin: 64px auto 0;
 
-  padding: 48px;
+  padding: clamp(28px, 4vw, 40px);
 
   border:
     1px solid
@@ -250,19 +242,14 @@
 }
 
 .cta h2 {
-  margin-bottom: 14px;
-
-  font-size: clamp(
-    32px,
-    4vw,
-    48px
-  );
+  margin-bottom: 12px;
+  font-size: clamp(28px, 3.5vw, 40px);
 }
 
 .cta > p:not(.ctaEyebrow) {
   max-width: 580px;
 
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 
   color: var(--muted);
 
@@ -288,10 +275,6 @@
     font-size: 18px;
   }
 
-  .cover {
-    margin-top: 36px;
-  }
-
   .article {
     margin-top: 44px;
 
@@ -300,29 +283,7 @@
   }
 
   .cta {
-    margin-top: 64px;
-
-    padding: 30px 24px;
+    margin-top: 48px;
+    padding: 28px 22px;
   }
-}
-
-.coverWrapper {
-  position: relative;
-
-  width: 100%;
-  max-width: 1000px;
-  aspect-ratio: 16 / 9;
-
-  margin: 40px auto;
-
-  overflow: hidden;
-
-  border: 1px solid var(--line);
-  border-radius: 14px;
-
-  background: var(--surface);
-}
-
-.cover {
-  object-fit: cover;
 }

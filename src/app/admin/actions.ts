@@ -96,6 +96,20 @@ const postSchema = z.object({
     .or(z.literal("")),
 });
 
+const blogCategorySchema = z.object({
+  name: z
+    .string()
+    .trim()
+    .min(2, "Informe o nome da categoria.")
+    .max(100, "O nome deve ter no máximo 100 caracteres."),
+  slug,
+  description: z
+    .string()
+    .trim()
+    .max(320, "A descrição deve ter no máximo 320 caracteres.")
+    .optional(),
+});
+
 const partnerSchema = z.object({
   name: z
     .string()
@@ -336,6 +350,19 @@ function errorMessage(
   return error instanceof Error
     ? error.message
     : "Não foi possível salvar.";
+}
+
+function categoryRedirect(
+  status: "saved" | "deleted" | "error",
+  message?: string,
+): never {
+  const searchParams = new URLSearchParams({ status });
+
+  if (message) {
+    searchParams.set("message", message);
+  }
+
+  redirect(`/admin/blog/categorias?${searchParams.toString()}`);
 }
 
 export async function savePost(
@@ -589,7 +616,144 @@ export async function savePost(
     `/blog/${parsed.data.slug}`,
   );
 
-  redirect("/admin/blog");
+  redirect("/admin/blog?saved=1");
+}
+
+export async function saveBlogCategory(
+  formData: FormData,
+) {
+  const parsed = blogCategorySchema.safeParse({
+    name: read(formData, "name"),
+    slug: read(formData, "slug"),
+    description: read(formData, "description"),
+  });
+
+  if (!parsed.success) {
+    categoryRedirect(
+      "error",
+      parsed.error.issues[0]?.message ?? "Dados inválidos.",
+    );
+  }
+
+  const idValue = read(formData, "id");
+  const parsedId = idValue ? z.string().uuid().safeParse(idValue) : null;
+
+  if (parsedId && !parsedId.success) {
+    categoryRedirect("error", "Categoria inválida.");
+  }
+
+  const supabase = await requireAdmin();
+  const categoryData = {
+    name: parsed.data.name,
+    slug: parsed.data.slug,
+    description: parsed.data.description || null,
+  };
+
+  let previousSlug: string | null = null;
+
+  if (parsedId?.success) {
+    const { data: existing, error: existingError } = await supabase
+      .from("blog_categories")
+      .select("slug")
+      .eq("id", parsedId.data)
+      .maybeSingle();
+
+    if (existingError || !existing) {
+      categoryRedirect("error", "Categoria não encontrada.");
+    }
+
+    previousSlug = existing.slug;
+  }
+
+  const result = parsedId?.success
+    ? await supabase
+        .from("blog_categories")
+        .update(categoryData)
+        .eq("id", parsedId.data)
+        .select("id")
+        .maybeSingle()
+    : await supabase
+        .from("blog_categories")
+        .insert(categoryData)
+        .select("id")
+        .maybeSingle();
+
+  if (result.error || !result.data) {
+    categoryRedirect(
+      "error",
+      result.error?.code === "23505"
+        ? "Este slug já está em uso."
+        : errorMessage(result.error),
+    );
+  }
+
+  revalidatePath("/admin/blog");
+  revalidatePath("/admin/blog/categorias");
+  revalidatePath("/blog");
+  revalidatePath(`/blog/categoria/${parsed.data.slug}`);
+
+  if (previousSlug && previousSlug !== parsed.data.slug) {
+    revalidatePath(`/blog/categoria/${previousSlug}`);
+  }
+
+  revalidatePath("/sitemap.xml");
+  categoryRedirect("saved");
+}
+
+export async function deleteBlogCategory(
+  formData: FormData,
+) {
+  const parsedId = z.string().uuid().safeParse(read(formData, "id"));
+
+  if (!parsedId.success) {
+    categoryRedirect("error", "Categoria inválida.");
+  }
+
+  const supabase = await requireAdmin();
+  const [{ data: category, error: categoryError }, postsResult] = await Promise.all([
+    supabase
+      .from("blog_categories")
+      .select("slug")
+      .eq("id", parsedId.data)
+      .maybeSingle(),
+    supabase
+      .from("blog_posts")
+      .select("id", { count: "exact", head: true })
+      .eq("category_id", parsedId.data),
+  ]);
+
+  if (categoryError || !category) {
+    categoryRedirect("error", "Categoria não encontrada.");
+  }
+
+  if (postsResult.error) {
+    categoryRedirect("error", "Não foi possível verificar os artigos associados.");
+  }
+
+  const postsCount = postsResult.count ?? 0;
+
+  if (postsCount > 0) {
+    categoryRedirect(
+      "error",
+      `Não é possível excluir esta categoria porque há ${postsCount} artigo${postsCount === 1 ? "" : "s"} associado${postsCount === 1 ? "" : "s"}.`,
+    );
+  }
+
+  const { error } = await supabase
+    .from("blog_categories")
+    .delete()
+    .eq("id", parsedId.data);
+
+  if (error) {
+    categoryRedirect("error", errorMessage(error));
+  }
+
+  revalidatePath("/admin/blog");
+  revalidatePath("/admin/blog/categorias");
+  revalidatePath("/blog");
+  revalidatePath(`/blog/categoria/${category.slug}`);
+  revalidatePath("/sitemap.xml");
+  categoryRedirect("deleted");
 }
 
 export async function savePartner(

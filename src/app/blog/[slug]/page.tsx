@@ -1,12 +1,16 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { notFound } from "next/navigation";
 
+import { CampaignPlacement } from "@/components/campaign-placement";
 import { SiteFooter } from "@/components/site-footer";
 import { PublicLink } from "@/components/navigation/public-link";
 import { SiteHeader } from "@/components/site-header";
 import { contentMetadata } from "@/lib/metadata";
-import { getPublishedPost } from "@/lib/public-content";
+import {
+  getPublishedPost,
+  normalizeBlogCategory,
+} from "@/lib/public-content";
+import { sanitizeRichTextHtml } from "@/lib/sanitize-rich-text";
 
 import styles from "./page.module.css";
 
@@ -15,18 +19,6 @@ type Props = {
     slug: string;
   }>;
 };
-
-function sanitizeHtml(value: string) {
-  return value
-    .replace(
-      /<script\b[^>]*>[\s\S]*?<\/script>/gi,
-      "",
-    )
-    .replace(
-      /\son\w+\s*=\s*(['"]).*?\1/gi,
-      "",
-    );
-}
 
 function formatDate(value?: string | null) {
   if (!value) return "";
@@ -78,13 +70,10 @@ export default async function Article({
   typeof data.content === "object" && data.content
     ? (data.content as {
         html?: string;
-        coverImage?: string;
-        coverAlt?: string;
       })
     : {};
 
-const html = sanitizeHtml(content.html ?? "");
-const coverAlt = content.coverAlt ?? "";
+  const html = sanitizeRichTextHtml(content.html ?? "");
 
   const words = html
     .replace(/<[^>]*>/g, " ")
@@ -97,22 +86,12 @@ const coverAlt = content.coverAlt ?? "";
     Math.ceil(words / 200),
   );
 
-  const category =
-    "category" in data &&
-    typeof data.category === "string"
-      ? data.category
-      : "Artigo";
+  const category = normalizeBlogCategory(data.category);
 
   const publishedAt =
     "published_at" in data &&
     typeof data.published_at === "string"
       ? data.published_at
-      : null;
-
-  const coverImage =
-    "cover_image" in data &&
-    typeof data.cover_image === "string"
-      ? data.cover_image
       : null;
 
   return (
@@ -122,7 +101,16 @@ const coverAlt = content.coverAlt ?? "";
       <main className={styles.page}>
         <header className={styles.hero}>
           <p className={styles.eyebrow}>
-            {category} · {readingTime}{" "}
+            {category ? (
+              <PublicLink
+                className={styles.categoryLink}
+                href={`/blog/categoria/${category.slug}`}
+              >
+                {category.name}
+              </PublicLink>
+            ) : (
+              "Artigo"
+            )} · {readingTime}{" "}
             {readingTime === 1
               ? "min de leitura"
               : "min de leitura"}
@@ -146,27 +134,14 @@ const coverAlt = content.coverAlt ?? "";
           )}
         </header>
 
-        {coverImage && (
-          <figure className={styles.cover}>
-            <div className={styles.coverWrapper}>
-              <Image
-                src={coverImage}
-                alt={coverAlt || data.title}
-                fill
-                sizes="(max-width: 768px) 100vw, 1000px"
-                className={styles.cover}
-                priority
-              />
-            </div>
-          </figure>
-        )}
-
         <article
           className={styles.article}
           dangerouslySetInnerHTML={{
             __html: html,
           }}
         />
+
+        <CampaignPlacement placement="blog-post-end" />
 
         <section className={styles.cta}>
           <p className={styles.ctaEyebrow}>

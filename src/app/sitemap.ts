@@ -61,7 +61,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     const now = new Date().toISOString();
 
-    const [projectsResult, postsResult, partnersResult] = await Promise.all([
+    const [projectsResult, postsResult, partnersResult, categoriesResult] = await Promise.all([
       supabase
         .from("projects")
         .select("slug,updated_at")
@@ -77,6 +77,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         .eq("active", true)
         .or(`starts_at.is.null,starts_at.lte.${now}`)
         .or(`ends_at.is.null,ends_at.gte.${now}`),
+      supabase
+        .from("blog_categories")
+        .select("slug"),
     ]);
 
     const projects: MetadataRoute.Sitemap = (projectsResult.data ?? []).map(
@@ -97,6 +100,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.7,
     }));
 
+    const categories: MetadataRoute.Sitemap = (categoriesResult.data ?? []).map((category) => ({
+      url: `${baseUrl}/blog/categoria/${category.slug}`,
+      changeFrequency: "weekly",
+      priority: 0.6,
+    }));
+
     const partners: MetadataRoute.Sitemap = (partnersResult.data ?? []).map(
       (partner) => ({
         url: `${baseUrl}/parceiros/${partner.slug}`,
@@ -108,7 +117,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       }),
     );
 
-    return [...staticRoutes, ...projects, ...posts, ...partners];
+    return [...staticRoutes, ...projects, ...posts, ...categories, ...partners];
   } catch {
     return staticRoutes;
   }

@@ -5,6 +5,7 @@ import { AdminEmptyState } from "@/components/admin/admin-empty-state";
 import { AdminFilters } from "@/components/admin/admin-filters";
 import { AdminPageHeader } from "@/components/admin/admin-page-header";
 import { AdminStatusBadge } from "@/components/admin/admin-status-badge";
+import { SettingsSavedToast } from "@/components/admin/settings-saved-toast";
 import styles from "@/components/admin/admin-ui.module.css";
 import { formatAdminDate } from "@/lib/admin-format";
 import { requireAdmin } from "@/lib/admin";
@@ -14,13 +15,14 @@ export const metadata: Metadata = {
   description: "Gerenciamento de artigos e publicações da Nelled Studio.",
 };
 
-type SearchParams = Promise<{ q?: string | string[]; status?: string | string[] }>;
+type SearchParams = Promise<{ q?: string | string[]; status?: string | string[]; saved?: string | string[] }>;
 const statuses = ["draft", "scheduled", "published", "archived"] as const;
 
 export default async function BlogAdmin({ searchParams }: { searchParams: SearchParams }) {
   const params = await searchParams;
   const query = typeof params.q === "string" ? params.q.trim() : "";
   const status = typeof params.status === "string" && statuses.includes(params.status as typeof statuses[number]) ? params.status : "";
+  const saved = params.saved === "1";
   const supabase = await requireAdmin();
   let request = supabase.from("blog_posts").select("id,title,slug,status,featured,updated_at").order("updated_at", { ascending: false });
   if (query) request = request.ilike("title", `%${query}%`);
@@ -30,7 +32,11 @@ export default async function BlogAdmin({ searchParams }: { searchParams: Search
 
   return (
     <>
+      <SettingsSavedToast show={saved} title="Artigo salvo" message="As alterações do artigo foram salvas com sucesso." />
       <AdminPageHeader eyebrow="Conteúdo" title="Blog" description="Organize artigos, rascunhos e publicações da Nelled Studio." action={{ label: "Novo artigo", href: "/admin/blog/novo", icon: Plus }} />
+      <Link className={`${styles.secondaryAction} ${styles.blogCategoriesLink}`} href="/admin/blog/categorias">
+        Gerenciar categorias
+      </Link>
       <AdminFilters query={query} status={status} placeholder="Buscar artigo por título" statuses={[
         { value: "draft", label: "Rascunho" },
         { value: "scheduled", label: "Agendado" },

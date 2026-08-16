@@ -61,6 +61,11 @@
   color: var(--text);
 }
 
+.blogCategoriesLink {
+  width: fit-content;
+  margin: -12px 0 16px;
+}
+
 .primaryAction:hover,
 .secondaryAction:hover {
   transform: translateY(-1px);

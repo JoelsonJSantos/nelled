@@ -20,6 +20,7 @@ const titles: Record<string, string> = {
 };
 
 function pageTitle(pathname: string) {
+  if (pathname === "/admin/blog/categorias") return "Categorias do Blog";
   const base = Object.keys(titles).find((path) => path !== "/admin" && pathname.startsWith(path));
   if (pathname.endsWith("/novo")) return `Novo · ${base ? titles[base] : "Conteúdo"}`;
   if (base && pathname !== base) return `Editar · ${titles[base]}`;
