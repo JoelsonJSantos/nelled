@@ -8,7 +8,7 @@ import styles from "./privacy-consent.module.css";
 
 export function PrivacyPreferencesButton({
   variant = "footer",
-  label = "Preferências de privacidade",
+  label = "Preferências",
 }: {
   variant?: "footer" | "inline";
   label?: string;

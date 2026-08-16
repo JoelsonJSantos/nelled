@@ -1,14 +1,29 @@
+"use client";
+
 import Image from "next/image";
 
-export function BrandLogo({ compact = false }: { compact?: boolean }) {
+type BrandLogoProps = {
+  compact?: boolean;
+};
+
+export function BrandLogo({
+  compact = false,
+}: BrandLogoProps) {
   return (
-    <div className="brand-logo" aria-label="Nelled Studio">
+    <div
+      className={`brand-logo${
+        compact ? " brand-logo-compact" : ""
+      }`}
+      aria-label="Nelled Studio"
+    >
       <Image
         className="brand-logo-dark"
         src="/nelled-studio-logo-dark.png"
         alt="Nelled Studio"
-        width={compact ? 52 : 140}
-        height={compact ? 52 : 140}
+        width={1045}
+        height={686}
+        sizes={compact ? "96px" : "104px"}
+        quality={100}
         priority
       />
 
@@ -17,8 +32,10 @@ export function BrandLogo({ compact = false }: { compact?: boolean }) {
         src="/nelled-studio-logo-light.png"
         alt=""
         aria-hidden="true"
-        width={compact ? 52 : 140}
-        height={compact ? 52 : 140}
+        width={1045}
+        height={686}
+        sizes={compact ? "96px" : "104px"}
+        quality={100}
         priority
       />
     </div>

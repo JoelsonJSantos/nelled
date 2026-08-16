@@ -28,7 +28,7 @@
   margin: 0;
 
   color: var(--muted);
-  font-size: 12px;
+  font-size: 13px;
   line-height: 1.4;
 }
 
@@ -77,13 +77,13 @@
 
   .footerGrid h4 {
     margin: 0 0 10px;
-    font-size: 9px;
+    font-size: 13px;
     letter-spacing: 0.8px;
   }
 
   .footerGrid a {
     margin: 8px 0;
-    font-size: 11px;
+    font-size: 13px;
     line-height: 1.35;
   }
 
@@ -92,17 +92,17 @@
   }
 
   .footerGrid .contactLinks a {
-    font-size: 11px;
+    font-size: 13px;
   }
 
   .footerBottom {
     gap: 11px;
     margin-top: 30px;
     padding-top: 17px;
-    font-size: 11px;
+    font-size: 13px;
   }
 
   .footerBottom a {
-    font-size: 11px;
+    font-size: 13px;
   }
 }
