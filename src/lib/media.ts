@@ -3,7 +3,7 @@ import { z } from "zod";
 export const MEDIA_MAX_BYTES = 10 * 1024 * 1024;
 export const MEDIA_ACCEPT = "image/jpeg,image/png,image/webp,image/avif";
 export const MEDIA_MIME_TYPES = ["image/jpeg", "image/png", "image/webp", "image/avif"] as const;
-export const MEDIA_CONTEXTS = ["portfolio", "blog", "partners", "site", "seo"] as const;
+export const MEDIA_CONTEXTS = ["portfolio", "blog", "partners", "campaigns", "site", "seo"] as const;
 
 export type MediaContext = (typeof MEDIA_CONTEXTS)[number];
 export type MediaMimeType = (typeof MEDIA_MIME_TYPES)[number];

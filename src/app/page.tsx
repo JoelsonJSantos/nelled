@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 
 import { ProjectImage } from "@/components/project-image";
+import { CampaignPlacement } from "@/components/campaign-placement";
 import { PublicLink } from "@/components/navigation/public-link";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
@@ -19,6 +20,7 @@ import { getFeaturedProjects } from "@/lib/public-content";
 import { getSiteSettings } from "@/lib/site-settings";
 
 import portfolioStyles from "./home-portfolio.module.css";
+import endStyles from "./home-end.module.css";
 
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSiteSettings();
@@ -235,7 +237,11 @@ export default async function Home() {
           )}
         </section>
 
-        <section className="section cta">
+        <div className={endStyles.campaign}>
+          <CampaignPlacement placement="home-showcase" />
+        </div>
+
+        <section className={`section cta ${endStyles.cta}`}>
           <p className="eyebrow">{home.ctaEyebrow}</p>
           <h2>{home.ctaTitle}</h2>
           <p>{home.ctaDescription}</p>

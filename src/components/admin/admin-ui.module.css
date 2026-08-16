@@ -206,6 +206,10 @@
   white-space: nowrap;
 }
 
+.rowAnalytics {
+  display: none;
+}
+
 .badge {
   width: max-content;
   display: inline-flex;
@@ -364,6 +368,10 @@
   grid-template-columns: minmax(0, 1.25fr) minmax(150px, 0.9fr) minmax(108px, 0.62fr) minmax(100px, 0.5fr) minmax(105px, 0.52fr) auto;
 }
 
+.dataRowCampaignAnalytics {
+  grid-template-columns: minmax(0, 1.25fr) minmax(118px, .75fr) minmax(86px, .45fr) repeat(3, minmax(68px, .38fr)) minmax(110px, .65fr) 80px;
+}
+
 .featured {
   color: var(--cyan);
   font-size: 11px;
@@ -488,12 +496,30 @@
   .dataRow,
   .dataRowThree,
   .dataRowFive,
-  .dataRowContact {
+  .dataRowContact,
+  .dataRowCampaignAnalytics {
     grid-template-columns: minmax(0, 1fr) auto;
   }
 
   .dataRow > :nth-child(n + 3) {
     display: none;
+  }
+
+  .rowAnalytics {
+    display: flex !important;
+    gap: 8px;
+    overflow: visible !important;
+    white-space: normal !important;
+  }
+
+  .rowAnalytics strong {
+    color: var(--muted);
+    font-size: 10px;
+    font-weight: 600;
+  }
+
+  .rowAnalytics strong:last-child {
+    color: var(--cyan);
   }
 
   .cardsGrid,

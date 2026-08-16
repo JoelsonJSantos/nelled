@@ -35,6 +35,7 @@ export async function deleteMedia(id: string): Promise<DeleteMediaState> {
     supabase.from("blog_posts").select("content,seo"),
     supabase.from("partners").select("content,seo"),
     supabase.from("ad_campaigns").select("image_url"),
+    supabase.from("ad_campaign_creatives").select("image_url,image_public_id"),
     supabase.from("site_settings").select("settings"),
   ]);
 

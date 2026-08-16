@@ -7,11 +7,7 @@ const statusLabels: Record<string, string> = {
   archived: "Arquivado",
   active: "Ativo",
   inactive: "Inativo",
-  new: "Novo",
-  contacted: "Em contato",
-  proposal_sent: "Proposta enviada",
-  won: "Convertido",
-  lost: "Perdido",
+  ended: "Encerrada",
 };
 
 export function formatAdminDate(value: string | null | undefined) {

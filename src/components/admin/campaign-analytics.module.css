@@ -1,0 +1,35 @@
+.periodTabs { display: flex; flex-wrap: wrap; gap: 6px; }
+.periodTabs a { padding: 8px 10px; border: 1px solid var(--line); border-radius: 7px; color: var(--muted); font-size: 11px; font-weight: 700; }
+.periodTabs a:hover, .periodTabs a:focus-visible, .periodActive { border-color: color-mix(in srgb, var(--cyan) 45%, var(--line)) !important; background: color-mix(in srgb, var(--cyan) 9%, var(--surface)); color: var(--cyan) !important; outline: none; }
+.performance { display: grid; gap: 16px; margin-top: 28px; padding: 21px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+.performanceHeader { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
+.performanceHeader h2, .dailyHeading h3 { margin: 0; color: var(--text); font-size: 16px; }
+.performanceHeader p:not(.eyebrow), .dailyHeading p, .panelHint { margin: 5px 0 0; color: var(--muted); font-size: 11px; line-height: 1.5; }
+.metricGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.metricGrid > div { min-height: 126px; }
+.daily { padding-top: 6px; }
+.dailyHeading { margin-bottom: 14px; }
+.chart { height: 172px; display: flex; align-items: end; gap: 8px; overflow-x: auto; padding: 10px 2px 0; border-bottom: 1px solid var(--line); }
+.chartItem { min-width: 30px; height: 100%; display: grid; grid-template-rows: 1fr auto; gap: 7px; text-align: center; }
+.chartItem small { color: var(--muted); font-size: 9px; white-space: nowrap; }
+.bars { min-height: 0; display: flex; align-items: end; justify-content: center; gap: 3px; }
+.bars span { width: 8px; min-height: 4px; border-radius: 3px 3px 0 0; background: color-mix(in srgb, var(--cyan) 78%, var(--blue)); }
+.bars span + span { background: color-mix(in srgb, var(--blue) 72%, var(--text)); }
+.legend { display: flex; align-items: center; gap: 7px; margin: 11px 0 0; color: var(--muted); font-size: 10px; }
+.legend i { width: 8px; height: 8px; border-radius: 2px; background: color-mix(in srgb, var(--cyan) 78%, var(--blue)); }
+.legend i + i { margin-left: 7px; background: color-mix(in srgb, var(--blue) 72%, var(--text)); }
+.ctr { color: var(--cyan); font-size: 13px; }
+.placementList { display: grid; }
+.placementRow { display: grid; grid-template-columns: minmax(0, 1.7fr) repeat(2, minmax(80px, .55fr)) 74px; gap: 12px; align-items: center; min-height: 72px; padding: 12px 18px; border-bottom: 1px solid var(--line); color: var(--text); font-size: 13px; }
+.placementRow:last-child { border-bottom: 0; }
+.placementRow > span { min-width: 0; display: grid; gap: 4px; }
+.placementRow small { color: var(--muted); font-size: 10px; }
+.placementRow > strong { color: var(--cyan); text-align: right; }
+.empty { min-height: 120px; display: grid; place-content: center; gap: 8px; padding: 20px; color: var(--muted); text-align: center; }
+.empty svg { margin: 0 auto; color: var(--cyan); }
+.empty p { margin: 0; font-size: 12px; }
+.listMetrics { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; color: var(--muted); font-size: 11px; }
+.listMetrics strong { display: block; color: var(--text); font-size: 12px; }
+.listMetrics span:last-child strong { color: var(--cyan); }
+@media (max-width: 900px) { .placementRow { grid-template-columns: minmax(0, 1fr) repeat(2, 70px) 62px; padding: 12px; } }
+@media (max-width: 720px) { .performanceHeader { display: grid; } .metricGrid { grid-template-columns: 1fr; } .placementRow { grid-template-columns: minmax(0, 1fr) 60px 54px; } .placementRow > strong { display: none; } .listMetrics { display: grid; } }

@@ -1,0 +1,20 @@
+.wrap { display: grid; justify-items: end; gap: 6px; }
+.actions { display: flex; align-items: center; justify-content: flex-end; gap: 5px; }
+.actions a, .actions button { min-height: 31px; display: inline-flex; align-items: center; gap: 5px; padding: 0 8px; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); color: var(--muted); font: inherit; font-size: 10px; font-weight: 700; cursor: pointer; }
+.actions a:hover, .actions button:hover { border-color: color-mix(in srgb, var(--cyan) 45%, var(--line)); color: var(--cyan); }
+.actions .deleteButton:hover { border-color: rgba(248, 113, 113, .48); color: #fca5a5; }
+.actions button:disabled { opacity: .55; cursor: wait; }
+.pending { display: inline-flex; align-items: center; gap: 5px; color: var(--muted); font-size: 10px; }
+.pending svg { animation: spin 800ms linear infinite; }
+.backdrop { position: fixed; inset: 0; z-index: 180; display: grid; place-items: center; padding: 20px; background: color-mix(in srgb, var(--bg) 78%, transparent); backdrop-filter: blur(12px); }
+.dialog { position: relative; width: min(420px, 100%); display: grid; gap: 14px; padding: 25px; border: 1px solid var(--line); border-radius: 13px; background: var(--surface); box-shadow: 0 24px 80px color-mix(in srgb, var(--bg) 75%, transparent); }
+.dialog > svg { color: #fca5a5; }
+.dialog h2 { margin: 0; color: var(--text); font-size: 20px; }
+.dialog p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.55; }
+.dialog > div { display: flex; justify-content: flex-end; gap: 9px; margin-top: 4px; }
+.dialog > div button { min-height: 40px; padding: 0 13px; border: 1px solid var(--line); border-radius: 7px; background: var(--bg); color: var(--text); font: inherit; font-size: 12px; font-weight: 700; cursor: pointer; }
+.dialog .confirmDelete { border-color: rgba(248, 113, 113, .4); background: rgba(248, 113, 113, .12); color: #fca5a5; }
+.close { position: absolute; top: 12px; right: 12px; width: 32px; height: 32px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 7px; background: var(--bg); color: var(--muted); cursor: pointer; }
+@keyframes spin { to { transform: rotate(360deg); } }
+@media (max-width: 720px) { .actions span { display: none; } .actions a, .actions button { width: 32px; justify-content: center; padding: 0; } }
+@media (prefers-reduced-motion: reduce) { .pending svg { animation: none; } }
