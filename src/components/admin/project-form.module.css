@@ -60,9 +60,9 @@
   font-weight: 650;
 }
 
-.grid input,
-.grid select,
-.grid textarea {
+.grid > label > input,
+.grid > label > select,
+.grid > label > textarea {
   width: 100%;
   margin: 0;
   padding: 11px 12px;
@@ -76,24 +76,24 @@
   transition: border-color 180ms ease, box-shadow 180ms ease;
 }
 
-.grid input,
-.grid select {
+.grid > label > input,
+.grid > label > select {
   min-height: 43px;
 }
 
-.grid textarea {
+.grid > label > textarea {
   resize: vertical;
   line-height: 1.55;
 }
 
-.grid input:focus,
-.grid select:focus,
-.grid textarea:focus {
+.grid > label > input:focus,
+.grid > label > select:focus,
+.grid > label > textarea:focus {
   border-color: var(--cyan);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--cyan) 9%, transparent);
 }
 
-.grid [aria-invalid="true"] {
+.grid > label > [aria-invalid="true"] {
   border-color: #f87171;
 }
 
@@ -165,9 +165,6 @@
   display: flex;
   justify-content: flex-end;
   gap: 10px;
-  position: sticky;
-  bottom: 16px;
-  z-index: 10;
   padding: 14px;
   border: 1px solid var(--line);
   border-radius: 10px;
@@ -240,10 +237,6 @@
   .mediaHelp a {
     width: 100%;
     margin-left: 27px;
-  }
-
-  .footer {
-    bottom: 8px;
   }
 
 }
