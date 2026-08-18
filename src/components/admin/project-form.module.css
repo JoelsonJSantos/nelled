@@ -60,7 +60,15 @@
   font-weight: 650;
 }
 
-.grid > label > input,
+/*
+ * Campos pertencentes diretamente ao formulário.
+ * O :not(.check) impede que o checkbox receba
+ * largura, padding e altura de um input comum.
+ *
+ * Também evitamos .grid input para não atingir
+ * inputs internos dos componentes de upload.
+ */
+.grid > label:not(.check) > input,
 .grid > label > select,
 .grid > label > textarea {
   width: 100%;
@@ -73,12 +81,22 @@
   font: inherit;
   font-size: 13px;
   outline: none;
-  transition: border-color 180ms ease, box-shadow 180ms ease;
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease;
 }
 
-.grid > label > input,
-.grid > label > select {
+/*
+ * Mantém altura mínima apenas nos inputs comuns.
+ * O select usa somente o padding acima, ficando
+ * mais compacto como no CmsForm de Parceiros.
+ */
+.grid > label:not(.check) > input {
   min-height: 43px;
+}
+
+.grid > label > select {
+  cursor: pointer;
 }
 
 .grid > label > textarea {
@@ -86,7 +104,7 @@
   line-height: 1.55;
 }
 
-.grid > label > input:focus,
+.grid > label:not(.check) > input:focus,
 .grid > label > select:focus,
 .grid > label > textarea:focus {
   border-color: var(--cyan);
@@ -118,24 +136,32 @@
   font-weight: 600;
 }
 
+/*
+ * Checkbox no mesmo padrão visual do CmsForm / Parceiros.
+ */
 .check {
-  min-height: 43px;
   display: flex !important;
   align-items: center;
-  align-self: end;
-  gap: 9px !important;
-  padding: 0 12px;
-  border: 1px solid var(--line);
-  border-radius: 7px;
-  background: var(--bg);
+  align-self: center;
+  gap: 8px !important;
   color: var(--text) !important;
 }
 
 .check input {
   width: 17px;
+  height: 17px;
+  min-width: 17px;
   min-height: 17px;
+  flex: 0 0 17px;
+  margin: 0;
   padding: 0;
   accent-color: var(--cyan);
+  cursor: pointer;
+}
+
+.check span {
+  line-height: 1.4;
+  cursor: pointer;
 }
 
 .mediaHelp {
@@ -209,7 +235,9 @@
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @media (max-width: 680px) {
@@ -229,6 +257,10 @@
     grid-column: auto;
   }
 
+  .check {
+    align-self: start;
+  }
+
   .mediaHelp {
     align-items: flex-start;
     flex-wrap: wrap;
@@ -238,9 +270,10 @@
     width: 100%;
     margin-left: 27px;
   }
-
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .spinner { animation: none; }
+  .spinner {
+    animation: none;
+  }
 }

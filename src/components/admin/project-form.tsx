@@ -143,8 +143,23 @@ export function ProjectForm({ record, media, initialMessage, action }: ProjectFo
             <p>Controle a visibilidade pública e os metadados.</p>
           </div>
           <div className={styles.grid}>
-            <label>Status<select name="status" defaultValue={record?.status ?? "draft"}><option value="draft">Rascunho</option><option value="published">Publicado</option><option value="archived">Arquivado</option></select></label>
-            <label className={styles.check}><input name="featured" type="checkbox" defaultChecked={record?.featured} /><span>Destacar na Home</span></label>
+            <label className={styles.statusField}>
+              Status
+              <select name="status" defaultValue={record?.status ?? "draft"}>
+                <option value="draft">Rascunho</option>
+                <option value="published">Publicado</option>
+                <option value="archived">Arquivado</option>
+              </select>
+            </label>
+
+            <label className={styles.check}>
+              <input
+                name="featured"
+                type="checkbox"
+                defaultChecked={record?.featured}
+              />
+              <span>Destacar na Home</span>
+            </label>
             <label>SEO title<input name="seoTitle" maxLength={70} defaultValue={record?.seoTitle ?? ""} aria-invalid={Boolean(fieldError(state, "seoTitle"))} />{fieldError(state, "seoTitle") && <small className={styles.error}>{fieldError(state, "seoTitle")}</small>}</label>
             <MediaPicker name="ogImage" label="OG image" media={availableMedia} context="seo" value={ogImage} onChange={(value) => setOgImage(typeof value === "string" ? value : value[0] ?? "")} onMediaUploaded={(items) => setAvailableMedia((current) => mergeMedia(current, items))} error={fieldError(state, "ogImage")} />
             <label className={styles.full}>SEO description<textarea name="seoDescription" rows={3} maxLength={180} defaultValue={record?.seoDescription ?? ""} aria-invalid={Boolean(fieldError(state, "seoDescription"))} />{fieldError(state, "seoDescription") && <small className={styles.error}>{fieldError(state, "seoDescription")}</small>}</label>
