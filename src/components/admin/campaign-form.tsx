@@ -75,7 +75,7 @@ export function CampaignForm({ record, partners, media, initialMessage, action }
               {fieldError(state, "name") && <small className={styles.error}>{fieldError(state, "name")}</small>}
             </label>
             <label>
-              Parceiro <span className={styles.optional}>opcional</span>
+              <span className={styles.labelRow}><span>Parceiro</span><span className={styles.optional}>opcional</span></span>
               <select name="partnerId" defaultValue={record?.partnerId ?? ""}>
                 <option value="">Sem parceiro vinculado</option>
                 {partners.map((partner) => <option value={partner.id} key={partner.id}>{partner.name}</option>)}
@@ -87,12 +87,12 @@ export function CampaignForm({ record, partners, media, initialMessage, action }
               {fieldError(state, "title") && <small className={styles.error}>{fieldError(state, "title")}</small>}
             </label>
             <label className={styles.full}>
-              Descrição <span className={styles.optional}>opcional</span>
+              <span className={styles.labelRow}><span>Descrição</span><span className={styles.optional}>opcional</span></span>
               <textarea name="description" rows={4} maxLength={1200} defaultValue={record?.description ?? ""} aria-invalid={Boolean(fieldError(state, "description"))} />
               {fieldError(state, "description") && <small className={styles.error}>{fieldError(state, "description")}</small>}
             </label>
             <label>
-              Texto do CTA <span className={styles.optional}>opcional</span>
+              <span className={styles.labelRow}><span>Texto do CTA</span><span className={styles.optional}>opcional</span></span>
               <input name="ctaLabel" maxLength={80} defaultValue={record?.ctaLabel ?? ""} placeholder="Conheça a solução" />
             </label>
             <label>
@@ -170,12 +170,12 @@ export function CampaignForm({ record, partners, media, initialMessage, action }
               <span>Campanha ativa</span>
             </label>
             <label>
-              Início <span className={styles.optional}>opcional</span>
+              <span className={styles.labelRow}><span>Início</span><span className={styles.optional}>opcional</span></span>
               <input name="startsAt" type="datetime-local" defaultValue={formatDateTimeLocal(record?.startsAt ?? "")} aria-invalid={Boolean(fieldError(state, "startsAt"))} />
               {fieldError(state, "startsAt") && <small className={styles.error}>{fieldError(state, "startsAt")}</small>}
             </label>
             <label>
-              Encerramento <span className={styles.optional}>opcional</span>
+              <span className={styles.labelRow}><span>Encerramento</span><span className={styles.optional}>opcional</span></span>
               <input name="endsAt" type="datetime-local" defaultValue={formatDateTimeLocal(record?.endsAt ?? "")} aria-invalid={Boolean(fieldError(state, "endsAt"))} />
               {fieldError(state, "endsAt") && <small className={styles.error}>{fieldError(state, "endsAt")}</small>}
             </label>

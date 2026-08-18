@@ -119,7 +119,9 @@
 @keyframes spin { to { transform: rotate(360deg); } }
 
 @media (max-width: 1200px) {
-  .actions span { display: none; }
+  .actions a span,
+  .actions button span,
+  .actions > span span { display: none; }
   .actions a,
   .actions button,
   .actions > span { width: 32px; padding: 0; }

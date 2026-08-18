@@ -186,6 +186,7 @@ export const getPublishedPartner = cache(async (slug: string) => {
     .select("*")
     .eq("slug", slug)
     .eq("active", true)
+    .is("archived_at", null)
     .or(`starts_at.is.null,starts_at.lte.${now}`)
     .or(`ends_at.is.null,ends_at.gte.${now}`)
     .maybeSingle();

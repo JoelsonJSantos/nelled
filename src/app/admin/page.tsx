@@ -19,7 +19,7 @@ export default async function AdminDashboard() {
   const [projectCount, postCount, partnerCount, contactCount, recentProjects, recentPosts, recentContacts] = await Promise.all([
     supabase.from("projects").select("id", { count: "exact", head: true }).eq("status", "published"),
     supabase.from("blog_posts").select("id", { count: "exact", head: true }).eq("status", "published"),
-    supabase.from("partners").select("id", { count: "exact", head: true }).eq("active", true),
+    supabase.from("partners").select("id", { count: "exact", head: true }).eq("active", true).is("archived_at", null),
     supabase.from("contact_requests").select("id", { count: "exact", head: true }).eq("status", "new"),
     supabase.from("projects").select("id,name,status,updated_at").order("updated_at", { ascending: false }).limit(5),
     supabase.from("blog_posts").select("id,title,status,updated_at").order("updated_at", { ascending: false }).limit(5),

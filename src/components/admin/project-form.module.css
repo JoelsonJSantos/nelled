@@ -119,6 +119,13 @@
   grid-column: 1 / -1;
 }
 
+.labelRow {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  min-width: 0;
+}
+
 .optional,
 .counter {
   color: var(--muted);

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 
 import { BlogEditor } from "@/components/admin/blog/blog-editor";
@@ -165,7 +166,10 @@ export function CmsForm({
         </label>
       </fieldset>
 
-      <button className={styles.submit} type="submit">Salvar parceiro</button>
+      <div className={styles.footer}>
+        <Link href="/admin/parceiros" className={styles.cancel}>Cancelar</Link>
+        <button className={styles.submit} type="submit">Salvar parceiro</button>
+      </div>
     </form>
   );
 }

@@ -47,10 +47,12 @@
   height: 40px;
   display: none;
   place-items: center;
+  flex: 0 0 auto;
   border: 1px solid var(--line);
   border-radius: 8px;
   background: var(--surface);
   color: var(--text);
+  cursor: pointer;
 }
 
 .actions {
@@ -69,7 +71,10 @@
   font: inherit;
   font-size: 12px;
   cursor: pointer;
-  transition: border-color 180ms ease, color 180ms ease, background-color 180ms ease;
+  transition:
+    border-color 180ms ease,
+    color 180ms ease,
+    background-color 180ms ease;
 }
 
 .actions a:hover,
@@ -83,6 +88,11 @@
   width: 38px;
   justify-content: center;
   padding: 0 !important;
+}
+
+.sunIcon,
+.moonIcon {
+  flex: 0 0 auto;
 }
 
 .moonIcon {
@@ -101,6 +111,7 @@
   margin: 0;
 }
 
+/* Mobile / tablet */
 @media (max-width: 900px) {
   .header {
     padding: 12px 22px;
@@ -109,6 +120,14 @@
   .menuButton {
     display: grid;
   }
+
+  /*
+   * No mobile, Tema / Ver site / Sair
+   * ficam somente dentro da sidebar.
+   */
+  .actions {
+    display: none;
+  }
 }
 
 @media (max-width: 560px) {
@@ -116,17 +135,24 @@
     padding-inline: 16px;
   }
 
-  .actions a {
-    display: none;
+  .titleGroup {
+    min-width: 0;
   }
 
-  .actions button span {
-    display: none;
+  .titleGroup div {
+    min-width: 0;
   }
 
+  .titleGroup strong {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .actions a,
   .actions button {
-    width: 40px;
-    justify-content: center;
-    padding: 0;
+    transition: none;
   }
 }

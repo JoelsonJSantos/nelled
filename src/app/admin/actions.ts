@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { z } from "zod";
 
 import { requireAdmin } from "@/lib/admin";
+import type { BlogActionState } from "@/lib/blog-action-state";
 import { sanitizeRichTextHtml } from "@/lib/sanitize-rich-text";
 
 const slug = z
@@ -95,6 +96,11 @@ const postSchema = z.object({
     .url()
     .optional()
     .or(z.literal("")),
+});
+
+const quickPostActionSchema = z.object({
+  id: z.string().uuid(),
+  operation: z.enum(["publish", "unpublish", "archive"]),
 });
 
 const blogCategorySchema = z.object({
@@ -623,6 +629,93 @@ export async function savePost(
   );
 
   redirect("/admin/blog?saved=1");
+}
+
+export async function quickPostAction(
+  _previousState: BlogActionState,
+  formData: FormData,
+): Promise<BlogActionState> {
+  const parsed = quickPostActionSchema.safeParse({
+    id: read(formData, "id"),
+    operation: read(formData, "operation"),
+  });
+
+  if (!parsed.success) {
+    return { status: "error", message: "Operação inválida." };
+  }
+
+  const supabase = await requireAdmin();
+  const { data: post, error } = await supabase
+    .from("blog_posts")
+    .select("*")
+    .eq("id", parsed.data.id)
+    .maybeSingle();
+
+  if (error) return { status: "error", message: "Não foi possível carregar o artigo." };
+  if (!post) return { status: "error", message: "Artigo não encontrado." };
+
+  if (parsed.data.operation === "publish") {
+    const content = objectRecord(post.content);
+    const seo = objectRecord(post.seo);
+    const publication = postSchema.safeParse({
+      title: post.title,
+      slug: post.slug,
+      status: "published",
+      summary: post.summary ?? "",
+      categoryId: post.category_id ?? "",
+      contentHtml: typeof content.html === "string" ? content.html : "",
+      contentJson: JSON.stringify(content.json ?? { type: "doc", content: [] }),
+      coverImage: typeof content.coverImage === "string" ? content.coverImage : "",
+      coverAlt: typeof content.coverAlt === "string" ? content.coverAlt : "",
+      featured: Boolean(post.featured),
+      publishedAt: post.published_at ?? "",
+      seoTitle: typeof seo.title === "string" ? seo.title : "",
+      seoDescription: typeof seo.description === "string" ? seo.description : "",
+      seoImage: typeof seo.image === "string" ? seo.image : "",
+    });
+
+    if (!publication.success) {
+      return {
+        status: "error",
+        message: publication.error.issues[0]?.message ?? "Complete o artigo antes de publicar.",
+      };
+    }
+  }
+
+  const nextStatus = parsed.data.operation === "publish"
+    ? "published"
+    : parsed.data.operation === "archive"
+      ? "archived"
+      : "draft";
+  const updatedAt = new Date().toISOString();
+  const payload = parsed.data.operation === "publish"
+    ? { status: nextStatus, published_at: updatedAt, updated_at: updatedAt }
+    : { status: nextStatus, updated_at: updatedAt };
+  const update = await supabase
+    .from("blog_posts")
+    .update(payload)
+    .eq("id", post.id)
+    .select("id")
+    .maybeSingle();
+
+  if (update.error || !update.data) {
+    return { status: "error", message: "Não foi possível alterar o status do artigo." };
+  }
+
+  revalidatePath("/");
+  revalidatePath("/admin/blog");
+  revalidatePath("/blog");
+  revalidatePath(`/blog/${post.slug}`);
+  revalidatePath("/sitemap.xml");
+
+  return {
+    status: "success",
+    message: nextStatus === "published"
+      ? "Artigo publicado."
+      : nextStatus === "archived"
+        ? "Artigo arquivado."
+        : "Publicação retirada.",
+  };
 }
 
 export async function saveBlogCategory(

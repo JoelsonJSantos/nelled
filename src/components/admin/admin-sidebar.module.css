@@ -34,10 +34,12 @@
   width: 38px;
   height: 38px;
   place-items: center;
+  flex: 0 0 auto;
   border: 1px solid var(--line);
   border-radius: 8px;
   background: transparent;
   color: var(--text);
+  cursor: pointer;
 }
 
 .management {
@@ -79,19 +81,30 @@
   color: var(--muted);
   font: inherit;
   font-size: 13px;
+  text-align: left;
   cursor: pointer;
-  transition: background-color 180ms ease, color 180ms ease;
+  transition:
+    background-color 180ms ease,
+    color 180ms ease;
 }
 
 .group a:hover,
 .footer a:hover,
 .footer button:hover {
-  background: color-mix(in srgb, var(--elevated) 70%, transparent);
+  background: color-mix(
+    in srgb,
+    var(--elevated) 70%,
+    transparent
+  );
   color: var(--text);
 }
 
 .group a.active {
-  background: color-mix(in srgb, var(--cyan) 10%, transparent);
+  background: color-mix(
+    in srgb,
+    var(--cyan) 10%,
+    transparent
+  );
   color: var(--cyan);
 }
 
@@ -105,7 +118,12 @@
   background: linear-gradient(var(--cyan), var(--blue));
 }
 
+/*
+ * No desktop, Tema / Ver site / Sair ficam
+ * somente no header.
+ */
 .footer {
+  display: none;
   margin-top: auto;
   padding-top: 18px;
   border-top: 1px solid var(--line);
@@ -115,6 +133,35 @@
   margin: 2px 0 0;
 }
 
+/*
+ * Tema atual.
+ *
+ * O site usa modo escuro como padrão.
+ * Quando html recebe a classe "light",
+ * o CSS troca automaticamente ícone e texto.
+ */
+.darkTheme {
+  display: inline;
+}
+
+.lightTheme {
+  display: none;
+}
+
+:global(html.light) .darkTheme {
+  display: none;
+}
+
+:global(html.light) .lightTheme {
+  display: inline;
+}
+
+.footer svg.darkTheme,
+.footer svg.lightTheme {
+  flex: 0 0 auto;
+}
+
+/* Mobile / tablet */
 @media (max-width: 900px) {
   .sidebar {
     position: fixed;
@@ -130,6 +177,14 @@
 
   .closeButton {
     display: grid;
+  }
+
+  /*
+   * No mobile, Tema / Ver site / Sair
+   * aparecem somente dentro da sidebar.
+   */
+  .footer {
+    display: block;
   }
 }
 

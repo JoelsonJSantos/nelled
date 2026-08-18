@@ -16,5 +16,8 @@
 .check input { width: 17px; height: 17px; margin: 0; padding: 0; accent-color: var(--cyan); }
 .seo { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .seo legend { padding: 0 7px; color: var(--text); font-size: 12px; font-weight: 700; }
-.submit { width: max-content; min-height: 43px; padding: 0 18px; border: 0; border-radius: 8px; background: linear-gradient(110deg, var(--blue), var(--cyan)); color: white; font: inherit; font-size: 13px; font-weight: 750; cursor: pointer; }
+.footer { display: flex; justify-content: flex-end; gap: 10px; padding: 14px; border: 1px solid var(--line); border-radius: 10px; background: color-mix(in srgb, var(--surface) 94%, transparent); backdrop-filter: blur(14px); }
+.cancel, .submit { min-height: 43px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 0 17px; border-radius: 8px; font: inherit; font-size: 13px; font-weight: 750; }
+.cancel { border: 1px solid var(--line); background: var(--surface); color: var(--text); }
+.submit { border: 0; background: linear-gradient(110deg, var(--blue), var(--cyan)); color: white; cursor: pointer; }
 @media (max-width: 680px) { .section, .seo { padding: 18px; } .fields, .seo { grid-template-columns: 1fr; } .checkGroup { align-items: flex-start; flex-direction: column; gap: 10px; } }

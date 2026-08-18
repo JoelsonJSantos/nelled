@@ -89,7 +89,7 @@ export function ProjectForm({ record, media, initialMessage, action }: ProjectFo
               {fieldError(state, "category") && <small className={styles.error}>{fieldError(state, "category")}</small>}
             </label>
             <label>
-              Cliente <span className={styles.optional}>opcional</span>
+              <span className={styles.labelRow}><span>Cliente</span><span className={styles.optional}>opcional</span></span>
               <input name="clientName" defaultValue={record?.clientName ?? ""} />
             </label>
             <label>
@@ -121,8 +121,8 @@ export function ProjectForm({ record, media, initialMessage, action }: ProjectFo
             <label className={styles.full}>Processo<textarea name="process" rows={6} defaultValue={record?.process ?? ""} /></label>
             <label className={styles.full}>Resultados<textarea name="results" rows={6} defaultValue={record?.results ?? ""} /></label>
             <label className={styles.full}>Tecnologias <span className={styles.optional}>uma por linha ou separadas por vírgula</span><textarea name="technologies" rows={4} defaultValue={record?.technologies.join("\n") ?? ""} /></label>
-            <label>URL externa <span className={styles.optional}>opcional</span><input name="externalUrl" type="url" placeholder="https://" defaultValue={record?.externalUrl ?? ""} aria-invalid={Boolean(fieldError(state, "externalUrl"))} />{fieldError(state, "externalUrl") && <small className={styles.error}>{fieldError(state, "externalUrl")}</small>}</label>
-            <label>GitHub <span className={styles.optional}>opcional</span><input name="githubUrl" type="url" placeholder="https://github.com/" defaultValue={record?.githubUrl ?? ""} aria-invalid={Boolean(fieldError(state, "githubUrl"))} />{fieldError(state, "githubUrl") && <small className={styles.error}>{fieldError(state, "githubUrl")}</small>}</label>
+            <label><span className={styles.labelRow}><span>URL externa</span><span className={styles.optional}>opcional</span></span><input name="externalUrl" type="url" placeholder="https://" defaultValue={record?.externalUrl ?? ""} aria-invalid={Boolean(fieldError(state, "externalUrl"))} />{fieldError(state, "externalUrl") && <small className={styles.error}>{fieldError(state, "externalUrl")}</small>}</label>
+            <label><span className={styles.labelRow}><span>GitHub</span><span className={styles.optional}>opcional</span></span><input name="githubUrl" type="url" placeholder="https://github.com/" defaultValue={record?.githubUrl ?? ""} aria-invalid={Boolean(fieldError(state, "githubUrl"))} />{fieldError(state, "githubUrl") && <small className={styles.error}>{fieldError(state, "githubUrl")}</small>}</label>
           </div>
         </section>
 

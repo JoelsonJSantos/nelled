@@ -26,6 +26,7 @@ export default async function Partners() {
     .from("partners")
     .select("slug,name,short_description,coupon")
     .eq("active", true)
+    .is("archived_at", null)
     .or(`starts_at.is.null,starts_at.lte.${now}`)
     .or(`ends_at.is.null,ends_at.gte.${now}`)
     .order("sort_order");

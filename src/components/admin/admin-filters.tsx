@@ -6,11 +6,13 @@ export function AdminFilters({
   status,
   statuses,
   placeholder,
+  allStatusesLabel = "Todos os status",
 }: {
   query?: string;
   status?: string;
   statuses: Array<{ value: string; label: string }>;
   placeholder: string;
+  allStatusesLabel?: string;
 }) {
   return (
     <form className={styles.filters}>
@@ -19,7 +21,7 @@ export function AdminFilters({
         <input name="q" defaultValue={query} placeholder={placeholder} aria-label={placeholder} />
       </div>
       <select name="status" defaultValue={status ?? ""} aria-label="Filtrar por status">
-        <option value="">Todos os status</option>
+        <option value="">{allStatusesLabel}</option>
         {statuses.map((item) => <option value={item.value} key={item.value}>{item.label}</option>)}
       </select>
       <button className={styles.filterButton} type="submit">Filtrar</button>
