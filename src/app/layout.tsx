@@ -51,6 +51,7 @@ export default async function RootLayout({
       lang="pt-BR"
       className={theme === "light" ? "light" : undefined}
       style={{ colorScheme: theme }}
+      data-scroll-behavior="smooth"
       suppressHydrationWarning
     >
       <body>
