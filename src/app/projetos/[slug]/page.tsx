@@ -117,13 +117,13 @@ export default async function Project({ params }: Props) {
 
         <nav className={styles.projectNav} aria-label="Navegação entre projetos">
           {navigation.previous ? (
-            <PublicLink href={`/portfolio/${navigation.previous.slug}`}>
+            <PublicLink href={`/projetos/${navigation.previous.slug}`}>
               <ArrowLeft size={17} />
               <span><small>Projeto anterior</small>{navigation.previous.name}</span>
             </PublicLink>
           ) : <span />}
           {navigation.next ? (
-            <PublicLink href={`/portfolio/${navigation.next.slug}`}>
+            <PublicLink href={`/projetos/${navigation.next.slug}`}>
               <span><small>Próximo projeto</small>{navigation.next.name}</span>
               <ArrowRight size={17} />
             </PublicLink>

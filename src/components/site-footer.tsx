@@ -1,10 +1,8 @@
-import { Mail, Phone } from "lucide-react";
-
 import { BrandLogo } from "@/components/brand-logo";
 import { PublicLink } from "@/components/navigation/public-link";
 import { PrivacyPreferencesButton } from "@/components/privacy/privacy-preferences-button";
 import { InstagramIcon, LinkedInIcon } from "@/components/social-icons";
-import { getSiteSettings, phoneHref } from "@/lib/site-settings";
+import { getSiteSettings } from "@/lib/site-settings";
 
 import styles from "./site-footer.module.css";
 
@@ -16,8 +14,9 @@ function footerCopyright(template: string, companyName: string) {
 
 export async function SiteFooter() {
   const settings = await getSiteSettings();
-  const telephone = phoneHref(settings.phone);
   const footer = settings.pages.footer;
+  const instagram = settings.instagram || "https://instagram.com/nelledstudio";
+  const linkedin = settings.linkedin || "https://linkedin.com/company/nelledstudio";
 
   return (
     <footer>
@@ -26,19 +25,29 @@ export async function SiteFooter() {
           <BrandLogo compact />
           <p>{footer.tagline}</p>
 
-          {(settings.email || settings.phone) && (
-            <div className={styles.contactLinks}>
-              {settings.email && (
-                <a href={`mailto:${settings.email}`}>
-                  <Mail size={14} />
-                  <span>{settings.email}</span>
+          {(instagram || linkedin) && (
+            <div className={styles.socialLinks} aria-label="Redes sociais">
+              {instagram && (
+                <a
+                  href={instagram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Instagram da Nelled Studio"
+                  title="Instagram"
+                >
+                  <InstagramIcon size={17} />
                 </a>
               )}
 
-              {settings.phone && telephone && (
-                <a href={telephone}>
-                  <Phone size={14} />
-                  <span>{settings.phone}</span>
+              {linkedin && (
+                <a
+                  href={linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="LinkedIn da Nelled Studio"
+                  title="LinkedIn"
+                >
+                  <LinkedInIcon size={17} />
                 </a>
               )}
             </div>
@@ -47,30 +56,17 @@ export async function SiteFooter() {
 
         <div>
           <h4>{footer.navigationTitle}</h4>
-          <PublicLink href="/">Início</PublicLink>
+          <PublicLink href="/">Home</PublicLink>
           <PublicLink href="/sobre">Sobre</PublicLink>
-          <PublicLink href="/portfolio">Portfólio</PublicLink>
-          <PublicLink href="/blog">Blog</PublicLink>
+          <PublicLink href="/projetos">Projetos</PublicLink>
+          <PublicLink href="/blog">News</PublicLink>
         </div>
 
         <div>
           <h4>{footer.ecosystemTitle}</h4>
           <PublicLink href="/parceiros">Parceiros</PublicLink>
+          <PublicLink href="/servicos">Serviços</PublicLink>
           <PublicLink href="/contato">Contato</PublicLink>
-
-          {settings.instagram && (
-            <a href={settings.instagram} target="_blank" rel="noopener noreferrer">
-              <InstagramIcon size={14} />
-              <span>Instagram</span>
-            </a>
-          )}
-
-          {settings.linkedin && (
-            <a href={settings.linkedin} target="_blank" rel="noopener noreferrer">
-              <LinkedInIcon size={14} />
-              <span>LinkedIn</span>
-            </a>
-          )}
         </div>
 
         <div>

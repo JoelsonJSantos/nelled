@@ -26,7 +26,7 @@ export function ProjectRowActions({ id, slug, status }: { id: string; slug: stri
       <div className={styles.actions} aria-label="Ações do projeto">
         <Link href={`/admin/portfolio/${id}`} title="Editar"><Edit3 size={15} /><span>Editar</span></Link>
         {status === "published" ? (
-          <Link href={`/portfolio/${slug}`} target="_blank" title="Visualizar projeto"><Eye size={15} /><span>Ver</span></Link>
+          <Link href={`/projetos/${slug}`} target="_blank" title="Visualizar projeto"><Eye size={15} /><span>Ver</span></Link>
         ) : (
           <span className={styles.disabled} title="Publique para visualizar"><EyeOff size={15} /><span>Ver</span></span>
         )}

@@ -119,7 +119,7 @@ export default async function Home() {
             <p className="subtle">{home.heroSecondary}</p>
 
             <div className="actions">
-              <PublicLink className="button primary" href="/portfolio">
+              <PublicLink className="button primary" href="/projetos">
                 {home.primaryCtaLabel}
                 <ArrowRight size={17} />
               </PublicLink>
@@ -181,7 +181,7 @@ export default async function Home() {
               <h2>{home.portfolioTitle}</h2>
             </div>
 
-            <PublicLink className="text-link" href="/portfolio">
+            <PublicLink className="text-link" href="/projetos">
               {home.portfolioLinkLabel}
               <ArrowRight size={16} />
             </PublicLink>
@@ -192,7 +192,7 @@ export default async function Home() {
               {featuredProjects.map((project) => (
                 <article className={portfolioStyles.card} key={project.id}>
                   <PublicLink
-                    href={`/portfolio/${project.slug}`}
+                    href={`/projetos/${project.slug}`}
                     className={portfolioStyles.media}
                   >
                     <ProjectImage
@@ -208,7 +208,7 @@ export default async function Home() {
                     </p>
 
                     <h3>
-                      <PublicLink href={`/portfolio/${project.slug}`}>
+                      <PublicLink href={`/projetos/${project.slug}`}>
                         {project.name}
                       </PublicLink>
                     </h3>
@@ -216,7 +216,7 @@ export default async function Home() {
                     <p>{project.excerpt}</p>
 
                     <PublicLink
-                      href={`/portfolio/${project.slug}`}
+                      href={`/projetos/${project.slug}`}
                       className={portfolioStyles.link}
                     >
                       Ver case

@@ -43,7 +43,7 @@ export const campaignPlacements = [
   },
   {
     value: "portfolio-list",
-    label: "Portfólio · Listagem",
+    label: "Projetos · Listagem",
     description: "Lateral no desktop e após os projetos no mobile.",
     desktopFormat: "vertical",
     mobileFormat: "horizontal",

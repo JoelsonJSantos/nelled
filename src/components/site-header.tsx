@@ -17,10 +17,11 @@ import { PublicLink } from "@/components/navigation/public-link";
 import styles from "./site-header.module.css";
 
 const nav = [
-  ["Início", "/"],
+  ["Home", "/"],
   ["Sobre", "/sobre"],
-  ["Portfólio", "/portfolio"],
-  ["Blog", "/blog"],
+  ["Projetos", "/projetos"],
+  ["News", "/blog"],
+  ["Serviços", "/servicos"],
   ["Contato", "/contato"],
 ] as const;
 

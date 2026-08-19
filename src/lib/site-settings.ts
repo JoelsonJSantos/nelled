@@ -184,7 +184,7 @@ export const defaultPageSettings: PublicPageSettings = {
     servicesEyebrow: "O QUE CONSTRUÍMOS",
     servicesTitle: "Nossos serviços",
     portfolioEyebrow: "PROJETOS SELECIONADOS",
-    portfolioTitle: "Portfólio em destaque",
+    portfolioTitle: "Projetos em destaque",
     portfolioLinkLabel: "Ver todos os projetos",
     ctaEyebrow: "VAMOS CONVERSAR",
     ctaTitle: "Vamos tirar seu projeto do papel?",

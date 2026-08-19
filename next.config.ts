@@ -11,6 +11,16 @@ const nextConfig: NextConfig = {
     qualities: [75, 100],
   },
 
+  async redirects() {
+    return [
+      {
+        source: "/portfolio/:path*",
+        destination: "/projetos/:path*",
+        permanent: true,
+      },
+    ];
+  },
+
   allowedDevOrigins: [
     "192.168.1.5",
     "localhost",

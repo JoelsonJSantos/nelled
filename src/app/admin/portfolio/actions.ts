@@ -21,9 +21,9 @@ function list(value: string) {
 
 function revalidateProject(slug?: string) {
   revalidatePath("/");
-  revalidatePath("/portfolio");
+  revalidatePath("/projetos");
   revalidatePath("/admin/portfolio");
-  if (slug) revalidatePath(`/portfolio/${slug}`);
+  if (slug) revalidatePath(`/projetos/${slug}`);
 }
 
 export async function saveProject(

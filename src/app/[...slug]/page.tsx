@@ -342,7 +342,7 @@ export default async function Page({ params }: Props) {
               <h3>Conteúdo gerenciado pelo CMS</h3>
               <p>Esta página está preparada para receber conteúdo institucional.</p>
 
-              {key === "portfolio" && (
+              {key === "projetos" && (
                 <PublicLink href="/contato" className="text-link">
                   Tem um projeto em mente? <ArrowRight size={16} />
                 </PublicLink>

@@ -1150,7 +1150,8 @@ export async function saveSiteSettings(
   revalidatePath("/");
   revalidatePath("/sobre");
   revalidatePath("/contato");
-  revalidatePath("/portfolio");
+  revalidatePath("/projetos");
+  revalidatePath("/servicos");
   revalidatePath("/blog");
   revalidatePath("/parceiros");
 
@@ -1345,7 +1346,8 @@ export async function savePageContent(
       "/",
       "/sobre",
       "/contato",
-      "/portfolio",
+      "/projetos",
+      "/servicos",
       "/blog",
       "/parceiros",
       "/termos-de-uso",
@@ -1359,7 +1361,8 @@ export async function savePageContent(
       "/",
       "/sobre",
       "/contato",
-      "/portfolio",
+      "/projetos",
+      "/servicos",
       "/blog",
       "/parceiros",
       "/termos-de-uso",

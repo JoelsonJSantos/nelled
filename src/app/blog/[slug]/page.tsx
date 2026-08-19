@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
+import { ArticleShareButton } from "@/components/article-share-button";
 import { CampaignPlacement } from "@/components/campaign-placement";
-import { SiteFooter } from "@/components/site-footer";
 import { PublicLink } from "@/components/navigation/public-link";
+import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { contentMetadata } from "@/lib/metadata";
 import {
@@ -67,13 +68,15 @@ export default async function Article({
   }
 
   const content =
-  typeof data.content === "object" && data.content
-    ? (data.content as {
-        html?: string;
-      })
-    : {};
+    typeof data.content === "object" && data.content
+      ? (data.content as {
+          html?: string;
+        })
+      : {};
 
-  const html = sanitizeRichTextHtml(content.html ?? "");
+  const html = sanitizeRichTextHtml(
+    content.html ?? "",
+  );
 
   const words = html
     .replace(/<[^>]*>/g, " ")
@@ -86,7 +89,9 @@ export default async function Article({
     Math.ceil(words / 200),
   );
 
-  const category = normalizeBlogCategory(data.category);
+  const category = normalizeBlogCategory(
+    data.category,
+  );
 
   const publishedAt =
     "published_at" in data &&
@@ -101,19 +106,7 @@ export default async function Article({
       <main className={styles.page}>
         <header className={styles.hero}>
           <p className={styles.eyebrow}>
-            {category ? (
-              <PublicLink
-                className={styles.categoryLink}
-                href={`/blog/categoria/${category.slug}`}
-              >
-                {category.name}
-              </PublicLink>
-            ) : (
-              "Artigo"
-            )} · {readingTime}{" "}
-            {readingTime === 1
-              ? "min de leitura"
-              : "min de leitura"}
+            ARTIGO
           </p>
 
           <h1>{data.title}</h1>
@@ -124,14 +117,53 @@ export default async function Article({
             </p>
           )}
 
-          {publishedAt && (
-            <time
-              className={styles.date}
-              dateTime={publishedAt}
-            >
-              {formatDate(publishedAt)}
-            </time>
-          )}
+          <div className={styles.meta}>
+            {publishedAt && (
+              <time dateTime={publishedAt}>
+                {formatDate(publishedAt)}
+              </time>
+            )}
+
+            {publishedAt && category && (
+              <span
+                className={
+                  styles.metaSeparator
+                }
+                aria-hidden="true"
+              >
+                ·
+              </span>
+            )}
+
+            {category && (
+              <PublicLink
+                className={
+                  styles.metaCategory
+                }
+                href={`/blog/categoria/${category.slug}`}
+              >
+                {category.name}
+              </PublicLink>
+            )}
+
+            {(publishedAt || category) && (
+              <span
+                className={
+                  styles.metaSeparator
+                }
+                aria-hidden="true"
+              >
+                ·
+              </span>
+            )}
+
+            <span>
+              {readingTime}{" "}
+              {readingTime === 1
+                ? "min de leitura"
+                : "min de leitura"}
+            </span>
+          </div>
         </header>
 
         <article
@@ -141,30 +173,38 @@ export default async function Article({
           }}
         />
 
+        <section
+          className={styles.share}
+          aria-label="Compartilhar artigo"
+        >
+          <div className={styles.shareContent}>
+            <p
+              className={
+                styles.shareEyebrow
+              }
+            >
+              COMPARTILHE
+            </p>
+
+            <h2>
+              Gostou deste artigo?
+            </h2>
+
+            <p>
+              Compartilhe este conteúdo com
+              quem também pode se interessar
+              pelo assunto.
+            </p>
+          </div>
+
+          <ArticleShareButton
+            title={data.title}
+            className={styles.shareButton}
+          />
+        </section>
+
         <CampaignPlacement placement="blog-post-end" />
 
-        <section className={styles.cta}>
-          <p className={styles.ctaEyebrow}>
-            VAMOS CONVERSAR
-          </p>
-
-          <h2>
-            Tem um projeto em mente?
-          </h2>
-
-          <p>
-            Conte sua ideia e descubra como a
-            Nelled Studio pode transformar seu
-            desafio em produto digital.
-          </p>
-
-          <PublicLink
-            href="/contato"
-            className="button primary"
-          >
-            Fale com a Nelled Studio
-          </PublicLink>
-        </section>
       </main>
 
       <SiteFooter />
