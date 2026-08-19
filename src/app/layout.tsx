@@ -1,8 +1,9 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { cookies } from "next/headers";
+import { SerwistProvider } from "@serwist/turbopack/react";
 
-import { ConsentAwareTracking } from "@/components/privacy/consent-aware-tracking";
 import { RouteTransitionProvider } from "@/components/navigation/route-transition-loader";
+import { ConsentAwareTracking } from "@/components/privacy/consent-aware-tracking";
 import { PrivacyConsent } from "@/components/privacy/privacy-consent";
 import { getSiteSettings } from "@/lib/site-settings";
 
@@ -14,11 +15,23 @@ export async function generateMetadata(): Promise<Metadata> {
 
   return {
     metadataBase: new URL(settings.domain),
+
+    applicationName: "Nelled Studio",
+    manifest: "/site.webmanifest",
+
     title: {
       default: settings.seoTitle,
       template: `%s | ${settings.companyName}`,
     },
+
     description: settings.seoDescription,
+
+    appleWebApp: {
+      capable: true,
+      title: "Nelled Studio",
+      statusBarStyle: "black-translucent",
+    },
+
     openGraph: {
       type: "website",
       siteName: settings.companyName,
@@ -26,11 +39,25 @@ export async function generateMetadata(): Promise<Metadata> {
       description: settings.seoDescription,
       url: settings.domain,
     },
+
     verification: {
       google: "BqOLZqFnMIWWYkmZd2wr5SZAeMhWecWw9c1EGf7BM7s",
     },
   };
 }
+
+export const viewport: Viewport = {
+  themeColor: [
+    {
+      media: "(prefers-color-scheme: light)",
+      color: "#f5f8fa",
+    },
+    {
+      media: "(prefers-color-scheme: dark)",
+      color: "#050b14",
+    },
+  ],
+};
 
 export default async function RootLayout({
   children,
@@ -55,11 +82,15 @@ export default async function RootLayout({
       suppressHydrationWarning
     >
       <body>
-        <RouteTransitionProvider>
-          {children}
-          <PrivacyConsent content={privacy} />
-          <ConsentAwareTracking version={privacy.version} />
-        </RouteTransitionProvider>
+        <SerwistProvider swUrl="/serwist/sw.js">
+          <RouteTransitionProvider>
+            {children}
+
+            <PrivacyConsent content={privacy} />
+
+            <ConsentAwareTracking version={privacy.version} />
+          </RouteTransitionProvider>
+        </SerwistProvider>
       </body>
     </html>
   );

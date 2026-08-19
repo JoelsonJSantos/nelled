@@ -61,8 +61,10 @@ html {
 
 body {
   margin: 0;
+
   background: var(--bg);
   color: var(--text);
+
   font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -121,10 +123,7 @@ p {
 
   object-fit: contain;
 
-  transform: translate(
-    -50%,
-    -50%
-  );
+  transform: translate(-50%, -50%);
 }
 
 .brand-logo-dark {
@@ -149,16 +148,10 @@ p {
   visibility: visible;
 }
 
-
-/*
- * Compacto: Navbar + Admin.
- *
- * O pequeno deslocamento vertical compensa
- * a área transparente/ótica do PNG.
- */
 .brand-logo-compact {
   width: 68px;
   min-width: 68px;
+
   aspect-ratio: 1045 / 686;
 
   transform: translateY(-5px);
@@ -182,13 +175,9 @@ p {
   justify-content: space-between;
 }
 
-/*
- * Logo compacto do navbar.
- * A proporção original do PNG é preservada.
- */
 .nav > .brand-logo {
-  width: 96px;
-  min-width: 96px;
+  width: 118px;
+  min-width: 118px;
 
   aspect-ratio: 1045 / 686;
 
@@ -200,6 +189,7 @@ p {
   gap: 28px;
 
   color: var(--muted);
+
   font-size: 14px;
 }
 
@@ -251,6 +241,7 @@ p {
   padding: 8px;
 
   border: 0;
+
   background: transparent;
 
   color: var(--text);
@@ -265,6 +256,7 @@ p {
 .icon-button:hover,
 .menu:hover {
   color: var(--cyan);
+
   transform: translateY(-1px);
 }
 
@@ -291,11 +283,12 @@ p {
 }
 
 .quote-link {
-  border: 1px solid color-mix(
-    in srgb,
-    var(--cyan) 55%,
-    var(--line)
-  );
+  border: 1px solid
+    color-mix(
+      in srgb,
+      var(--cyan) 55%,
+      var(--line)
+    );
 
   color: var(--cyan);
   background: transparent;
@@ -306,14 +299,14 @@ p {
 
   border-color: var(--cyan);
 
-  background: color-mix(
-    in srgb,
-    var(--cyan) 7%,
-    transparent
-  );
+  background:
+    color-mix(
+      in srgb,
+      var(--cyan) 7%,
+      transparent
+    );
 
-  box-shadow:
-    0 8px 24px rgba(0, 217, 245, 0.08);
+  box-shadow: 0 8px 24px rgba(0, 217, 245, 0.08);
 }
 
 .menu {
@@ -417,6 +410,7 @@ h2 span {
   max-width: 640px;
 
   color: var(--muted);
+
   line-height: 1.65;
 }
 
@@ -445,20 +439,21 @@ h2 span {
 .button.primary:hover {
   transform: translateY(-2px);
 
-  background: color-mix(
-    in srgb,
-    var(--cyan) 88%,
-    white
-  );
+  background:
+    color-mix(
+      in srgb,
+      var(--cyan) 88%,
+      white
+    );
 
-  border-color: color-mix(
-    in srgb,
-    var(--cyan) 88%,
-    white
-  );
+  border-color:
+    color-mix(
+      in srgb,
+      var(--cyan) 88%,
+      white
+    );
 
-  box-shadow:
-    0 9px 28px rgba(0, 217, 245, 0.16);
+  box-shadow: 0 9px 28px rgba(0, 217, 245, 0.16);
 }
 
 .primary svg,
@@ -486,17 +481,19 @@ h2 span {
 .ghost:hover {
   transform: translateY(-2px);
 
-  border-color: color-mix(
-    in srgb,
-    var(--cyan) 48%,
-    var(--line)
-  );
+  border-color:
+    color-mix(
+      in srgb,
+      var(--cyan) 48%,
+      var(--line)
+    );
 
-  background: color-mix(
-    in srgb,
-    var(--cyan) 6%,
-    transparent
-  );
+  background:
+    color-mix(
+      in srgb,
+      var(--cyan) 6%,
+      transparent
+    );
 
   color: var(--cyan);
 }
@@ -519,6 +516,7 @@ h2 span {
 
 .text-link:hover {
   color: var(--cyan);
+
   transform: translateX(3px);
 }
 
@@ -538,7 +536,6 @@ h2 span {
 .hero {
   position: relative;
   isolation: isolate;
-  overflow: hidden;
 
   min-height: 560px;
 
@@ -546,6 +543,8 @@ h2 span {
   grid-template-columns: 1.1fr 0.9fr;
   align-items: center;
   gap: 36px;
+
+  overflow: hidden;
 }
 
 .hero::before {
@@ -559,116 +558,292 @@ h2 span {
 
   background:
     radial-gradient(
-      circle at 76% 46%,
-      rgba(0, 217, 245, 0.10),
-      transparent 31%
+      circle at 77% 45%,
+      rgba(0, 153, 255, 0.12),
+      rgba(0, 217, 245, 0.04) 24%,
+      transparent 43%
     );
 }
 
 .light .hero::before {
   background:
     radial-gradient(
-      circle at 76% 46%,
-      rgba(0, 173, 196, 0.09),
-      transparent 31%
+      circle at 77% 45%,
+      rgba(0, 173, 196, 0.11),
+      rgba(0, 153, 255, 0.035) 25%,
+      transparent 43%
     );
 }
+
+
+/* =========================================================
+   HERO / NELLED SYMBOL
+========================================================= */
 
 .ns-stage {
   position: relative;
   isolation: isolate;
 
-  height: 370px;
+  min-width: 0;
+  height: 440px;
 
   display: grid;
   place-items: center;
 
-  color: var(--cyan);
+  overflow: visible;
+
+  perspective: 900px;
 }
 
-.hero-logo {
-  position: relative;
-  z-index: 1;
+.ns-glow {
+  position: absolute;
+  z-index: 0;
 
-  width: min(100%, 500px);
+  width: 410px;
+  height: 410px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(0, 153, 255, 0.18) 0%,
+      rgba(0, 128, 255, 0.10) 31%,
+      rgba(0, 217, 245, 0.045) 51%,
+      transparent 72%
+    );
+
+  filter: blur(5px);
+
+  pointer-events: none;
+}
+
+.hero-mark-shell {
+  position: relative;
+  z-index: 4;
+
+  width: min(77%, 350px);
+  aspect-ratio: 1;
+
+  display: grid;
+  place-items: center;
+
+  animation: ns-mark-float 6s ease-in-out infinite;
+}
+
+.hero-mark {
+  display: block;
+
+  width: 100%;
   height: auto;
 
   object-fit: contain;
 
   filter:
-    drop-shadow(
-      0 0 35px rgba(0, 217, 245, 0.16)
-    );
-}
-
-.hero-logo-light {
-  display: none;
-}
-
-.light .hero-logo-dark {
-  display: none;
-}
-
-.light .hero-logo-light {
-  display: block;
-}
-
-.ns-mark {
-  width: 180px;
-  height: 180px;
-
-  display: grid;
-  place-items: center;
-
-  border: 1px solid var(--cyan);
-
-  font-size: 60px;
-  letter-spacing: -12px;
-
-  transform: skewY(-8deg);
-
-  box-shadow:
-    0 0 80px rgba(0, 217, 245, 0.22),
-    inset 0 0 45px rgba(0, 217, 245, 0.08);
-}
-
-.ns-mark span {
-  color: var(--cyan);
-}
-
-.ns-stage > p {
-  position: absolute;
-
-  text-align: center;
-
-  color: var(--text);
-
-  font-size: 13px;
-  line-height: 25px;
-  letter-spacing: 7px;
-}
-
-.ns-stage > p span {
-  color: var(--cyan);
+    drop-shadow(0 0 14px rgba(0, 153, 255, 0.22))
+    drop-shadow(0 0 32px rgba(0, 217, 245, 0.13))
+    drop-shadow(0 24px 34px rgba(0, 0, 0, 0.3));
 }
 
 .orbit {
   position: absolute;
 
-  border: 1px solid rgba(0, 217, 245, 0.25);
+  top: 50%;
+  left: 50%;
+
+  z-index: 2;
+
+  border: 1px solid
+    color-mix(
+      in srgb,
+      var(--cyan) 31%,
+      transparent
+    );
+
   border-radius: 50%;
 
-  transform: rotate(-25deg);
+  opacity: 0.58;
+
+  pointer-events: none;
+
+  box-shadow: 0 0 18px rgba(0, 217, 245, 0.025);
 }
 
 .orbit-a {
-  width: 350px;
-  height: 140px;
+  width: 410px;
+  height: 304px;
+
+  transform:
+    translate(-50%, -50%)
+    rotate(15deg);
+
+  animation: ns-orbit-a 24s linear infinite;
 }
 
 .orbit-b {
-  width: 270px;
-  height: 270px;
+  width: 392px;
+  height: 225px;
+
+  transform:
+    translate(-50%, -50%)
+    rotate(-25deg);
+
+  opacity: 0.46;
+
+  animation: ns-orbit-b 29s linear infinite reverse;
+}
+
+.orbit-c {
+  width: 290px;
+  height: 392px;
+
+  transform:
+    translate(-50%, -50%)
+    rotate(39deg);
+
+  opacity: 0.32;
+
+  animation: ns-orbit-c 34s linear infinite;
+}
+
+.hero-floor-glow {
+  position: absolute;
+
+  left: 50%;
+  bottom: 27px;
+
+  z-index: 1;
+
+  width: 245px;
+  height: 24px;
+
+  transform: translateX(-50%);
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      ellipse at center,
+      rgba(0, 217, 245, 0.8) 0%,
+      rgba(0, 153, 255, 0.33) 28%,
+      rgba(0, 153, 255, 0.09) 52%,
+      transparent 75%
+    );
+
+  filter: blur(9px);
+
+  opacity: 0.8;
+
+  pointer-events: none;
+
+  animation: ns-floor-glow 4s ease-in-out infinite;
+}
+
+
+/* =========================================================
+   HERO MOTION
+========================================================= */
+
+@keyframes ns-mark-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-7px);
+  }
+}
+
+@keyframes ns-orbit-a {
+  from {
+    transform:
+      translate(-50%, -50%)
+      rotate(15deg);
+  }
+
+  to {
+    transform:
+      translate(-50%, -50%)
+      rotate(375deg);
+  }
+}
+
+@keyframes ns-orbit-b {
+  from {
+    transform:
+      translate(-50%, -50%)
+      rotate(-25deg);
+  }
+
+  to {
+    transform:
+      translate(-50%, -50%)
+      rotate(335deg);
+  }
+}
+
+@keyframes ns-orbit-c {
+  from {
+    transform:
+      translate(-50%, -50%)
+      rotate(39deg);
+  }
+
+  to {
+    transform:
+      translate(-50%, -50%)
+      rotate(399deg);
+  }
+}
+
+@keyframes ns-floor-glow {
+  0%,
+  100% {
+    opacity: 0.58;
+    transform: translateX(-50%) scaleX(0.88);
+  }
+
+  50% {
+    opacity: 0.88;
+    transform: translateX(-50%) scaleX(1);
+  }
+}
+
+
+/* =========================================================
+   HERO / LIGHT THEME
+========================================================= */
+
+.light .ns-glow {
+  background:
+    radial-gradient(
+      circle,
+      rgba(0, 173, 196, 0.13) 0%,
+      rgba(0, 153, 255, 0.065) 36%,
+      transparent 70%
+    );
+}
+
+.light .orbit {
+  border-color:
+    color-mix(
+      in srgb,
+      var(--cyan) 43%,
+      transparent
+    );
+
+  opacity: 0.5;
+}
+
+.light .hero-mark {
+  filter:
+    drop-shadow(0 10px 24px rgba(18, 38, 62, 0.12))
+    drop-shadow(0 0 18px rgba(0, 173, 196, 0.11));
+}
+
+.light .hero-floor-glow {
+  opacity: 0.45;
 }
 
 
@@ -706,6 +881,7 @@ h2 span {
   max-width: 330px;
 
   color: var(--muted);
+
   line-height: 1.5;
 }
 
@@ -745,11 +921,12 @@ h2 span {
 .service-card:hover {
   transform: translateY(-4px);
 
-  border-color: color-mix(
-    in srgb,
-    var(--cyan) 55%,
-    var(--line)
-  );
+  border-color:
+    color-mix(
+      in srgb,
+      var(--cyan) 55%,
+      var(--line)
+    );
 }
 
 .service-card svg {
@@ -811,8 +988,7 @@ h2 span {
   font-weight: 700;
   letter-spacing: -4px;
 
-  box-shadow:
-    0 0 30px rgba(0, 217, 245, 0.16);
+  box-shadow: 0 0 30px rgba(0, 217, 245, 0.16);
 }
 
 .empty-panel h3 {
@@ -834,8 +1010,10 @@ h2 span {
 
 .cta {
   position: relative;
+
   width: 100%;
   max-width: var(--content-narrow);
+
   overflow: hidden;
 
   margin: 32px auto 56px;
@@ -848,7 +1026,7 @@ h2 span {
   background:
     radial-gradient(
       circle at 80% 20%,
-      rgba(0, 217, 245, 0.10),
+      rgba(0, 217, 245, 0.1),
       transparent 28%
     ),
     var(--surface);
@@ -858,6 +1036,7 @@ h2 span {
   content: "";
 
   position: absolute;
+
   top: 0;
   left: 7%;
   right: 7%;
@@ -883,6 +1062,7 @@ h2 span {
   max-width: 560px;
 
   color: var(--muted);
+
   line-height: 1.6;
 }
 
@@ -974,20 +1154,23 @@ textarea {
 }
 
 .optional-label {
-  color: color-mix(
-    in srgb,
-    var(--muted) 72%,
-    transparent
-  );
+  color:
+    color-mix(
+      in srgb,
+      var(--muted) 72%,
+      transparent
+    );
 
   font-size: 11px;
 }
 
 .field-error {
   display: block;
+
   margin-top: 6px;
 
   color: #ff7a8a;
+
   font-size: 12px;
 }
 
@@ -1002,25 +1185,28 @@ textarea {
 }
 
 .contact-feedback.success {
-  border-color: color-mix(
-    in srgb,
-    #22c55e 38%,
-    var(--line)
-  );
+  border-color:
+    color-mix(
+      in srgb,
+      #22c55e 38%,
+      var(--line)
+    );
 
-  color: color-mix(
-    in srgb,
-    #22c55e 80%,
-    var(--text)
-  );
+  color:
+    color-mix(
+      in srgb,
+      #22c55e 80%,
+      var(--text)
+    );
 }
 
 .contact-feedback.error {
-  border-color: color-mix(
-    in srgb,
-    #ff5267 38%,
-    var(--line)
-  );
+  border-color:
+    color-mix(
+      in srgb,
+      #ff5267 38%,
+      var(--line)
+    );
 
   color: #ff7a8a;
 }
@@ -1031,6 +1217,7 @@ textarea {
 
 .contact-submit:disabled {
   cursor: wait;
+
   opacity: 0.68;
 }
 
@@ -1101,7 +1288,6 @@ textarea {
 .contact-info-links a {
   display: flex;
   align-items: center;
-
   gap: 11px;
 
   min-width: 0;
@@ -1123,11 +1309,12 @@ textarea {
 .contact-info-links a:hover {
   transform: translateX(2px);
 
-  border-color: color-mix(
-    in srgb,
-    var(--cyan) 42%,
-    var(--line)
-  );
+  border-color:
+    color-mix(
+      in srgb,
+      var(--cyan) 42%,
+      var(--line)
+    );
 
   color: var(--cyan);
 }
@@ -1152,7 +1339,6 @@ textarea {
   font-weight: 600;
 
   text-transform: uppercase;
-
   letter-spacing: 0.06em;
 }
 
@@ -1192,18 +1378,13 @@ footer {
   gap: 30px;
 }
 
-/*
- * Logo do footer:
- * reduzido e levemente elevado para compensar
- * a área transparente do PNG.
- */
 .footer-grid .brand-logo {
-  width: 96px;
-  min-width: 96px;
+  width: 118px;
+  min-width: 118px;
 
   aspect-ratio: 1045 / 686;
 
-  transform: translateY(5px);
+  transform: translateY(2px);
 }
 
 .footer-grid p {
@@ -1213,6 +1394,8 @@ footer {
 
   font-size: 14px;
   line-height: 1.5;
+
+  transform: translateY(-10px);
 }
 
 .footer-grid h4 {
@@ -1223,11 +1406,6 @@ footer {
   text-transform: uppercase;
 }
 
-/*
- * Links das colunas:
- * mantemos em bloco para não colar
- * Início / Sobre / Portfólio / Blog.
- */
 .footer-grid a {
   display: block;
 
@@ -1244,19 +1422,14 @@ footer {
 
 .footer-grid a:hover {
   color: var(--cyan);
+
   transform: translateX(2px);
 }
 
-/*
- * Contatos:
- * ícone e texto ficam lado a lado.
- */
 .footer-grid a[href^="mailto:"],
 .footer-grid a[href^="tel:"] {
   display: flex;
-
   align-items: center;
-
   gap: 8px;
 }
 
@@ -1269,7 +1442,6 @@ footer {
 
 .footer-bottom {
   margin-top: 40px;
-
   padding-top: 20px;
 
   display: flex;
@@ -1298,6 +1470,14 @@ footer {
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
+  }
+
+  .hero-mark-shell,
+  .orbit-a,
+  .orbit-b,
+  .orbit-c,
+  .hero-floor-glow {
+    animation: none !important;
   }
 }
 
@@ -1328,20 +1508,20 @@ footer {
   }
 
   .nav > .brand-logo {
-    width: 68px;
-    min-width: 68px;
+  width: 82px;
+  min-width: 82px;
 
-    aspect-ratio: 1045 / 686;
+  aspect-ratio: 1045 / 686;
 
-    transform: translateY(-1px);
-  }
+  transform: translateY(-1px);
+}
 
   .brand-logo-compact {
-  width: 86px;
-  min-width: 86px;
+    width: 86px;
+    min-width: 86px;
 
-  transform: translateY(-3px);
-}
+    transform: translateY(-3px);
+  }
 
 
   /* Hero */
@@ -1381,6 +1561,7 @@ footer {
 
   .split {
     grid-template-columns: 1fr;
+
     gap: 30px;
   }
 
@@ -1425,15 +1606,14 @@ footer {
   /* Footer */
 
   .footer-grid .brand-logo {
-    width: 68px;
-    min-width: 68px;
+  width: 82px;
+  min-width: 82px;
 
-    transform: translateY(-5px);
-  }
+  transform: translateY(-5px);
+}
 
   .footer-bottom {
     flex-direction: column;
-
     align-items: flex-start;
 
     gap: 10px;

@@ -11,16 +11,16 @@ import {
   ShieldCheck,
 } from "lucide-react";
 
-import { ProjectImage } from "@/components/project-image";
 import { CampaignPlacement } from "@/components/campaign-placement";
 import { PublicLink } from "@/components/navigation/public-link";
+import { ProjectImage } from "@/components/project-image";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { getFeaturedProjects } from "@/lib/public-content";
 import { getSiteSettings } from "@/lib/site-settings";
 
-import portfolioStyles from "./home-portfolio.module.css";
 import endStyles from "./home-end.module.css";
+import portfolioStyles from "./home-portfolio.module.css";
 
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSiteSettings();
@@ -131,27 +131,25 @@ export default async function Home() {
           </div>
 
           <div className="ns-stage" aria-label="Símbolo Nelled Studio">
-            <div className="orbit orbit-a" />
-            <div className="orbit orbit-b" />
+            <div className="ns-glow" aria-hidden="true" />
 
-            <Image
-              src="/nelled-studio-hero-dark.png"
-              alt="Logo Nelled Studio"
-              width={560}
-              height={560}
-              priority
-              className="hero-logo hero-logo-dark"
-            />
+            <div className="orbit orbit-a" aria-hidden="true" />
+            <div className="orbit orbit-b" aria-hidden="true" />
+            <div className="orbit orbit-c" aria-hidden="true" />
 
-            <Image
-              src="/nelled-studio-hero-light.png"
-              alt=""
-              aria-hidden="true"
-              width={560}
-              height={560}
-              priority
-              className="hero-logo hero-logo-light"
-            />
+            <div className="hero-mark-shell">
+              <Image
+                src="/nelled-studio-mark.png"
+                alt="Símbolo Nelled Studio"
+                width={520}
+                height={520}
+                sizes="(max-width: 720px) 0px, 420px"
+                priority
+                className="hero-mark"
+              />
+            </div>
+
+            <div className="hero-floor-glow" aria-hidden="true" />
           </div>
         </section>
 
@@ -229,9 +227,13 @@ export default async function Home() {
           ) : (
             <div className="empty-panel">
               <div className="empty-symbol">NS</div>
+
               <div>
                 <h3>Projetos com contexto, não promessas.</h3>
-                <p>Os cases publicados aqui serão projetos reais da Nelled Studio.</p>
+                <p>
+                  Os cases publicados aqui serão projetos reais da Nelled
+                  Studio.
+                </p>
               </div>
             </div>
           )}

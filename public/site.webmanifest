@@ -1,21 +1,54 @@
 {
-  "name": "Nelled",
+  "id": "/",
+  "name": "Nelled Studio",
   "short_name": "Nelled",
+  "description": "Desenvolvimento, design e tecnologia para soluções digitais.",
+  "lang": "pt-BR",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "theme_color": "#050b14",
+  "background_color": "#050b14",
   "icons": [
     {
       "src": "/web-app-manifest-192x192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "maskable"
+      "purpose": "any"
     },
     {
       "src": "/web-app-manifest-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "maskable"
-    }
+      "purpose": "any"
+    },
+    {
+    "src": "/web-app-manifest-maskable-192x192.png",
+    "sizes": "192x192",
+    "type": "image/png",
+    "purpose": "maskable"
+  },
+  {
+    "src": "/web-app-manifest-maskable-512x512.png",
+    "sizes": "512x512",
+    "type": "image/png",
+    "purpose": "maskable"
+  }
   ],
-  "theme_color": "#ffffff",
-  "background_color": "#ffffff",
-  "display": "standalone"
+  "screenshots": [
+    {
+      "src": "/pwa/screenshot-desktop.png",
+      "sizes": "1440x900",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Nelled Studio no desktop"
+    },
+    {
+      "src": "/pwa/screenshot-mobile.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Nelled Studio no mobile"
+    }
+  ]
 }
