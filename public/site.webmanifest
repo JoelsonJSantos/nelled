@@ -1,6 +1,6 @@
 {
   "id": "/",
-  "name": "Nelled Studio",
+  "name": "Nelled Studio - Desenvolvimento de Sistemas",
   "short_name": "Nelled",
   "description": "Desenvolvimento, design e tecnologia para soluções digitais.",
   "lang": "pt-BR",
@@ -23,32 +23,16 @@
       "purpose": "any"
     },
     {
-    "src": "/web-app-manifest-maskable-192x192.png",
-    "sizes": "192x192",
-    "type": "image/png",
-    "purpose": "maskable"
-  },
-  {
-    "src": "/web-app-manifest-maskable-512x512.png",
-    "sizes": "512x512",
-    "type": "image/png",
-    "purpose": "maskable"
-  }
-  ],
-  "screenshots": [
-    {
-      "src": "/pwa/screenshot-desktop.png",
-      "sizes": "1440x900",
+      "src": "/web-app-manifest-maskable-192x192.png",
+      "sizes": "192x192",
       "type": "image/png",
-      "form_factor": "wide",
-      "label": "Nelled Studio no desktop"
+      "purpose": "maskable"
     },
     {
-      "src": "/pwa/screenshot-mobile.png",
-      "sizes": "390x844",
+      "src": "/web-app-manifest-maskable-512x512.png",
+      "sizes": "512x512",
       "type": "image/png",
-      "form_factor": "narrow",
-      "label": "Nelled Studio no mobile"
+      "purpose": "maskable"
     }
   ]
 }

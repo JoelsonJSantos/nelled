@@ -2,12 +2,20 @@
 
 import Image from "next/image";
 
+import { PublicLink } from "@/components/navigation/public-link";
+
+import styles from "./brand-logo.module.css";
+
 type BrandLogoProps = {
   compact?: boolean;
+  mobileHref?: string;
+  onMobileClick?: () => void;
 };
 
 export function BrandLogo({
   compact = false,
+  mobileHref,
+  onMobileClick,
 }: BrandLogoProps) {
   return (
     <div
@@ -16,6 +24,15 @@ export function BrandLogo({
       }`}
       aria-label="Nelled Studio"
     >
+      {mobileHref && (
+        <PublicLink
+          href={mobileHref}
+          className={styles.mobileHomeLink}
+          aria-label="Ir para a página inicial"
+          onClick={onMobileClick}
+        />
+      )}
+
       <Image
         className="brand-logo-dark"
         src="/nelled-studio-logo-dark.png"

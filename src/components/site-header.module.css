@@ -19,7 +19,47 @@
   isolation: isolate;
 }
 
+/* =========================================================
+   HEADER ICONS
+========================================================= */
+
+/*
+ * O tamanho visual dos ícones fica centralizado aqui.
+ *
+ * Isso sobrescreve os tamanhos definidos diretamente
+ * pelos componentes Lucide sem alterar a altura da navbar.
+ */
+
+.siteHeader :global(.icon-button) svg {
+  width: 21px;
+  height: 21px;
+}
+
+.siteHeader :global(.menu) svg {
+  width: 26px;
+  height: 26px;
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
 @media (max-width: 720px) {
+  /*
+   * Um pouco maiores no touch, sem aumentar
+   * a altura geral da barra de navegação.
+   */
+
+  .siteHeader :global(.icon-button) svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .siteHeader :global(.menu) svg {
+    width: 27px;
+    height: 27px;
+  }
+
   .overlay {
     position: fixed;
     inset: 0;
@@ -84,7 +124,7 @@
 
   /*
    * Não redimensionar .brand-logo img diretamente.
-   * O global.css controla a proporção do logo.
+   * O globals.css controla a proporção do logo.
    */
 
   .actions {

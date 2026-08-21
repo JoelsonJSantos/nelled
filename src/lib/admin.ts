@@ -1,39 +1,118 @@
 import { cache } from "react";
 import { redirect } from "next/navigation";
-import { createClient } from "@/lib/supabase/server";
+
+import {
+  createAuthenticatedClient,
+} from "@/lib/supabase/server";
 
 type AdminAuthResult =
-  | { status: "admin"; supabase: NonNullable<Awaited<ReturnType<typeof createClient>>> }
-  | { status: "unauthenticated" | "forbidden" | "unavailable" };
+  | {
+      status: "admin";
+      supabase: NonNullable<
+        Awaited<
+          ReturnType<
+            typeof createAuthenticatedClient
+          >
+        >
+      >;
+    }
+  | {
+      status:
+        | "unauthenticated"
+        | "forbidden"
+        | "unavailable";
+    };
 
-const verifyAdmin = cache(async (): Promise<AdminAuthResult> => {
-  const supabase = await createClient();
-  if (!supabase) return { status: "unavailable" };
+const verifyAdmin = cache(
+  async (): Promise<AdminAuthResult> => {
+    const supabase =
+      await createAuthenticatedClient();
 
-  const { data, error } = await supabase.auth.getClaims();
-  const userId = data?.claims?.sub;
-  if (error || !userId) return { status: "unauthenticated" };
+    if (!supabase) {
+      return {
+        status: "unavailable",
+      };
+    }
 
-  const { data: profile, error: profileError } = await supabase
-    .from("profiles")
-    .select("role")
-    .eq("id", userId)
-    .maybeSingle();
+    const {
+      data,
+      error,
+    } =
+      await supabase.auth.getClaims();
 
-  if (profileError) return { status: "unavailable" };
-  if (profile?.role !== "admin") return { status: "forbidden" };
+    const userId =
+      data?.claims?.sub;
 
-  return { status: "admin", supabase };
-});
+    if (
+      error ||
+      !userId
+    ) {
+      return {
+        status:
+          "unauthenticated",
+      };
+    }
+
+    const {
+      data: profile,
+      error: profileError,
+    } = await supabase
+      .from("profiles")
+      .select("role")
+      .eq("id", userId)
+      .maybeSingle();
+
+    if (profileError) {
+      return {
+        status: "unavailable",
+      };
+    }
+
+    if (
+      profile?.role !== "admin"
+    ) {
+      return {
+        status: "forbidden",
+      };
+    }
+
+    return {
+      status: "admin",
+      supabase,
+    };
+  },
+);
 
 export async function getAdminClient() {
-  const result = await verifyAdmin();
-  return result.status === "admin" ? result.supabase : null;
+  const result =
+    await verifyAdmin();
+
+  return result.status ===
+    "admin"
+    ? result.supabase
+    : null;
 }
 
 export async function requireAdmin() {
-  const result = await verifyAdmin();
-  if (result.status === "forbidden") redirect("/admin/acesso-negado");
-  if (result.status !== "admin") redirect("/admin/login");
+  const result =
+    await verifyAdmin();
+
+  if (
+    result.status ===
+    "forbidden"
+  ) {
+    redirect(
+      "/admin/acesso-negado",
+    );
+  }
+
+  if (
+    result.status !== "admin"
+  ) {
+    redirect(
+      "/admin/login",
+    );
+  }
+
   return result.supabase;
 }

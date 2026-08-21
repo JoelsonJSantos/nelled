@@ -1,6 +1,9 @@
 "use client";
 
-import { Menu, Sun, X } from "lucide-react";
+import {
+  Menu,
+  X,
+} from "lucide-react";
 import {
   AnimatePresence,
   motion,
@@ -14,6 +17,8 @@ import {
 
 import { BrandLogo } from "@/components/brand-logo";
 import { PublicLink } from "@/components/navigation/public-link";
+import { ThemeToggle } from "@/components/theme-toggle";
+
 import styles from "./site-header.module.css";
 
 const nav = [
@@ -26,63 +31,60 @@ const nav = [
 ] as const;
 
 export function SiteHeader() {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] =
+    useState(false);
 
-  const closeButton = useRef<HTMLButtonElement>(null);
-  const reduceMotion = useReducedMotion();
+  const closeButton =
+    useRef<HTMLButtonElement>(null);
+
+  const reduceMotion =
+    useReducedMotion();
 
   useEffect(() => {
-    document.body.classList.toggle("mobile-nav-open", open);
+    document.body.classList.toggle(
+      "mobile-nav-open",
+      open,
+    );
 
     if (!open) {
       return () => {
-        document.body.classList.remove("mobile-nav-open");
+        document.body.classList.remove(
+          "mobile-nav-open",
+        );
       };
     }
 
-    const onKeyDown = (event: KeyboardEvent) => {
+    const onKeyDown = (
+      event: KeyboardEvent,
+    ) => {
       if (event.key === "Escape") {
         setOpen(false);
       }
     };
 
-    window.addEventListener("keydown", onKeyDown);
+    window.addEventListener(
+      "keydown",
+      onKeyDown,
+    );
 
     closeButton.current?.focus();
 
     return () => {
-      window.removeEventListener("keydown", onKeyDown);
-      document.body.classList.remove("mobile-nav-open");
+      window.removeEventListener(
+        "keydown",
+        onKeyDown,
+      );
+
+      document.body.classList.remove(
+        "mobile-nav-open",
+      );
     };
   }, [open]);
 
-  const toggleTheme = () => {
-  const root = document.documentElement;
-
-  const isLight =
-    !root.classList.contains("light");
-
-  const theme =
-    isLight ? "light" : "dark";
-
-  root.classList.toggle(
-    "light",
-    isLight,
-  );
-
-  root.style.colorScheme = theme;
-
-  localStorage.setItem(
-    "theme",
-    theme,
-  );
-
-  document.cookie =
-    `theme=${theme}; Path=/; Max-Age=31536000; SameSite=Lax`;
-};
-
   const transition = reduceMotion
-    ? { duration: 0 }
+    ? {
+        duration: 0,
+      }
     : {
         duration: 0.22,
         ease: "easeOut" as const,
@@ -93,27 +95,33 @@ export function SiteHeader() {
   };
 
   return (
-    <header className={styles.siteHeader}>
-      <nav className="nav" aria-label="Navegação principal">
-        <BrandLogo compact />
+    <header
+      className={styles.siteHeader}
+    >
+      <nav
+        className="nav"
+        aria-label="Navegação principal"
+      >
+        <BrandLogo
+          compact
+          mobileHref="/"
+        />
 
         <div className="nav-links">
-          {nav.map(([label, href]) => (
-            <PublicLink href={href} key={href}>
-              {label}
-            </PublicLink>
-          ))}
+          {nav.map(
+            ([label, href]) => (
+              <PublicLink
+                href={href}
+                key={href}
+              >
+                {label}
+              </PublicLink>
+            ),
+          )}
         </div>
 
         <div className="nav-actions">
-          <button
-            type="button"
-            className="icon-button"
-            onClick={toggleTheme}
-            aria-label="Alternar tema"
-          >
-            <Sun size={18} />
-          </button>
+          <ThemeToggle />
 
           <PublicLink
             className="quote-link"
@@ -125,7 +133,9 @@ export function SiteHeader() {
           <button
             type="button"
             className="menu"
-            onClick={() => setOpen(true)}
+            onClick={() =>
+              setOpen(true)
+            }
             aria-expanded={open}
             aria-controls="mobile-navigation"
             aria-label="Abrir menu"
@@ -139,14 +149,22 @@ export function SiteHeader() {
         {open && (
           <motion.div
             className={styles.overlay}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            initial={{
+              opacity: 0,
+            }}
+            animate={{
+              opacity: 1,
+            }}
+            exit={{
+              opacity: 0,
+            }}
             transition={transition}
           >
             <motion.button
               type="button"
-              className={styles.backdrop}
+              className={
+                styles.backdrop
+              }
               aria-label="Fechar menu"
               onClick={closeMenu}
             />
@@ -171,7 +189,9 @@ export function SiteHeader() {
               }}
               exit={
                 reduceMotion
-                  ? { opacity: 0 }
+                  ? {
+                      opacity: 0,
+                    }
                   : {
                       x: 24,
                       opacity: 0,
@@ -179,18 +199,23 @@ export function SiteHeader() {
               }
               transition={transition}
             >
-              <div className={styles.top}>
-                <BrandLogo compact />
+              <div
+                className={styles.top}
+              >
+                <BrandLogo
+                  compact
+                  mobileHref="/"
+                  onMobileClick={
+                    closeMenu
+                  }
+                />
 
-                <div className={styles.actions}>
-                  <button
-                    type="button"
-                    className="icon-button"
-                    onClick={toggleTheme}
-                    aria-label="Alternar tema"
-                  >
-                    <Sun size={18} />
-                  </button>
+                <div
+                  className={
+                    styles.actions
+                  }
+                >
+                  <ThemeToggle />
 
                   <button
                     ref={closeButton}
@@ -209,7 +234,10 @@ export function SiteHeader() {
                 aria-label="Navegação mobile"
               >
                 {nav.map(
-                  ([label, href], index) => (
+                  (
+                    [label, href],
+                    index,
+                  ) => (
                     <motion.div
                       key={href}
                       initial={
@@ -226,21 +254,28 @@ export function SiteHeader() {
                       }}
                       transition={
                         reduceMotion
-                          ? { duration: 0 }
+                          ? {
+                              duration: 0,
+                            }
                           : {
-                              delay: 0.04 * index,
-                              duration: 0.18,
+                              delay:
+                                0.04 *
+                                index,
+                              duration:
+                                0.18,
                             }
                       }
                     >
                       <PublicLink
                         href={href}
-                        onClick={closeMenu}
+                        onClick={
+                          closeMenu
+                        }
                       >
                         {label}
                       </PublicLink>
                     </motion.div>
-                  )
+                  ),
                 )}
               </nav>
 

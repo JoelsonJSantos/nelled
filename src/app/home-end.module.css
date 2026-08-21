@@ -1,17 +1,21 @@
 .campaign > aside {
-  max-width: 1000px;
+  max-width: 900px;
   margin-top: 40px;
 }
 
-.campaign > aside > div {
-  height: clamp(116px, 13vw, 178px);
-}
-
-.cta {
+/*
+ * A Home também possui a classe global .cta.
+ *
+ * Usar as duas classes juntas aumenta a especificidade
+ * e garante o mesmo resultado em desenvolvimento e
+ * no build de produção, independentemente da ordem
+ * em que o Turbopack empacotar os arquivos CSS.
+ */
+:global(.cta).cta {
   max-width: 1000px;
 }
 
-.cta h2 {
+:global(.cta).cta h2 {
   max-width: 720px;
 }
 
@@ -21,11 +25,7 @@
     padding-inline: 20px;
   }
 
-  .campaign > aside > div {
-    height: clamp(102px, 31vw, 142px);
-  }
-
-  .cta {
+  :global(.cta).cta {
     width: calc(100% - 40px);
   }
 }

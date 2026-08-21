@@ -39,8 +39,21 @@
 
 .footerGrid .socialLinks a:hover {
   color: var(--cyan);
-  border-color: color-mix(in srgb, var(--cyan) 55%, var(--line));
-  background: color-mix(in srgb, var(--cyan) 6%, transparent);
+
+  border-color:
+    color-mix(
+      in srgb,
+      var(--cyan) 55%,
+      var(--line)
+    );
+
+  background:
+    color-mix(
+      in srgb,
+      var(--cyan) 6%,
+      transparent
+    );
+
   transform: translateY(-2px);
 }
 
@@ -54,33 +67,52 @@
 }
 
 @media (max-width: 720px) {
-  .footerGrid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+  /*
+   * O elemento recebe simultaneamente:
+   *
+   * .footer-grid
+   * styles.footerGrid
+   *
+   * Unimos as duas classes no seletor para impedir
+   * que a regra global de globals.css vença somente
+   * por aparecer depois no bundle de produção.
+   */
+  :global(.footer-grid).footerGrid {
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr));
+
     gap: 22px 13px;
   }
 
-  .footerGrid > div:first-child {
+  :global(.footer-grid).footerGrid > div:first-child {
     grid-column: 1 / -1;
   }
 
-  .footerGrid > div:first-child :global(.brand-logo img) {
+  :global(.footer-grid).footerGrid
+    > div:first-child
+    :global(.brand-logo img) {
     width: 82px;
     height: 82px;
   }
 
-  .footerGrid > div:first-child p {
-    margin: 12px 0 0;
+  :global(.footer-grid).footerGrid
+    > div:first-child
+    p {
     max-width: 260px;
+
+    margin: 12px 0 0;
   }
 
-  .footerGrid h4 {
+  :global(.footer-grid).footerGrid h4 {
     margin: 0 0 10px;
+
     font-size: 13px;
     letter-spacing: 0.8px;
   }
 
-  .footerGrid a {
+  :global(.footer-grid).footerGrid a {
     margin: 8px 0;
+
     font-size: 13px;
     line-height: 1.35;
   }
@@ -89,19 +121,24 @@
     margin-top: 14px;
   }
 
-  .footerGrid .socialLinks a {
+  :global(.footer-grid).footerGrid
+    .socialLinks
+    a {
     width: 34px;
     height: 34px;
+    margin: 0;
   }
 
-  .footerBottom {
+  :global(.footer-bottom).footerBottom {
     gap: 11px;
+
     margin-top: 30px;
     padding-top: 17px;
+
     font-size: 13px;
   }
 
-  .footerBottom a {
+  :global(.footer-bottom).footerBottom a {
     font-size: 13px;
   }
 }
